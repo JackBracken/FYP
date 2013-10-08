@@ -31,6 +31,8 @@ target/
 # PDT-specific
 .buildpath
 
+target/
+
 
 #################
 ## Visual Studio
