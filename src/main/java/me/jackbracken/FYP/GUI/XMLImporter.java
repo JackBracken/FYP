@@ -61,21 +61,13 @@ public class XMLImporter extends JFrame implements ActionListener {
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setEditable(false);
 
-		// Vector<TableColumn> tableColumns = new Vector<TableColumn>();
-		// TableColumn t = new TableColumn();
-		// for(String s: colNames) {
-		// tableColumns.add(t);
-		// tableColumns.get(tableColumns.size()-1).setHeaderValue(s);
-		// }
-
-		// JTableHeader userTableHeader = new JTableHeader();
-
 		Object[][] data = { { null, null, null, null, null, null, null, null,
 				null, null, null, null } };
 
-		userTable = new JTable(data, colNames);
-		JScrollPane scrollPane = new JScrollPane(userTable);
-
+//		userTable = new JTable(data, colNames);
+//		JScrollPane scrollPane = new JScrollPane(userTable);
+//		userTable.setFillsViewportHeight(true);
+		
 		// Create file chooser
 		fileChooser = new JFileChooser();
 
@@ -91,7 +83,7 @@ public class XMLImporter extends JFrame implements ActionListener {
 		buttonPanel.add(openButton);
 		buttonPanel.add(applyButton).setEnabled(false);
 
-		add(scrollPane, BorderLayout.CENTER);
+//		add(scrollPane, BorderLayout.CENTER);
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
@@ -114,9 +106,11 @@ public class XMLImporter extends JFrame implements ActionListener {
 
 				applyButton.setEnabled(true);
 				ParseUserFile puf = new ParseUserFile(file);
-				userTable = new JTable(puf.getUsers(), colHeader);
-				add(userTable, BorderLayout.CENTER);
 				
+				userTable = new JTable(puf.getUsers(), colHeader);
+				JScrollPane scrollPane = new JScrollPane(userTable);
+				userTable.setFillsViewportHeight(true);
+				add(scrollPane, BorderLayout.CENTER);
 			} else {
 				// textArea.append("Open command cancelled by user." + newline);
 			}
