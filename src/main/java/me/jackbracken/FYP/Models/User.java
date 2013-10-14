@@ -11,57 +11,62 @@ public class User {
 	int userID, reputation, views, downVotes, upVotes, age;
 	Date creationDate, lastAccess;
 	String displayName, location, aboutText, emailHash;
+
+	int l = 0;
 	
-	public User(int userID, int reputation, String creationDate, String displayName, String lastAccess,
-			String location, String aboutText, int views, int downVotes, int upVotes, String emailHash, int age) throws ParseException {
-		
-		this.userID 		= userID;
-		this.reputation 	= reputation;
-		this.creationDate 	= toUnixTime.parse(creationDate);
-		this.displayName 	= displayName;
-		this.lastAccess		= toUnixTime.parse(lastAccess);
-		this.location 		= location;
-		this.aboutText 		= aboutText;
-		this.views 			= views;
-		this.downVotes 		= downVotes;
-		this.upVotes 		= upVotes;
-		this.emailHash 		= emailHash;
-		this.age 			= age;
-	}
-	
-	public String toString() {
-		return "ID: " + userID + "\tName: " + displayName + "\tReputation: " + reputation;
+	public User(int userID, int reputation, String creationDate,
+			String displayName, String lastAccess, String location,
+			String aboutText, int views, int downVotes, int upVotes,
+			String emailHash, int age) throws ParseException {
+
+		this.userID = userID;
+		this.reputation = reputation;
+		this.creationDate = toUnixTime.parse(creationDate);
+		this.displayName = displayName;
+		this.lastAccess = toUnixTime.parse(lastAccess);
+		this.location = location;
+		this.aboutText = aboutText;
+		this.views = views;
+		this.downVotes = downVotes;
+		this.upVotes = upVotes;
+		this.emailHash = emailHash;
+		this.age = age;
 	}
 
-	private int getUserId() {
+	public String toString() {
+		return "ID: " + userID + ",\tReputation: " + reputation + ",\tUp: "
+				+ upVotes + ",\tDown: " + downVotes + ",\tName: " + location;
+	}
+
+	public int getUserId() {
 		return userID;
 	}
 
-	private int getReputation() {
+	public int getReputation() {
 		return reputation;
 	}
 
-	private Date getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	private String getDisplayName() {
+	public String getDisplayName() {
 		return displayName;
 	}
 
-	private String getLocation() {
+	public String getLocation() {
 		return location;
 	}
 
-	private int getViews() {
+	public int getViews() {
 		return views;
 	}
 
-	private int getUpVotes() {
+	public int getUpVotes() {
 		return upVotes;
 	}
 
-	private int getDownVotes() {
+	public int getDownVotes() {
 		return downVotes;
 	}
 

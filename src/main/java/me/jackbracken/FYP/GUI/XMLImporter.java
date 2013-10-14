@@ -30,37 +30,26 @@ public class XMLImporter extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	static final String title = "FYP XML Importer Utility";
 	static final String newline = "\n";
-	
+
 	// Set up BufferedReader
 	String currentLine = "";
 	FileInputStream fis;
 	UnicodeBOMInputStream ubis;
 	InputStreamReader isr;
 	BufferedReader br;
-	
+
 	JButton openButton, applyButton;
 	JTextArea textArea;
 	JTable userTable;
 	JFileChooser fileChooser;
 	GridLayout buttonStrip = new GridLayout(1, 2);
-	
+
 	// Create JTable to show data
-	String[] colNames = {
-			"ID",
-			"Reputation",
-			"Creation Date",
-			"Display Name",
-			"Last Access",
-			"Location",
-			"About",
-			"Views",
-			"Up Votes",
-			"Down Votes",
-			"Email hash",
-			"Age"
-	};
+	String[] colNames = { "ID", "Reputation", "Creation Date", "Display Name",
+			"Last Access", "Location", "About", "Views", "Up Votes",
+			"Down Votes", "Email hash", "Age" };
 	Vector<String> colHeader = new Vector<String>(Arrays.asList(colNames));
-	
+
 	public XMLImporter(String name) {
 		super(name);
 		setResizable(false);
@@ -71,22 +60,22 @@ public class XMLImporter extends JFrame implements ActionListener {
 		textArea = new JTextArea();
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setEditable(false);
-		
-//		Vector<TableColumn> tableColumns = new Vector<TableColumn>();
-//		TableColumn t = new TableColumn();
-//		for(String s: colNames) {
-//			tableColumns.add(t);
-//			tableColumns.get(tableColumns.size()-1).setHeaderValue(s);
-//		}
-		
-//		JTableHeader userTableHeader = new JTableHeader();
-		
-		Object[][] data = {
-			    {null, null, null, null, null, null, null, null, null, null, null, null}};
-		
-		userTable = new JTable(data ,colNames);
+
+		// Vector<TableColumn> tableColumns = new Vector<TableColumn>();
+		// TableColumn t = new TableColumn();
+		// for(String s: colNames) {
+		// tableColumns.add(t);
+		// tableColumns.get(tableColumns.size()-1).setHeaderValue(s);
+		// }
+
+		// JTableHeader userTableHeader = new JTableHeader();
+
+		Object[][] data = { { null, null, null, null, null, null, null, null,
+				null, null, null, null } };
+
+		userTable = new JTable(data, colNames);
 		JScrollPane scrollPane = new JScrollPane(userTable);
-		
+
 		// Create file chooser
 		fileChooser = new JFileChooser();
 
@@ -122,13 +111,14 @@ public class XMLImporter extends JFrame implements ActionListener {
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				
+
 				applyButton.setEnabled(true);
 				ParseUserFile puf = new ParseUserFile(file);
 				userTable = new JTable(puf.getUsers(), colHeader);
 				add(userTable, BorderLayout.CENTER);
+				
 			} else {
-//				textArea.append("Open command cancelled by user." + newline);
+				// textArea.append("Open command cancelled by user." + newline);
 			}
 			textArea.setCaretPosition(textArea.getDocument().getLength());
 		} else if (e.getSource() == applyButton) {

@@ -21,13 +21,12 @@ public class ParseUserFile extends DefaultHandler {
 	String tmpValue;
 	User userTmp;
 	Vector<User> userVector;
-	
 
 	public ParseUserFile(File file) {
 		this.file = file;
 		users = new Vector<Vector>();
 		parseDocument();
-//		printData();
+		printData();
 	}
 
 	private void parseDocument() {
@@ -48,11 +47,12 @@ public class ParseUserFile extends DefaultHandler {
 	public Vector<Vector> getUsers() {
 		return users;
 	}
-	
+
 	private void printData() {
-//		for (User tmpB : users) {
-//			System.out.println(tmpB.toString());
-//		}
+		int l = 0;
+		for (Vector<User> tmpB : users) {
+			System.out.println(tmpB);
+		}
 	}
 
 	@Override
@@ -64,27 +64,28 @@ public class ParseUserFile extends DefaultHandler {
 		if (elementName.equalsIgnoreCase("row")) {
 			int userID, reputation, views, downVotes, upVotes, age = 0;
 			String displayName, location, aboutText, emailHash, creationDate, lastAccess;
-		
-			userID 			= Integer.parseInt(attributes.getValue("Id"));
-			reputation 		= Integer.parseInt(attributes.getValue("Reputation"));
-			creationDate 	= 				   attributes.getValue("CreationDate");
-			displayName 	= 				   attributes.getValue("DisplayName");
-			lastAccess 		= 				   attributes.getValue("LastAccessDate");
-			location 		= 				   attributes.getValue("Location");
-			aboutText 		= 				   attributes.getValue("AboutMe");
-			views 			= Integer.parseInt(attributes.getValue("Views"));
-			upVotes 		= Integer.parseInt(attributes.getValue("UpVotes"));
-			downVotes 		= Integer.parseInt(attributes.getValue("DownVotes"));
-			emailHash 		= 				   attributes.getValue("EmailHash");
+
+			userID = Integer.parseInt(attributes.getValue("Id"));
+			reputation = Integer.parseInt(attributes.getValue("Reputation"));
+			creationDate = attributes.getValue("CreationDate");
+			displayName = attributes.getValue("DisplayName");
+			lastAccess = attributes.getValue("LastAccessDate");
+			location = attributes.getValue("Location");
+			aboutText = attributes.getValue("AboutMe");
+			views = Integer.parseInt(attributes.getValue("Views"));
+			upVotes = Integer.parseInt(attributes.getValue("UpVotes"));
+			downVotes = Integer.parseInt(attributes.getValue("DownVotes"));
+			emailHash = attributes.getValue("EmailHash");
 			try {
-				age 			= Integer.parseInt(attributes.getValue("Age"));
-			} catch(NumberFormatException e) {
-//				e.printStackTrace();
+				age = Integer.parseInt(attributes.getValue("Age"));
+			} catch (NumberFormatException e) {
+				// e.printStackTrace();
 			}
 			try {
-				userTmp = new User(userID, reputation, creationDate, displayName, lastAccess,
-						 location, aboutText, views, downVotes, upVotes, emailHash, age);
-				userVector = new Vector();
+				userTmp = new User(userID, reputation, creationDate,
+						displayName, lastAccess, location, aboutText, views,
+						downVotes, upVotes, emailHash, age);
+				userVector = new Vector<User>();
 				userVector.add(userTmp);
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -103,9 +104,10 @@ public class ParseUserFile extends DefaultHandler {
 		tmpValue = new String(ac, i, j);
 	}
 
-//	public static void main(String[] args) {
-//		ParseUserFile puf = new ParseUserFile("/media/windows/Users/jack/Documents/1 Stack Exchange Data Dump - Sept 2013/Content/math.stackexchange.com/Users.xml");
-//		puf.printData();
-//	}
+	// public static void main(String[] args) {
+	// ParseUserFile puf = new
+	// ParseUserFile("/media/windows/Users/jack/Documents/1 Stack Exchange Data Dump - Sept 2013/Content/math.stackexchange.com/Users.xml");
+	// puf.printData();
+	// }
 
 }
