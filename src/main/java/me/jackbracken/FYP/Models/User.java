@@ -34,8 +34,14 @@ public class User {
 	}
 
 	public String toString() {
-		return "ID: " + userID + ",\tReputation: " + reputation + ",\tUp: "
-				+ upVotes + ",\tDown: " + downVotes + ",\tName: " + location;
+		String r = "", u = "";
+		if(reputation < 100)
+			r = "\t";
+		if (upVotes < 100)
+			u = "\t";
+
+		return "ID: " + userID + ",\tReputation: " + reputation + ","  + r + "\tUp: "
+				+ upVotes + "," + u + "\tDown: " + downVotes + ",\tName: " + displayName;
 	}
 
 	public int getUserId() {

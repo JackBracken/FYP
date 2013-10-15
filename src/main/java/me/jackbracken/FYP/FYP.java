@@ -1,8 +1,10 @@
 package main.java.me.jackbracken.FYP;
 
+import java.io.File;
+import java.util.Vector;
+
 import main.java.me.jackbracken.FYP.FileUtilities.ParseUserFile;
 import main.java.me.jackbracken.FYP.Models.User;
-import main.java.me.jackbracken.FYP.GUI.*;
 
 import com.googlecode.flyway.core.Flyway;
 
@@ -13,7 +15,13 @@ public class FYP {
 		// Point to database
 		flyway.setDataSource("jdbc:postgresql:fyp", "postgres", "october");
 		flyway.migrate();
-	
-		new XMLImporter("FYP");
+
+		File file = new File("/home/jack/stack/Users.xml");
+
+		ParseUserFile puf = new ParseUserFile(file);
+		Vector<Vector<User>> users = new Vector<Vector<User>>(puf.getUsers());
+		User first = users.firstElement().firstElement();
+//		System.out.println(users.lastElement());
+		System.exit(0);
 	}
 }

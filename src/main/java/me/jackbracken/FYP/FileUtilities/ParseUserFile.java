@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ParseUserFile extends DefaultHandler {
-	Vector<Vector> users;
+	Vector<Vector<User>> users;
 	File file;
 	String tmpValue;
 	User userTmp;
@@ -24,7 +24,7 @@ public class ParseUserFile extends DefaultHandler {
 
 	public ParseUserFile(File file) {
 		this.file = file;
-		users = new Vector<Vector>();
+		users = new Vector<Vector<User>>();
 		parseDocument();
 		printData();
 	}
@@ -44,23 +44,20 @@ public class ParseUserFile extends DefaultHandler {
 		}
 	}
 
-	public Vector<Vector> getUsers() {
+	public Vector<Vector<User>> getUsers() {
 		return users;
 	}
 
 	private void printData() {
-		int l = 0;
 		for (Vector<User> tmpB : users) {
-			System.out.println(tmpB);
+			System.out.println(tmpB.firstElement());
 		}
 	}
 
 	@Override
 	public void startElement(String s, String s1, String elementName,
 			Attributes attributes) throws SAXException {
-		// if current element is book , create new book
-		// clear tmpValue on start of element
-
+		
 		if (elementName.equalsIgnoreCase("row")) {
 			int userID, reputation, views, downVotes, upVotes, age = 0;
 			String displayName, location, aboutText, emailHash, creationDate, lastAccess;
