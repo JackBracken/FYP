@@ -13,7 +13,7 @@ public class FYP {
 		// Create flyway instance
 		Flyway flyway = new Flyway();
 		// Point to database
-		flyway.setDataSource("jdbc:postgresql:fyp", "postgres", "october");
+		flyway.setDataSource("jdbc:postgresql:fyp", "karma", "karma");
 		flyway.migrate();
 
 		File file = new File("/home/jack/stack/Users.xml");
