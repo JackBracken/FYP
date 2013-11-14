@@ -19,9 +19,10 @@ public class FYP {
 		File file = new File("/home/jack/stack/Users.xml");
 
 		ParseUserFile puf = new ParseUserFile(file);
-		Vector<Vector<User>> users = new Vector<Vector<User>>(puf.getUsers());
-		User first = users.firstElement().firstElement();
-//		System.out.println(users.lastElement());
+		Vector<User> users = new Vector<User>(puf.getUsers());
+		for(User u: users) {
+			System.out.println(u.toString());
+		}
 		System.exit(0);
 	}
 }

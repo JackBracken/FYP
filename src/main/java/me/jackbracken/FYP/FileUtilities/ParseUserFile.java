@@ -16,17 +16,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ParseUserFile extends DefaultHandler {
-	Vector<Vector<User>> users;
+	Vector<User> users;
 	File file;
 	String tmpValue;
-	User userTmp;
-	Vector<User> userVector;
+	User user;
 
 	public ParseUserFile(File file) {
 		this.file = file;
-		users = new Vector<Vector<User>>();
+		users = new Vector<User>();
 		parseDocument();
-		printData();
 	}
 
 	private void parseDocument() {
@@ -44,14 +42,8 @@ public class ParseUserFile extends DefaultHandler {
 		}
 	}
 
-	public Vector<Vector<User>> getUsers() {
+	public Vector<User> getUsers() {
 		return users;
-	}
-
-	private void printData() {
-		for (Vector<User> tmpB : users) {
-			System.out.println(tmpB.firstElement());
-		}
 	}
 
 	@Override
@@ -59,7 +51,7 @@ public class ParseUserFile extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		
 		if (elementName.equalsIgnoreCase("row")) {
-			int userID, reputation, views, downVotes, upVotes, age = 0;
+			int userID, reputation, views, downVotes, upVotes, age;
 			String displayName, location, aboutText, emailHash, creationDate, lastAccess;
 
 			userID = Integer.parseInt(attributes.getValue("Id"));
@@ -73,17 +65,20 @@ public class ParseUserFile extends DefaultHandler {
 			upVotes = Integer.parseInt(attributes.getValue("UpVotes"));
 			downVotes = Integer.parseInt(attributes.getValue("DownVotes"));
 			emailHash = attributes.getValue("EmailHash");
+			
 			try {
 				age = Integer.parseInt(attributes.getValue("Age"));
 			} catch (NumberFormatException e) {
-				// e.printStackTrace();
+				// Age not given
+				age = -1;
 			}
+			
 			try {
-				userTmp = new User(userID, reputation, creationDate,
+				user = new User(userID, reputation, creationDate,
 						displayName, lastAccess, location, aboutText, views,
 						downVotes, upVotes, emailHash, age);
-				userVector = new Vector<User>();
-				userVector.add(userTmp);
+
+				users.add(user);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -93,18 +88,10 @@ public class ParseUserFile extends DefaultHandler {
 	@Override
 	public void endElement(String s, String s1, String element)
 			throws SAXException {
-		users.add(userVector);
 	}
 
 	@Override
 	public void characters(char[] ac, int i, int j) throws SAXException {
 		tmpValue = new String(ac, i, j);
 	}
-
-	// public static void main(String[] args) {
-	// ParseUserFile puf = new
-	// ParseUserFile("/media/windows/Users/jack/Documents/1 Stack Exchange Data Dump - Sept 2013/Content/math.stackexchange.com/Users.xml");
-	// puf.printData();
-	// }
-
 }
