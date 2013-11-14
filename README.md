@@ -52,5 +52,6 @@ For now, the database is name ```fyp``` and is owned by a user name ```karma```.
 
 Download the jar somewhere safe. If using eclipse, install the artifact with ```File -> Import -> Maven -> Install or deploy an artifact to a Maven repository``` and fill in the appropriate details. 
 
-If not using eclipse's m2e, install it to the local mvn repo with the command ```mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=12.1.0.1 \
- -Dpackaging=jar -Dfile=ojdbc6.jar -DgeneratePom=true```.
+If not using eclipse's m2e, install it to the local mvn repo with the command
+    mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=12.1.0.1 \
+    -Dpackaging=jar -Dfile=ojdbc6.jar -DgeneratePom=true```.
