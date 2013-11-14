@@ -17,6 +17,13 @@
 	</developers>
 
 	<dependencies>
+        <!-- JDBC -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>12.1.0.1</version>
+		</dependency>
+		
 		<!-- Database and JDBI wrapper -->
 		<dependency>
 			<groupId>postgresql</groupId>
