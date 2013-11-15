@@ -6,13 +6,11 @@ import java.util.Date;
 
 public class User {
 	// The date format used by StackExchange
-	SimpleDateFormat toUnixTime = new SimpleDateFormat("yyyy-MM-dd'T'H:m:s'.'S");
+	SimpleDateFormat stackTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'H:m:s'.'S");
 
 	int userID, reputation, views, downVotes, upVotes, age;
 	Date creationDate, lastAccess;
 	String displayName, location, aboutText, emailHash;
-
-	int l = 0;
 	
 	public User(int userID, int reputation, String creationDate,
 			String displayName, String lastAccess, String location,
@@ -21,9 +19,9 @@ public class User {
 
 		this.userID = userID;
 		this.reputation = reputation;
-		this.creationDate = toUnixTime.parse(creationDate);
+		this.creationDate = stackTimeFormat.parse(creationDate);
 		this.displayName = displayName;
-		this.lastAccess = toUnixTime.parse(lastAccess);
+		this.lastAccess = stackTimeFormat.parse(lastAccess);
 		this.location = location;
 		this.aboutText = aboutText;
 		this.views = views;
