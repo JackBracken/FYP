@@ -33,4 +33,8 @@ public class Vote {
 	public Date getCreationDate() {
 		return creationDate;
 	}
+	
+	public String toString() {
+		return "Vote ID: " + voteID + "\tPost ID: " + postID;
+	}
 }
