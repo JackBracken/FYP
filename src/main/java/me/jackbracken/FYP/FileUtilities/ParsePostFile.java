@@ -15,13 +15,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ParsePostsFile extends DefaultHandler {
+public class ParsePostFile extends DefaultHandler {
 	Vector<Post> posts;
 	File file;
 	String tmpValue;
 	Post post;
 
-	public ParsePostsFile(File file) {
+	public ParsePostFile(File file) {
 		this.file = file;
 		posts = new Vector<Post>();
 		parseDocument();
