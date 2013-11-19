@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -24,7 +23,6 @@ import javax.swing.SwingUtilities;
 
 import main.java.me.jackbracken.FYP.FileUtilities.ParseUserFile;
 import main.java.me.jackbracken.FYP.FileUtilities.UnicodeBOMInputStream;
-import main.java.me.jackbracken.FYP.Models.User;
 
 public class XMLImporter extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -60,9 +58,6 @@ public class XMLImporter extends JFrame implements ActionListener {
 		textArea = new JTextArea();
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setEditable(false);
-
-		Object[][] data = { { null, null, null, null, null, null, null, null,
-				null, null, null, null } };
 
 //		userTable = new JTable(data, colNames);
 //		JScrollPane scrollPane = new JScrollPane(userTable);
