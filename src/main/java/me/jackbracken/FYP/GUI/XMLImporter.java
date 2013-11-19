@@ -22,7 +22,6 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import main.java.me.jackbracken.FYP.FileUtilities.ParseUserFile;
-import main.java.me.jackbracken.FYP.FileUtilities.UnicodeBOMInputStream;
 
 public class XMLImporter extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +31,6 @@ public class XMLImporter extends JFrame implements ActionListener {
 	// Set up BufferedReader
 	String currentLine = "";
 	FileInputStream fis;
-	UnicodeBOMInputStream ubis;
 	InputStreamReader isr;
 	BufferedReader br;
 

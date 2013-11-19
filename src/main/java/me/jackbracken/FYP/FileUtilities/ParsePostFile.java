@@ -2,28 +2,20 @@ package main.java.me.jackbracken.FYP.FileUtilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import main.java.me.jackbracken.FYP.Models.Post;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ParsePostFile extends DefaultHandler {
-	Vector<Post> posts;
 	File file;
-	String tmpValue;
-	Post post;
 
 	public ParsePostFile(File file) {
 		this.file = file;
-		posts = new Vector<Post>();
 		parseDocument();
 	}
 
@@ -40,10 +32,6 @@ public class ParsePostFile extends DefaultHandler {
 		} catch (IOException e) {
 			System.out.println("IO error");
 		}
-	}
-
-	public Vector<Post> getPosts() {
-		return posts;
 	}
 
 	@Override
@@ -88,27 +76,6 @@ public class ParsePostFile extends DefaultHandler {
 			} catch (NumberFormatException e) {
 				favoriteCount = 0;
 			}
-			
-			try {
-				post = new Post(postID, postTypeID, acceptedAnswerID,
-						creationDate, score, body,
-						ownerUserID, title, tags,
-						answerCount, favoriteCount);
-
-				posts.add(post);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 		}
-	}
-
-	@Override
-	public void endElement(String s, String s1, String element)
-			throws SAXException {
-	}
-
-	@Override
-	public void characters(char[] ac, int i, int j) throws SAXException {
-		tmpValue = new String(ac, i, j);
 	}
 }

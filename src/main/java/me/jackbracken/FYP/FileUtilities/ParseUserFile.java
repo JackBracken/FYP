@@ -2,28 +2,20 @@ package main.java.me.jackbracken.FYP.FileUtilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import main.java.me.jackbracken.FYP.Models.User;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ParseUserFile extends DefaultHandler {
-	Vector<User> users;
 	File file;
-	String tmpValue;
-	User user;
 
 	public ParseUserFile(File file) {
 		this.file = file;
-		users = new Vector<User>();
 		parseDocument();
 	}
 
@@ -40,10 +32,6 @@ public class ParseUserFile extends DefaultHandler {
 		} catch (IOException e) {
 			System.out.println("IO error");
 		}
-	}
-
-	public Vector<User> getUsers() {
-		return users;
 	}
 
 	@Override
@@ -72,26 +60,6 @@ public class ParseUserFile extends DefaultHandler {
 				// Age not given
 				age = -1;
 			}
-			
-			try {
-				user = new User(userID, reputation, creationDate,
-						displayName, lastAccess, location, aboutText, views,
-						downVotes, upVotes, emailHash, age);
-
-				users.add(user);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 		}
-	}
-
-	@Override
-	public void endElement(String s, String s1, String element)
-			throws SAXException {
-	}
-
-	@Override
-	public void characters(char[] ac, int i, int j) throws SAXException {
-		tmpValue = new String(ac, i, j);
 	}
 }

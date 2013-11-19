@@ -28,7 +28,7 @@ public class ParserLauncher {
 						System.out.println("Parsing file:\t" + fileName);
 						new ParseVoteFile(dataFile);
 					} else {
-						System.out.println("Discarding file:\t" + fileName);
+						System.out.println("Ignoring file:\t" + fileName);
 					}
 				}
 				
