@@ -21,12 +21,12 @@ public class ParserLauncher {
 					if (fileName.contains("Users")) {
 						System.out.println("Parsing file:\t" + fileName);
 						new ParseUserFile(dataFile);
-					} else if (fileName.contains("Posts")) {
-						System.out.println("Parsing file:\t" + fileName);
-						new ParsePostFile(dataFile);
-					} else if (fileName.contains("Votes")) {
-						System.out.println("Parsing file:\t" + fileName);
-						new ParseVoteFile(dataFile);
+//					} else if (fileName.contains("Posts")) {
+//						System.out.println("Parsing file:\t" + fileName);
+//						new ParsePostFile(dataFile);
+//					} else if (fileName.contains("Votes")) {
+//						System.out.println("Parsing file:\t" + fileName);
+//						new ParseVoteFile(dataFile);
 					} else {
 						System.out.println("Ignoring file:\t" + fileName);
 					}
