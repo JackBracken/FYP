@@ -2,8 +2,8 @@ package main.java.me.jackbracken.FYP.FileUtilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -19,7 +19,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParseUserFile extends DefaultHandler {
 	File file;
 	Handle h;
-	ArrayList<User> userList = new ArrayList<User>();
+	Vector<User> userList = new Vector<User>();
 
 	public ParseUserFile(File file) {
 		 /** PGPoolingDataSource ds = new PGPoolingDataSource();
@@ -31,10 +31,9 @@ public class ParseUserFile extends DefaultHandler {
 		
 		 DBI dbi = new DBI(ds);
 		 this.h = dbi.open();
-		
-		 this.file = file; 
 		 */
 		
+		this.file = file; 
 		parseDocument();
 	}
 
@@ -53,7 +52,7 @@ public class ParseUserFile extends DefaultHandler {
 		}
 	}
 
-	public ArrayList<User> getUserList() {
+	public Vector<User> getUserList() {
 		return userList;
 	}
 	

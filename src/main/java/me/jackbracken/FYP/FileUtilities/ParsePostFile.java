@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -17,7 +18,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ParsePostFile extends DefaultHandler {
 	File file;
-	ArrayList<Post> postList = new ArrayList<Post>();
+	Vector<Post> postList = new Vector<Post>();
 
 	public ParsePostFile(File file) {
 		this.file = file;
@@ -39,7 +40,7 @@ public class ParsePostFile extends DefaultHandler {
 		}
 	}
 
-	public ArrayList<Post> getPostList() {
+	public Vector<Post> getPostList() {
 		return postList;
 	}
 
