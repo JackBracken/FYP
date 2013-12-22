@@ -1,3 +1,0 @@
-CREATE TABLE sites (
-	name			VARCHAR(128) NOT NULL
-);
