@@ -1,77 +1,29 @@
 package main.java.me.jackbracken.FYP.Models;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class User {
-	// The date format used by StackExchange
-	SimpleDateFormat stackTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'H:m:s'.'S");
-
-	int userID, reputation, views, downVotes, upVotes, age;
-	Date creationDate, lastAccess;
-	String displayName, location, aboutText, emailHash;
+	int id;
+	short reputation;
+	String name;
 	
-	public User(int userID, int reputation, String creationDate,
-			String displayName, String lastAccess, String location,
-			String aboutText, int views, int downVotes, int upVotes,
-			String emailHash, int age) throws ParseException {
-
-		this.userID = userID;
+	public User(int id, short reputation, String name) {
+		this.id = id;
 		this.reputation = reputation;
-		this.creationDate = stackTimeFormat.parse(creationDate);
-		this.displayName = displayName;
-		this.lastAccess = stackTimeFormat.parse(lastAccess);
-		this.location = location;
-		this.aboutText = aboutText;
-		this.views = views;
-		this.downVotes = downVotes;
-		this.upVotes = upVotes;
-		this.emailHash = emailHash;
-		this.age = age;
+		this.name = name;
 	}
 
 	public String toString() {
-		String r = "", u = "";
-		if(reputation < 100)
-			r = "\t";
-		if (upVotes < 100)
-			u = "\t";
-
-		return "ID: " + userID + ",\tReputation: " + reputation + ","  + r + "\tUp: "
-				+ upVotes + "," + u + "\tDown: " + downVotes + ",\tName: " + displayName;
+		return "id: " + id + " \trep" + reputation + " \tname: " + name;
 	}
 
 	public int getUserId() {
-		return userID;
+		return id;
 	}
 
-	public int getReputation() {
+	public short getReputation() {
 		return reputation;
 	}
 
-	public Date getCreationDate() {
-		return creationDate;
+	public String getName() {
+		return name;
 	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public int getViews() {
-		return views;
-	}
-
-	public int getUpVotes() {
-		return upVotes;
-	}
-
-	public int getDownVotes() {
-		return downVotes;
-	}
-
 }

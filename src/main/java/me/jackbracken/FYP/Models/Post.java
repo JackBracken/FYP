@@ -6,76 +6,57 @@ import java.util.Date;
 
 public class Post {
 	// The date format used by StackExchange
-	SimpleDateFormat stackTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'H:m:s'.'S");
+	SimpleDateFormat stackTimeFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'H:m:s'.'S");
 
-	int postID, postTypeID, acceptedAnswerID, score, ownerUserID, answerCount, favoriteCount;
+	int id, acceptedAnswer, ownerID;
+	byte postTypeID;
+	short score, answers;
 	Date creationDate;
-	String body, title, tags;
-	
-	public Post(int postID, int postTypeID, int acceptedAnswerID,
-			String creationDate, int score, String body,
-			int ownerUserID, String title, String tags,
-			int answerCount, int favoriteCount) throws ParseException {
 
-		this.postID = postID;
+	public Post(int id, byte postTypeID, int acceptedAnswer,
+			String creationDate, short score, int ownerID, short answers)
+			throws ParseException {
+
+		this.id = id;
 		this.postTypeID = postTypeID;
-		this.acceptedAnswerID = acceptedAnswerID;
+		this.acceptedAnswer = acceptedAnswer;
 		this.creationDate = stackTimeFormat.parse(creationDate);
 		this.score = score;
-		this.body = body;
-		this.ownerUserID = ownerUserID;
-		this.title = title;
-		this.tags = tags;
-		this.answerCount = answerCount;
-		this.favoriteCount = favoriteCount;
+		this.ownerID = ownerID;
+		this.answers = answers;
 	}
 
-	public int getPostID() {
-		return postID;
+	public int getID() {
+		return id;
 	}
 
-	public int getPostTypeID() {
+	public byte getPostTypeID() {
 		return postTypeID;
 	}
 
-	public int getAcceptedAnswerID() {
-		return acceptedAnswerID;
+	public int getAcceptedAnswer() {
+		return acceptedAnswer;
 	}
 
-	public int getScore() {
+	public short getScore() {
 		return score;
 	}
 
-	public int getOwnerUserID() {
-		return ownerUserID;
+	public int getOwnerID() {
+		return ownerID;
 	}
 
-	public int getAnswerCount() {
-		return answerCount;
-	}
-
-	public int getFavoriteCount() {
-		return favoriteCount;
+	public short getAnswerCount() {
+		return answers;
 	}
 
 	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public String getBody() {
-		return body;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getTags() {
-		return tags;
-	}
-
 	public String toString() {
-		return "ID: " + postID + ",\tType: " + score  + ",\tCreation Date: "
+		return "ID: " + id + ",\tScore: " + score + ",\tCreation Date: "
 				+ creationDate;
 	}
 }

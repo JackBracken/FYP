@@ -2,10 +2,14 @@ package main.java.me.jackbracken.FYP.FileUtilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import main.java.me.jackbracken.FYP.Models.Post;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -13,6 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ParsePostFile extends DefaultHandler {
 	File file;
+	ArrayList<Post> postList = new ArrayList<Post>();
 
 	public ParsePostFile(File file) {
 		this.file = file;
@@ -34,47 +39,60 @@ public class ParsePostFile extends DefaultHandler {
 		}
 	}
 
+	public ArrayList<Post> getPostList() {
+		return postList;
+	}
+
 	@Override
 	public void startElement(String s, String s1, String elementName,
 			Attributes attributes) throws SAXException {
-		
-		if (elementName.equalsIgnoreCase("row")) {
-			int postID, postTypeID, acceptedAnswerID, score, ownerUserID, answerCount, favoriteCount;
-			String body, title, tags, creationDate;
 
-			postID = Integer.parseInt(attributes.getValue("Id"));
-			postTypeID = Integer.parseInt(attributes.getValue("PostTypeId"));
+		if (elementName.equalsIgnoreCase("row")) {
+			int id, acceptedAnswer, ownerID;
+			byte postTypeID;
+			short score, answers;
+			String creationDate;
+
+			id = Integer.parseInt(attributes.getValue("Id"));
+			postTypeID = Byte.parseByte(attributes.getValue("PostTypeId"));
 			creationDate = attributes.getValue("CreationDate");
-			score = Integer.parseInt(attributes.getValue("Score"));
-			body = attributes.getValue("Body");
-			title = attributes.getValue("Title");
-			tags = attributes.getValue("Tags");
-			
+			score = Short.parseShort(attributes.getValue("Score"));
+
 			try {
-				acceptedAnswerID = Integer.parseInt(attributes.getValue("AcceptedAnswerId"));
+				acceptedAnswer = Integer.parseInt(
+					attributes.getValue("AcceptedAnswerId")
+				);
+				
 			} catch (NumberFormatException e) {
 				// No accepted answer or the post is not a question
-				acceptedAnswerID = -1;
+				acceptedAnswer = -1;
 			}
-			
-			try {			
-				ownerUserID = Integer.parseInt(attributes.getValue("OwnerUserId"));
+
+			try {
+				ownerID = Integer.parseInt(
+					attributes.getValue("OwnerUserId")
+				);
+				
 			} catch (NumberFormatException e) {
 				// Owner account no longer exists
-				ownerUserID = -1;
+				ownerID = -1;
 			}
-			
+
 			try {
-				answerCount = Integer.parseInt(attributes.getValue("AnswerCount"));
+				answers = Short.parseShort(
+					attributes.getValue("AnswerCount")
+				);
+				
 			} catch (NumberFormatException e) {
 				// Not a queestion, does not have answers
-				answerCount = -1;
+				answers = -1;
 			}
-			
+
 			try {
-				favoriteCount = Integer.parseInt(attributes.getValue("FavoriteCount"));
-			} catch (NumberFormatException e) {
-				favoriteCount = 0;
+				postList.add(new Post(id, postTypeID, acceptedAnswer,
+						creationDate, score, ownerID, answers));
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
 		}
 	}
