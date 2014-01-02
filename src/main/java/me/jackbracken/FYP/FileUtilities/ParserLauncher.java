@@ -15,25 +15,24 @@ public class ParserLauncher {
 	public Vector<Post> postList = new Vector<Post>();
 	
 	public ParserLauncher(File dataRoot) {
-		String fileName;
+		String fileName, site;
 		File[] listOfSites = dataRoot.listFiles();
 		
 		for(File siteDirectory : listOfSites) {
 			if(!siteDirectory.isFile()) {
 				File[] siteDataFiles = siteDirectory.listFiles();
-				
-				System.out.println("Directory:\t" + siteDirectory.getName());
+				site =  siteDirectory.getName();
+
+				System.out.println("Directory:\t" + site);
 				for (File dataFile: siteDataFiles) {
 					fileName = dataFile.getName();
 					
 					if (fileName.contains("Users")) {
 						System.out.println("Parsing file:\t" + fileName);
-//						ParseUserFile puf = new ParseUserFile(dataFile);
-						userList = new ParseUserFile(dataFile).getUserList();
+						userList = new ParseUserFile(dataFile, site).getUserList();
 					} else if (fileName.contains("Posts")) {
 						System.out.println("Parsing file:\t" + fileName);
-//						ParsePostFile ppf = new ParsePostFile(dataFile);
-						postList = new ParsePostFile(dataFile).getPostList();
+						postList = new ParsePostFile(dataFile, site).getPostList();
 					} else {
 						System.out.println("Ignoring file:\t" + fileName);
 					}

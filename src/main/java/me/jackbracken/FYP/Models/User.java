@@ -3,12 +3,13 @@ package main.java.me.jackbracken.FYP.Models;
 public class User {
 	int id;
 	short reputation;
-	String name;
+	String name, site;
 	
-	public User(int id, short reputation, String name) {
+	public User(int id, short reputation, String name, String site) {
 		this.id = id;
 		this.reputation = reputation;
 		this.name = name;
+		this.site = site;
 	}
 
 	public String toString() {
@@ -25,5 +26,9 @@ public class User {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getSite() {
+		return site;
 	}
 }

@@ -3,7 +3,6 @@ package main.java.me.jackbracken.FYP.FileUtilities;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,10 +17,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ParsePostFile extends DefaultHandler {
 	File file;
+	String site;
 	Vector<Post> postList = new Vector<Post>();
 
-	public ParsePostFile(File file) {
+	public ParsePostFile(File file, String site) {
 		this.file = file;
+		this.site = site;
 		parseDocument();
 	}
 
@@ -91,7 +92,7 @@ public class ParsePostFile extends DefaultHandler {
 
 			try {
 				postList.add(new Post(id, postTypeID, acceptedAnswer,
-						creationDate, score, ownerID, answers));
+						creationDate, score, ownerID, answers, site));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

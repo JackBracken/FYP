@@ -2,7 +2,6 @@ package main.java.me.jackbracken.FYP.FileUtilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,29 +10,18 @@ import javax.xml.parsers.SAXParserFactory;
 
 import main.java.me.jackbracken.FYP.Models.User;
 
-import org.skife.jdbi.v2.Handle;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ParseUserFile extends DefaultHandler {
 	File file;
-	Handle h;
+	String site;
 	Vector<User> userList = new Vector<User>();
 
-	public ParseUserFile(File file) {
-		 /** PGPoolingDataSource ds = new PGPoolingDataSource();
-		 ds.setDataSourceName("fyp");
-		 ds.setDatabaseName("fyp");
-		 ds.setUser("karma");
-		 ds.setPassword("karma");
-		 ds.setMaxConnections(3);
-		
-		 DBI dbi = new DBI(ds);
-		 this.h = dbi.open();
-		 */
-		
-		this.file = file; 
+	public ParseUserFile(File file, String site) {		
+		this.file = file;
+		this.site = site;
 		parseDocument();
 	}
 
@@ -69,23 +57,8 @@ public class ParseUserFile extends DefaultHandler {
 			reputation = Short.parseShort(attributes.getValue("Reputation"));
 			name = attributes.getValue("DisplayName");
 
-			userList.add(new User(id, reputation, name));
-
-
-			// h.execute("insert into users values " +
-			// userID + "," +
-			// reputation + "," +
-			// creationDateString + "," +
-			// displayName + "," +
-			// lastAccess + "," +
-			// location + "," +
-			// aboutText + "," +
-			// views + "," +
-			// upVotes + "," +
-			// downVotes + "," +
-			// emailHash + "," +
-			// age
-			// );
+			userList.add(new User(id, reputation, name, site));
+			System.out.println(id+ " " + site);
 		}
 	}
 }

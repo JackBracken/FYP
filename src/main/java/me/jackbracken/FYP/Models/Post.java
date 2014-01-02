@@ -13,9 +13,10 @@ public class Post {
 	byte postTypeID;
 	short score, answers;
 	Date creationDate;
+	String site;
 
 	public Post(int id, byte postTypeID, int acceptedAnswer,
-			String creationDate, short score, int ownerID, short answers)
+			String creationDate, short score, int ownerID, short answers, String site)
 			throws ParseException {
 
 		this.id = id;
@@ -25,6 +26,7 @@ public class Post {
 		this.score = score;
 		this.ownerID = ownerID;
 		this.answers = answers;
+		this.site = site;
 	}
 
 	public int getID() {
@@ -53,6 +55,10 @@ public class Post {
 
 	public Date getCreationDate() {
 		return creationDate;
+	}
+	
+	public String getSite() {
+		return site;
 	}
 
 	public String toString() {
