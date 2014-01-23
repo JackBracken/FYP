@@ -1,17 +1,9 @@
 package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Vector;
 
-import javax.sql.DataSource;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import main.java.me.jackbracken.fyp.FYP;
 import main.java.me.jackbracken.fyp.models.Post;
 import main.java.me.jackbracken.fyp.models.User;
 
@@ -21,15 +13,7 @@ public class ParserLauncher {
 	
 	public Vector<User> userList = new Vector<User>();
 	public Vector<Post> postList = new Vector<Post>();
-	
-	private Connection con = null;
-	private Statement st = null;
-	private ResultSet rs = null;
-	
-	final private String DB_URL = "jdbc:postgresql://localhost/fyp";
-	final private String DB_USER = "karma";
-	final private String DB_PASS = "karma";
-	
+
 	public ParserLauncher(File dataRoot) {
 		String fileName, site;
 		
@@ -66,39 +50,16 @@ public class ParserLauncher {
 					System.exit(1);
 				}
 				
+				try {
+					new UpsertUsers(userList);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				
 			} else {
 				System.out.println("Unnecessary file " + siteDirectory.getName() + "found.");
-			}
-		}
-		
-		try {
-			con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-			st = con.createStatement();
-			rs = st.executeQuery("SELECT VERSION()");
-			
-			if (rs.next()) {
-				System.out.println("\trs: " + rs.getString(1));
-			}
-			
-	 	} catch (SQLException se){
-	 		System.out.println(se.getMessage());
-		
-	 	} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				
-				if (st != null) {
-					st.close();
-				}
-				
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException se) {
-				System.out.println(se.getMessage());
 			}
 		}
 		

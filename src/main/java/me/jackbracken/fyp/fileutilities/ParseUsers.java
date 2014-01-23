@@ -55,7 +55,7 @@ public class ParseUsers extends DefaultHandler {
 			id = Integer.parseInt(attributes.getValue("Id"));
 			reputation = Integer.parseInt(attributes.getValue("Reputation"));
 			name = attributes.getValue("DisplayName");
-
+			
 			userList.add(new User(id, reputation, name, site));
 		}
 	}
