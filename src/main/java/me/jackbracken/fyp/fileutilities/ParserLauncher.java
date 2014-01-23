@@ -11,10 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import main.java.me.jackbracken.fyp.FYP;
 import main.java.me.jackbracken.fyp.models.Post;
 import main.java.me.jackbracken.fyp.models.User;
-
-import org.apache.log4j.Logger;
 
 public class ParserLauncher {
 	// dataRoot should be the directory with the unzipped stack 
@@ -22,15 +21,14 @@ public class ParserLauncher {
 	
 	public Vector<User> userList = new Vector<User>();
 	public Vector<Post> postList = new Vector<Post>();
-	public static Logger logger = Logger.getLogger(";");
 	
 	private Connection con = null;
 	private Statement st = null;
 	private ResultSet rs = null;
 	
-	private String dbUrl = "jdbc:postgresql://localhost/testdb";
-	private String user = "karma";
-	private String pass = "karma";
+	final private String DB_URL = "jdbc:postgresql://localhost/fyp";
+	final private String DB_USER = "karma";
+	final private String DB_PASS = "karma";
 	
 	public ParserLauncher(File dataRoot) {
 		String fileName, site;
@@ -45,46 +43,46 @@ public class ParserLauncher {
 				site = siteDirectory.getName();
 				byte filesParsed = 0;
 
-				logger.info("Directory:\t" + site);
+				System.out.println("Directory:\t" + site);
 				
 				for (File dataFile: siteDataFiles) {
 					fileName = dataFile.getName();
 					
 					if (fileName.equals("Users.xml")) {
-						logger.info("Parsing file:\t" + fileName);
+						System.out.println("Parsing file:\t" + fileName);
 						userList = new ParseUsers(dataFile, site).getUserList();
 						filesParsed++;
 					} else if (fileName.equals("Posts.xml")) {
-						logger.info("Parsing file:\t" + fileName);
+						System.out.println("Parsing file:\t" + fileName);
 						postList = new ParsePosts(dataFile, site).getPostList();
 						filesParsed++;
 					} else {
-						logger.info("Ignoring file:\t" + fileName);
+						System.out.println("Ignoring file:\t" + fileName);
 					}
 				}
 				
 				if (filesParsed < 2) {
-					logger.error("Only " + filesParsed + " files were parsed in directory: " + site);
+					System.out.println("Only " + filesParsed + " files were parsed in directory: " + site);
 					System.exit(1);
 				}
 				
 				
 			} else {
-				logger.info("Unnecessary file " + siteDirectory.getName() + "found.");
+				System.out.println("Unnecessary file " + siteDirectory.getName() + "found.");
 			}
 		}
 		
 		try {
-			con = DriverManager.getConnection(dbUrl, user, pass);
+			con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT VERSION()");
 			
 			if (rs.next()) {
-				logger.info(rs.getString(1));
+				System.out.println("\trs: " + rs.getString(1));
 			}
 			
 	 	} catch (SQLException se){
-			logger.error(se.getMessage());
+	 		System.out.println(se.getMessage());
 		
 	 	} finally {
 			try {
@@ -100,7 +98,7 @@ public class ParserLauncher {
 					con.close();
 				}
 			} catch (SQLException se) {
-				logger.error(se.getMessage());
+				System.out.println(se.getMessage());
 			}
 		}
 		
