@@ -1,4 +1,4 @@
-package main.java.me.jackbracken.FYP.FileUtilities;
+package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,18 +8,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import main.java.me.jackbracken.FYP.Models.User;
+import main.java.me.jackbracken.fyp.models.User;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ParseUserFile extends DefaultHandler {
+public class ParseUsers extends DefaultHandler {
 	File file;
 	String site;
 	Vector<User> userList = new Vector<User>();
 
-	public ParseUserFile(File file, String site) {		
+	public ParseUsers(File file, String site) {		
 		this.file = file;
 		this.site = site;
 		parseDocument();
@@ -58,7 +58,6 @@ public class ParseUserFile extends DefaultHandler {
 			name = attributes.getValue("DisplayName");
 
 			userList.add(new User(id, reputation, name, site));
-			System.out.println(id+ " " + site);
 		}
 	}
 }

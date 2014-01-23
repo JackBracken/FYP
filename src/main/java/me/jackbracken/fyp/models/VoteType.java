@@ -1,4 +1,4 @@
-package main.java.me.jackbracken.FYP.Models;
+package main.java.me.jackbracken.fyp.models;
 
 public enum VoteType {
 	AcceptedByOriginator(1),

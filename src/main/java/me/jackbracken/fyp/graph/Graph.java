@@ -1,4 +1,4 @@
-package main.java.me.jackbracken.FYP.Graph;
+package main.java.me.jackbracken.fyp.graph;
 
 import java.util.Vector;
 

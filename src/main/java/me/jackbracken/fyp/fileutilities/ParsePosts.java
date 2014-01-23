@@ -1,4 +1,4 @@
-package main.java.me.jackbracken.FYP.FileUtilities;
+package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,18 +9,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import main.java.me.jackbracken.FYP.Models.Post;
+import main.java.me.jackbracken.fyp.models.Post;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ParsePostFile extends DefaultHandler {
+public class ParsePosts extends DefaultHandler {
 	File file;
 	String site;
 	Vector<Post> postList = new Vector<Post>();
 
-	public ParsePostFile(File file, String site) {
+	public ParsePosts(File file, String site) {
 		this.file = file;
 		this.site = site;
 		parseDocument();

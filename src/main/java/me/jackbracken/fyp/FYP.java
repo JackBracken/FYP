@@ -1,12 +1,9 @@
-package main.java.me.jackbracken.FYP;
+package main.java.me.jackbracken.fyp;
 
 import java.io.File;
 import java.sql.SQLException;
 
-import main.java.me.jackbracken.FYP.FileUtilities.ParserLauncher;
-import main.java.me.jackbracken.FYP.Graph.Graph;
-import main.java.me.jackbracken.FYP.Graph.Node;
-import main.java.me.jackbracken.FYP.Models.User;
+import main.java.me.jackbracken.fyp.fileutilities.ParserLauncher;
 
 import com.googlecode.flyway.core.Flyway;
 
