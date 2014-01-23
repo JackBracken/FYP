@@ -1,11 +1,10 @@
 package main.java.me.jackbracken.fyp.models;
 
 public class User {
-	int id;
-	short reputation;
+	int id, reputation;
 	String name, site;
 	
-	public User(int id, short reputation, String name, String site) {
+	public User(int id, int reputation, String name, String site) {
 		this.id = id;
 		this.reputation = reputation;
 		this.name = name;
@@ -20,7 +19,7 @@ public class User {
 		return id;
 	}
 
-	public short getReputation() {
+	public int getReputation() {
 		return reputation;
 	}
 

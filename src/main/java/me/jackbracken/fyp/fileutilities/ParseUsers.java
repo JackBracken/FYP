@@ -49,12 +49,11 @@ public class ParseUsers extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 
 		if (elementName.equalsIgnoreCase("row")) {
-			int id;
-			short reputation;
+			int id, reputation;
 			String name;
 
 			id = Integer.parseInt(attributes.getValue("Id"));
-			reputation = Short.parseShort(attributes.getValue("Reputation"));
+			reputation = Integer.parseInt(attributes.getValue("Reputation"));
 			name = attributes.getValue("DisplayName");
 
 			userList.add(new User(id, reputation, name, site));
