@@ -52,6 +52,7 @@ public class ParserLauncher {
 				
 				try {
 					new UpsertUsers(userList);
+					new UpsertPosts(postList);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
