@@ -9,6 +9,8 @@ import java.util.Vector;
 import main.java.me.jackbracken.fyp.models.User;
 
 public class UpsertUsers {
+	// TODO Refactor this class
+	
 	private Connection con = null;
 	private PreparedStatement ps = null;
 	
@@ -20,7 +22,7 @@ public class UpsertUsers {
 	private String upsertQuery = "UPDATE users SET name = ?, reputation = ? WHERE id = ? AND site = ?;" +
 								 "INSERT INTO users (id, name, reputation, site)" +
 									"SELECT ?, ?, ?, ?" +
-									"WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = ?);";
+									"WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = ? AND site = ?);";
 	
 	UpsertUsers(Vector<User> users) throws SQLException {
 		try {
