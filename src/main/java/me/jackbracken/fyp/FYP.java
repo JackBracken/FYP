@@ -18,7 +18,7 @@ public class FYP {
 		final String HOME = System.getenv("HOME");
 		final File DATA_ROOT = new File(HOME + "/stack/");
 		
-		ParserLauncher pl = new ParserLauncher(DATA_ROOT);
+		new ParserLauncher(DATA_ROOT);
 
 
 		
