@@ -40,7 +40,8 @@ public class UpsertUsers {
 				ps.setInt(7, user.getReputation());
 				ps.setString(8, user.getSite());
 				ps.setInt(9, user.getUserId());
-				
+				ps.setString(10, user.getSite());
+
 				// execute query
 				ps.executeUpdate();
 			}
