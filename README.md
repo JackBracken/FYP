@@ -60,3 +60,7 @@ If not using eclipse's m2e, install it to the local mvn repo with the command
 
     mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=12.1.0.1 \
     -Dpackaging=jar -Dfile=ojdbc6.jar -DgeneratePom=true```.
+
+#### Gephi
+
+I had problems with Maven 2 and the Gephi toolkit library. Instead, just download the toolkit and make sure the ```gephi-toolkit.jar``` is in the classpath.
