@@ -30,6 +30,10 @@ Any (but not limited to) the following:
 
 ### Setup
 
+#### Java version
+
+Install Java 1.7.
+
 #### Database
 
 Download and install [PostgreSQL](http://www.postgresql.org/download/).
