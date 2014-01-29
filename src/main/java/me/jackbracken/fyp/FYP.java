@@ -16,12 +16,10 @@ public class FYP {
 		flyway.migrate();
 
 		final String HOME = System.getenv("HOME");
-		final File DATA_ROOT = new File(HOME + "/stack/test");
+		final File DATA_ROOT = new File(HOME + "/stack");
 		
 		new ParserLauncher(DATA_ROOT);
 
-
-		
 		double heapSize = Runtime.getRuntime().totalMemory();
 		double heapMaxSize = Runtime.getRuntime().maxMemory();
 		System.out.println("Percentage of heap used: " + heapSize / heapMaxSize);

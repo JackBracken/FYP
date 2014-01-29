@@ -29,6 +29,11 @@ public class ParserLauncher {
 
 				System.out.println("Directory:\t" + site);
 				
+				if(site.contains("test")) {
+					System.out.println("Ignoring test dir");
+					continue;
+				}
+				
 				for (File dataFile: siteDataFiles) {
 					fileName = dataFile.getName();
 					
@@ -50,6 +55,7 @@ public class ParserLauncher {
 					System.exit(1);
 				}
 				
+/*				
 				try {
 					new UpsertUsers(userList);
 					new UpsertPosts(postList);
@@ -57,7 +63,7 @@ public class ParserLauncher {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+*/		
 				
 			} else {
 				System.out.println("Unnecessary file " + siteDirectory.getName() + "found.");
