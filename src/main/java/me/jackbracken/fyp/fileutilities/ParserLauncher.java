@@ -1,9 +1,9 @@
 package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.Vector;
 
+import main.java.me.jackbracken.fyp.graph.GraphBuilder;
 import main.java.me.jackbracken.fyp.models.Post;
 import main.java.me.jackbracken.fyp.models.User;
 
@@ -13,6 +13,7 @@ public class ParserLauncher {
 	
 	public Vector<User> userList = new Vector<User>();
 	public Vector<Post> postList = new Vector<Post>();
+	int x = 0;
 
 	public ParserLauncher(File dataRoot) {
 		String fileName, site;
@@ -22,7 +23,7 @@ public class ParserLauncher {
 		
 		for(File siteDirectory : listOfSites) {
 			// Put files from directories in an array
-			if(!siteDirectory.isFile()) {
+			if(!siteDirectory.isFile() && x < 1) {
 				File[] siteDataFiles = siteDirectory.listFiles();
 				site = siteDirectory.getName();
 				byte filesParsed = 0;
@@ -64,6 +65,8 @@ public class ParserLauncher {
 					e.printStackTrace();
 				}
 */		
+				new GraphBuilder(userList, postList);
+				x++;
 				
 			} else {
 				System.out.println("Unnecessary file " + siteDirectory.getName() + "found.");
