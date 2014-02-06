@@ -1,0 +1,157 @@
+\documentclass[]{final_report}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%% Input project details
+\def\studentname{John Patrick Bracken}
+\def\projecttitle{Reputation Algorithms for the Social Web}
+\def\supervisorname{Dr. Michael O'Mahony}
+\def\moderatorname{Dr. Houssem Jerbi}
+\def\stack{Stack Exchange}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents\pdfbookmark[0]{Table of Contents}{toc}\newpage
+
+\begin{specification}
+
+\textbf{\textsl{Subject:}} Social Network Analysis, Reputation Systems
+
+\textbf{\textsl{Prerequisites:}} None
+
+\textbf{\textsl{Corequisites:}} None
+
+\textbf{\textsl{Coverage}} Social Network Analysis, Reputation Systems
+
+\textbf{\textsl{Project Type:}} Design and Implementation
+
+\textbf{\textsl{Software Requirements:}} Java, Linux, MySQL (or other)
+
+\textbf{\textsl{Hardware Requirements:}} Laptop for development. Access to server will be provided if necessary.
+
+\textbf{\textsl{Preassigned:}} No
+
+\end{specification}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%% Your Abstract herebstract
+
+\begin{abstract}
+
+In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. An attempt will also be made to improve upon the performance of the algorithms, and analyze their robustness against attack.
+
+\end{abstract}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%% Introduction
+
+\chapter{Introduction (aim for 2 pages)}
+
+With the increasing use of the internet in our day-to-day tasks, it has become more and more important that we be able to verify the trustworthiness of the strangers we so often rely on. While the use of technologies such as public key encryption allow us to verify \textsl{who} we are talking to with reasonable confidence, we are still left with the problem of determining that person's trustworthiness as an individual---whether that be trust in their knowledge in a particular field, or that they can be relied upon to deliver a good or service to satisfaction.
+
+To that end there has been considerable recent research into the fields of peer-to-peer trust and user reputation systems in social networks (McNally, O'Mahony and Smyth 2013; Cheng and Vassileva 2005; Mui 2002).
+
+There are numerous contexts in which a measure of trust is desired online, from internet transactions to online tutorials. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the Stack Exchange Question and Answer network. We define trust as the likelihood that the user answering a question is knowledgeable on the subject matter at hand. User reputation will refer to a numerical score allocated to a user indicating their trustworthiness.
+
+In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum; Hubs and Authorities, or HITS; and PageRank) upon a graph made up of \textsl{collaboration events} [TODO: explain collaboration events] and comparing their performance on the Stack Exchange datasets to each other and to the Stack Exchange reputation model (McNally, O'Mahony and Smyth 2013).
+
+\chapter{Background Research (aim for 6 pages)}
+
+\section{Trust}
+
+Trust can be defined as a relationship between two relationship. A trustor is an entity who places a certain amount of faith in the actions of knowledge of another entity, (or the trustee). Trust is not a symmetric relationship, so while, for example, a student may trust a teacher's knowledge in their subject matter, the teacher will likely have less reason to trust in the student's knowledge.
+
+Trust is an abstract relation that can occur between numerous types of entities, such as between people or web-pages (Page, L., Brin S., Motwani, R., and Winograd, T. 1999).
+
+Trust is an inherently qualitative property, and this is what causes us to draw a distinction between trust and reputation. [TODO: expand on this and add citations]
+
+\section{Reputation}
+
+Reputation is a numeric score that attempts to measure a particular entity's trustworthiness. There are many proprietary and generic reputation implementations in place across the web used to measure trust, such as google's PageRank for measuring a web-page's importance, to ebay's bespoke reputation system that allows buyers to find reliable sellers. [TODO: expand on this and add citation]
+
+\section{Evolution of the Web}
+
+[N.B. this entire paragraph written from memory, I need to fact check and find sources, although I don't believe there are any inaccuracies]
+
+When the web first exploded into widespread use in the nineties, it was a very static compilation of pages connected by hyperlinks. Typically, websites were only published by universities, government organisations and corporations, with content being controlled by their respective webmasters. It was much easier, then, to evaluate the trusworthiness of online resources; content related to hardware published by IBM was likely to be accurate, but IBM's advice on cake-baking may be taken with a pinch of salt (or perhaps not, as the casemay be).
+
+Over time however, as computers became more sophisticated; so-called web 2.0 technologies such as PHP and javascript evolved; and the number of internet users exploded, [TODO: get actual figures] the roles of producer and consumer are no longer so rigidly defined as they once were. Instead, anyone can post on a social network, publish a music review to potentially millions of people, or share off-colour remarks on a video of a cat falling from a ledge.
+
+For the large part this is not very often an issue, as many of these forms of communication are entirely, and transparently, opnional, but when a user, Alice, asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua, she may get a range of different answers. Bob gives her the correct answer and Mallory, out of some sense of bizzare schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice not know who to trust, but errs on the side of caution.
+
+While the above example is contrived, it illustrates the potential dangers of the social web, and how important it is to attach an accurate reputation to users.
+
+[TODO: add citations to the above]
+
+\section{Case studies}
+\subsection{Stack Exchange}
+
+The Stack Exchange network is a network of Question and Answer (Q\&A) communities, each focused on a specific field of expertise, with one for everything from programming to bicycling and cooking. As of the time of writing this report, the network consists of 114 Q\&A sites, almost 4.5 million users and over 8 million questions with 14.6 million answers. (Stack Exchange About Page)
+
+In the Stack Exchange system, reputation is calculated as a sum of points earned by contributing to the sites in various ways. Nearly every site activity, from asking and answering questions, to suggesting edits and flagging content for moderation, can earn the user points. This system is aimed more towards encouraging activity than accurately evaluating a user's trust. (SO: What is reputation?)
+
+All content on the Stack Exchange network is published under a Creative Commons Attribution Share Alike license, and 
+every three months an anonymized data dump of all the questions and answers on every site is publicly released. Each site is divided into a collection of XML files for the different objects. The ones we are primarily interested in are the Posts.xml and Users.xml files. The other files deal with edit history, comments, and in-site rewards that are unneccesary for this project. [TODO: add citation]
+
+The files are all quite straight-forward, with each row mapping to a database row.
+
+The relevant files I will need to use to evaluate these algorithms are the Users.xml file and the Posts.xml file.
+
+\subsubsection{Users.xml}
+The Users table has columns for user ID, display name, number of up-and-down-votes creation date etc. We are principally concerned with the user ID field so that we can match posts and votes to the correct user.
+
+\subsubsection{Posts.xml}
+The posts table has columns for all post information such as title, contents, owner ID and the post type ID. We are mainly concerned with the owner ID, the post type ID--so that we can separate answers from questions and other post types-- and the score the post received. 
+
+[TODO: Case studies]
+\subsection{Klout}
+\subsection{HayStaks}
+\section{Reputation Algorithms}
+\subsection{Collaboration Events}
+
+In the context of user interactions, we can define a so-called \textsl{collaboration event} between two entities. When entity A interacts with the collection of entities C, A then produces a reputation score for each entity in the collection C.
+
+As we look at these events as a whole for a social network, they form a weighted directed graph of collaboration events, with the users represented by nodes, and reputation scores by the edges between nodes. There can potentially be numerous edges between the same two nodes in both directions, in which case we combine these scores so that there are at most two edges between two nodes (one for each direction).
+
+[TODO: add brief explnations of the algoruithms]
+
+\section{Development Tools}
+The project is written in Java and uses PostgreSQL to store persistent data. The Java Flyway project is used for database migrations and to ensure database consistency accross development environments. Database operations are handled with the JDBC and JDBI libraries and Apache Maven is used for builds and dependency management, while the Gephi toolkit is used to build the graph and evaluate reputation scores.
+
+
+
+%%%% ADD YOUR BIBLIOGRAPHY HERE
+\newpage
+\begin{thebibliography}{99}
+
+\textbf{McNally, K., O'Mahony, M.P., and Smyth, B. 2013} \textsl{A Model of Collaboration-based Reputation for the Social Web}
+\linebreak
+\linebreak
+\textbf{Cheng, R., and Vassileva, J. 2005.} \textsl{Reward Mechanism for Sustainable Online Learning Community. In Proceedings of the 2005 conference on Artificial Intelligence in Education. IOS Press.}
+\linebreak
+\linebreak
+\textbf{Page, L., Brin S., Motwani, R., and Winograd, T. 1999} \textsl{The PageRank citation ranking: Bringing order to the Web.}
+\linebreak
+\linebreak
+\textbf{Mui, L. 2002.} \textsl{A Computational Model of Trust and Reputation. Agents, Evolutionary Games, and Social Networks}
+\linebreak
+\linebreak
+\textbf{Resnick, P., and Zeckhauser, R. 2002.} \textsl{Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay?s Reputation System. Advances in Applied Microeconomics 11:127?157}
+\linebreak
+\linebreak
+\textbf{Stack Exchange about page} \textsl{http://stackexchange.com/about}
+\linebreak
+\linebreak
+\textbf{SO: What is reputation?} \textsl{http://stackoverflow.com/help/whats-reputation}
+
+\end{thebibliography}
+\label{endpage}
+
+\end{document}
+
+\end{article}

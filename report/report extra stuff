@@ -1,0 +1,54 @@
+Background research for the project was broken up into three main tasks.
+\begin{itemize}
+\item Research of the Stack Exchange network and gaining an understanding of the data dumps.
+\item Understanding the reputation algorithms that were to be implemented.
+\item Research into appropriate tools and libraries for the code implementation of the project.
+\end{itemize}
+
+\section{Stack Exchange Data Dumps}
+
+All content on the Stack Exchange network is published under a Creative Commons Attribution Share Alike license, and 
+every three months an anonymized data dump of all the questions and answers on every site is publicly released. Each site is divided into a collection of XML files for the different objects. The ones we are primarily interested in are the Posts.xml and Users.xml files. The other files deal with edit history, comments, and in-site rewards that are unneccesary for this project.
+
+The files are all quite straight-forward, with each row mapping to a database row.
+
+\subsection{Users.xml}
+The Users table has columns for user ID, display name, number of up-and-down-votes creation date etc. We are principally concerned with the user ID field so that we can match posts and votes to the correct user.
+
+\subsection{Posts.xml}
+The posts table has columns for all post information such as title, contents, owner ID and the post type ID. We are mainly concerned with the owner ID, the post type ID--so that we can separate answers from questions and other post types-- and the score the post received. 
+
+\section{User Reputation Algorithms}
+
+\section{Development Tools}
+The project is written in Java and uses PostgreSQL to store persistent data. The Java Flyway project is used for database migrations and to ensure database consistency accross development environments. Database operations are handled with the JDBC and JDBI libraries and Apache Maven is used for builds and dependency management.
+
+Unit tests will be written using the JUnit test framework.
+
+\subsection{Testing}
+
+\chapter{Chapter 2}
+
+Make sure to make UML model stuffs for this.
+
+\chapter{Chapter 3}
+
+Blah
+
+\chapter{Design and Implementation}
+
+Blah code stuff.
+
+Example figure:
+\begin{figure}[h]
+\centering
+\fboxsep 2mm
+\framebox{
+	\includegraphics[width=6cm]{logo} 
+	\includegraphics[width=3cm]{logo} 
+	\includegraphics[width=1.5cm]{logo} 
+	\includegraphics[width=0.75cm]{logo} 
+	\includegraphics[width=0.375cm]{logo}
+}
+\caption{\label{fig:logo} Logo of the UCD Department of Computer Science displayed at various size.}
+\end{figure} 
