@@ -9,7 +9,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import main.java.me.jackbracken.fyp.models.Answer;
 import main.java.me.jackbracken.fyp.models.Post;
+import main.java.me.jackbracken.fyp.models.Question;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -18,7 +20,8 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParsePosts extends DefaultHandler {
 	File file;
 	String site;
-	Vector<Post> postList = new Vector<Post>();
+	Vector<Question> questionList = new Vector<Question>();
+	Vector<Answer> answerList = new Vector<Answer>();
 
 	public ParsePosts(File file, String site) {
 		this.file = file;
@@ -89,12 +92,10 @@ public class ParsePosts extends DefaultHandler {
 				// Not a queestion, does not have answers
 				answers = -1;
 			}
-
-			try {
-				postList.add(new Post(id, postTypeID, acceptedAnswer,
-						creationDate, score, ownerID, answers, site));
-			} catch (ParseException e) {
-				e.printStackTrace();
+			if(postTypeID == 1) {
+				// questionList.add(new Question(id, ownerID, site)); 
+			} else {
+				
 			}
 		}
 	}
