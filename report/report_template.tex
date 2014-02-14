@@ -1,14 +1,14 @@
 \documentclass[]{final_report}
 \usepackage{graphicx}
 \usepackage{hyperref}
-
+\setcounter{tocdepth}{3}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Input project details
 \def\studentname{John Patrick Bracken}
 \def\projecttitle{Reputation Algorithms for the Social Web}
 \def\supervisorname{Dr. Michael O'Mahony}
-\def\moderatorname{Dr. Houssem Jerbi}
+%\def\moderatorname{}
 \def\stack{Stack Exchange}
 
 
@@ -40,9 +40,11 @@
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Your Abstract herebstract
 
+% TODO: Remove hard embedded date from cls file
+
 \begin{abstract}
 
-In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. An attempt will also be made to improve upon the performance of the algorithms, and analyze their robustness against attack.
+In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. An attempt will also be made to improve upon the performance of the algorithms, and analyse their robustness against attack.
 
 \end{abstract}
 \newpage
@@ -50,104 +52,138 @@ In this project I intend to compare the performance of generic reputation algori
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Introduction
 
-\chapter{Introduction (aim for 2 pages)}
+\chapter{Introduction}
 
 With the increasing use of the internet in our day-to-day tasks, it has become more and more important that we be able to verify the trustworthiness of the strangers we so often rely on. While the use of technologies such as public key encryption allow us to verify \textsl{who} we are talking to with reasonable confidence, we are still left with the problem of determining that person's trustworthiness as an individual---whether that be trust in their knowledge in a particular field, or that they can be relied upon to deliver a good or service to satisfaction.
 
 To that end there has been considerable recent research into the fields of peer-to-peer trust and user reputation systems in social networks (McNally, O'Mahony and Smyth 2013; Cheng and Vassileva 2005; Mui 2002).
 
-There are numerous contexts in which a measure of trust is desired online, from internet transactions to online tutorials. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the Stack Exchange Question and Answer network. We define trust as the likelihood that the user answering a question is knowledgeable on the subject matter at hand. User reputation will refer to a numerical score allocated to a user indicating their trustworthiness.
+There are numerous contexts in which an indication of trust may be desired online, from internet transactions to Question \& Answer sites. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the \textsl{Stack Exchange Question and Answer} network. We will define trust as a relationship between users, and reputation will refer to an aggregate score allocated to a user that reflects their trustworthiness.
 
-In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum; Hubs and Authorities, or HITS; and PageRank) upon a graph made up of \textsl{collaboration events} [TODO: explain collaboration events] and comparing their performance on the Stack Exchange datasets to each other and to the Stack Exchange reputation model (McNally, O'Mahony and Smyth 2013).
-
-\chapter{Background Research (aim for 6 pages)}
-
-\section{Trust}
-
-Trust can be defined as a relationship between two relationship. A trustor is an entity who places a certain amount of faith in the actions of knowledge of another entity, (or the trustee). Trust is not a symmetric relationship, so while, for example, a student may trust a teacher's knowledge in their subject matter, the teacher will likely have less reason to trust in the student's knowledge.
-
-Trust is an abstract relation that can occur between numerous types of entities, such as between people or web-pages (Page, L., Brin S., Motwani, R., and Winograd, T. 1999).
-
-Trust is an inherently qualitative property, and this is what causes us to draw a distinction between trust and reputation. [TODO: expand on this and add citations]
-
-\section{Reputation}
-
-Reputation is a numeric score that attempts to measure a particular entity's trustworthiness. There are many proprietary and generic reputation implementations in place across the web used to measure trust, such as google's PageRank for measuring a web-page's importance, to ebay's bespoke reputation system that allows buyers to find reliable sellers. [TODO: expand on this and add citation]
+In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum; Hubs and Authorities, or HITS; and PageRank) and comparing their performance on the Stack Exchange datasets to each other and to the Stack Exchange ad-hoc reputation model.
 
 \section{Evolution of the Web}
 
-[N.B. this entire paragraph written from memory, I need to fact check and find sources, although I don't believe there are any inaccuracies]
+To demonstrate the necessity for these reputation modelling, it is important to pay attention to the history of the Web up to its present state, and to look at current trends to predict its future.
 
-When the web first exploded into widespread use in the nineties, it was a very static compilation of pages connected by hyperlinks. Typically, websites were only published by universities, government organisations and corporations, with content being controlled by their respective webmasters. It was much easier, then, to evaluate the trusworthiness of online resources; content related to hardware published by IBM was likely to be accurate, but IBM's advice on cake-baking may be taken with a pinch of salt (or perhaps not, as the casemay be).
+When the web first exploded into widespread use in the nineties, it was a static compilation of pages connected by hyper links. Typically, websites were only published by universities, government organisations and corporations, with content being controlled by their respective web-masters. It was much easier, then, to evaluate the trustworthiness of online resources; content related to hardware published by IBM was likely to be accurate, but IBM's advice on cake-baking may be taken with a pinch of salt (or perhaps not).
 
-Over time however, as computers became more sophisticated; so-called web 2.0 technologies such as PHP and javascript evolved; and the number of internet users exploded, [TODO: get actual figures] the roles of producer and consumer are no longer so rigidly defined as they once were. Instead, anyone can post on a social network, publish a music review to potentially millions of people, or share off-colour remarks on a video of a cat falling from a ledge.
+Over time however, computers became more sophisticated, and so-called web 2.0 technologies such as PHP and JavaScript evolved which allowed end-users to interact dynamically with the web. At the same time, the number of internet users exploded, and the line between the roles of producer and consumer began to blur. Instead, anyone could post on a social network, publish a music review to potentially millions of people, or share crude comments on YouTube videos.
 
-For the large part this is not very often an issue, as many of these forms of communication are entirely, and transparently, opnional, but when a user, Alice, asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua, she may get a range of different answers. Bob gives her the correct answer and Mallory, out of some sense of bizzare schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice not know who to trust, but errs on the side of caution.
+In many cases this is not an issue, as many of these forms of communication are entirely--and transparently--opinion based. But there are increasingly more cases these days where it is beneficial to know if another person should be trusted.
 
-While the above example is contrived, it illustrates the potential dangers of the social web, and how important it is to attach an accurate reputation to users.
+To give an example, a user Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua name Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie dog treats instead. Mallory, out of some sense of bizarre Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie does not get diabetes.
 
-[TODO: add citations to the above]
+While the above example is contrived, it illustrates the potential dangers of the social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others serious harm, due to the maliciousness or ignorance of a stranger--and with over a billion active users and more than ten billion messages every day on Facebook alone, for example, there is a considerable amount of potentially inaccurate information being shared on social networks (Facebook, Ericsson and Qualcomm 2013).
 
-\section{Case studies}
-\subsection{Stack Exchange}
+\chapter{Background Research (6 pages)}
 
-The Stack Exchange network is a network of Question and Answer (Q\&A) communities, each focused on a specific field of expertise, with one for everything from programming to bicycling and cooking. As of the time of writing this report, the network consists of 114 Q\&A sites, almost 4.5 million users and over 8 million questions with 14.6 million answers. (Stack Exchange About Page)
+\section{Introduction}
 
-In the Stack Exchange system, reputation is calculated as a sum of points earned by contributing to the sites in various ways. Nearly every site activity, from asking and answering questions, to suggesting edits and flagging content for moderation, can earn the user points. This system is aimed more towards encouraging activity than accurately evaluating a user's trust. (SO: What is reputation?)
+In the following chapter I outline the research I have undertaken so far on online reputation systems.
 
-All content on the Stack Exchange network is published under a Creative Commons Attribution Share Alike license, and 
-every three months an anonymized data dump of all the questions and answers on every site is publicly released. Each site is divided into a collection of XML files for the different objects. The ones we are primarily interested in are the Posts.xml and Users.xml files. The other files deal with edit history, comments, and in-site rewards that are unneccesary for this project. [TODO: add citation]
+I define trust and reputation, and briefly explain their differences and why drawing a distinction between the two is important. I  briefly describe the user reputation algorithms that are currently in use across the web, and go into further detail on the algorithms I will be evaluating. Finally,  I will present a number of case studies on sites that use a user reputation model, such as the Stack Exchange Network, eBay and Klout.
 
-The files are all quite straight-forward, with each row mapping to a database row.
 
-The relevant files I will need to use to evaluate these algorithms are the Users.xml file and the Posts.xml file.
+\section{Trust and Reputation}
 
-\subsubsection{Users.xml}
-The Users table has columns for user ID, display name, number of up-and-down-votes creation date etc. We are principally concerned with the user ID field so that we can match posts and votes to the correct user.
+For the purposes of this project, \textsl{trust} is defined as a relationship between two parties. A trustor is an entity who places a certain amount of faith in the actions or knowledge of another entity, (or the trustee). Trust is not a symmetric relationship, so while, for example, a student may trust a teacher's knowledge in their subject matter, the teacher will likely have less (or no) trust in their student's knowledge  (McNally, O'Mahony and Smyth 2013).
 
-\subsubsection{Posts.xml}
-The posts table has columns for all post information such as title, contents, owner ID and the post type ID. We are mainly concerned with the owner ID, the post type ID--so that we can separate answers from questions and other post types-- and the score the post received. 
+Trust can occur between numerous types of entities, such as between people or web-pages (Page, L., Brin S., Motwani, R., and Winograd, T. 1999). It is inherently a difficult property to quantify in any accurate way, and is why the need to draw a distinction between \textsl{trust} and \textsl{reputation} arises.
 
-[TODO: Case studies]
-\subsection{Klout}
-\subsection{HayStaks}
+For the purposes of this paper, \textsl{reputation} is defined as a numeric measure of a user's \textsl{trustworthiness} according to some metric performed on their individual trust scores (McNally, O'Mahony and Smyth 2013).
+
+There are a number of generic and ad-hoc implementation across the web, such as Google's PageRank algorithm for measuring a web-page's importance, Stack Exchange's bespoke system based on user activity, or eBay's implementation which uses user reviews to calculate reputation.
+
+
 \section{Reputation Algorithms}
-\subsection{Collaboration Events}
+In the following section I discuss a number of algorithms that can be used to evaluate reputation.
 
-In the context of user interactions, we can define a so-called \textsl{collaboration event} between two entities. When entity A interacts with the collection of entities C, A then produces a reputation score for each entity in the collection C.
+\subsection{Weighted Sum}
+Description of Weighted Sum.
+%\subsection{PageRank}
+%Words go here.
+%\subsection{Hubs and Authorities}
+%Words go here.
+\section{Case studies}
 
-As we look at these events as a whole for a social network, they form a weighted directed graph of collaboration events, with the users represented by nodes, and reputation scores by the edges between nodes. There can potentially be numerous edges between the same two nodes in both directions, in which case we combine these scores so that there are at most two edges between two nodes (one for each direction).
+In this section I present case studies for two bespoke user reputation models. The activity-based Stack Exchange model, and eBay's user-feedback centric reputation model.
 
-[TODO: add brief explnations of the algoruithms]
+\subsection{Stack Exchange -- An activity based approach}
 
-\section{Development Tools}
-The project is written in Java and uses PostgreSQL to store persistent data. The Java Flyway project is used for database migrations and to ensure database consistency accross development environments. Database operations are handled with the JDBC and JDBI libraries and Apache Maven is used for builds and dependency management, while the Gephi toolkit is used to build the graph and evaluate reputation scores.
+The Stack Exchange network is a collection of Question and Answer (Q \& A) communities, each focused on a specific field of expertise, with a site for everything from programming to bicycling and cooking.  The network grew from the original Stack Overflow site, which focused on computer programming questions, and it currently still the largest site in the network. As of the time of writing this report, the network consists of 114 Q \& A sites, almost 4.5 million users and over 8 million questions with 14.6 million answers.
+
+The Stack Exchange network uses a bespoke model of reputation. A user's reputation is calculated as a sum of points earned by contributing to the sites in various ways. Nearly every site activity, from asking and answering questions, to suggesting edits and flagging content for moderation, can earn the user reputation points. This system is aimed more towards encouraging site activity than accurately evaluating a user's trust. A user can theoretically gain a considerable amount of reputation without actually demonstrating any domain knowledge.
+
+
+\begin{tabular}{|l|l|}
+\hline \textbf{Site activity} & \textbf{Reputation reward} \\ 
+\hline Your question voted up & +5 \\ 
+\hline Your answer voted up & +10 \\ 
+\hline Your answer 'accepted' as correct & +15 \\ 
+\hline You 'accept' an answer to your own question & +2 \\ 
+\hline Your suggested edit accepted & +2 (up to a total of 1000) \\ 
+\hline  
+\end{tabular}
+
+
+
+Additionally, reputation can be lost for a number of reasons, ranging from abuse of the site, to low-quality submissions, although reputation never falls below 1. Moderation is largely performed by the community itself, as increasing reputation scores are rewarded with additional site privileges, ranging from moderation tools to access to chat-rooms.
+
+
+\subsection{eBay -- A feedback-based approach}
+
+eBay Inc. is an online auction-house and market-place based entirely around user-to-user transactions. Originally founded in 1995, it has seen steady growth since, and has become the world's largest online marketplace, with over 112 million active users and \$175 billion USD worth of transactions facilitated by the site in 2012 alone.
+
+With such a large volume of transactions passing through the site, evaluating trust is one of eBay's principle concerns. eBay calculates reputation using user feedback after transactions. For each positive transaction, the user's reputation score is increased by one point. If they receive neutral feedback, there is no change to their reputation, and if a transaction receives negative feedback, the user's reputation is decreased by one point.
+
+In the event that there are multiple transactions between users in a single week, eBay aggregates the reputation points the user would have received. If this number is then positive, the reputation score is increased by one, if it is neutral, it does not change, and if it is negative, they lose one reputation point.
+
+As a user's feedback score grows, they gain a coloured star next to their display name as a quick visual indicator of their reputation. Sellers who consistently gain lots of positive feedback and make frequent sales can also gain a 'top-rated seller' badge that informs buyers that they consistently provide good service.
+
+Additionally, users can leave reviews with their feedback, where they may describe their interactions with the seller, the quality of the product, and the cost and speed of shipping (eBay Inc., 2014).
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=140mm]{ebayfeedback.png}
+\caption{An example of eBay feedback}
+\end{figure}
+
+This combination of reputation score and reviews allows buyers to quickly find trustworthy sellers and decide between them.
+
+%\subsection{Klout}
+
+% Write Klout case study 
 
 
 
 %%%% ADD YOUR BIBLIOGRAPHY HERE
 \newpage
 \begin{thebibliography}{99}
+\raggedright
+\textbf{McNally, K., O'Mahony, M.P., and Smyth, B. 2013} -- A Model of Collaboration-based Reputation for the Social Web
+\linebreak
+\linebreak
+\textbf{Cheng, R., and Vassileva, J. 2005} -- Reward Mechanism for Sustainable Online Learning Community. In Proceedings of the 2005 conference on Artificial Intelligence in Education. IOS Press.
+\linebreak
+\linebreak
+\textbf{Page, L., Brin S., Motwani, R., and Winograd, T. 1999} -- The PageRank citation ranking: Bringing order to the Web.
+\linebreak
+\linebreak
+\textbf{Mui, L. 2002} -- A Computational Model of Trust and Reputation. Agents, Evolutionary Games, and Social Networks
+\linebreak
+\linebreak
+\textbf{Resnick, P., and Zeckhauser, R. 2002} -- Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay's Reputation System. Advances in Applied Microeconomics 11:127?157
+\linebreak
+\linebreak
+\textbf{Massa, P., Avesani, P. 2007} -- Trust-Aware Recommender Systems
+\linebreak
+\linebreak
+\textbf{Facebook, Ericsson and Qualcomm. 2013} -- A focus on Efficiency (internet.org, September 16, 2013).
+\linebreak
+\linebreak
+\textbf{eBay Inc.} -- How feedback works. Available: http://pages.ebay.co.uk/help/feedback/howitworks.html. Last accessed 10th February 2014.
 
-\textbf{McNally, K., O'Mahony, M.P., and Smyth, B. 2013} \textsl{A Model of Collaboration-based Reputation for the Social Web}
-\linebreak
-\linebreak
-\textbf{Cheng, R., and Vassileva, J. 2005.} \textsl{Reward Mechanism for Sustainable Online Learning Community. In Proceedings of the 2005 conference on Artificial Intelligence in Education. IOS Press.}
-\linebreak
-\linebreak
-\textbf{Page, L., Brin S., Motwani, R., and Winograd, T. 1999} \textsl{The PageRank citation ranking: Bringing order to the Web.}
-\linebreak
-\linebreak
-\textbf{Mui, L. 2002.} \textsl{A Computational Model of Trust and Reputation. Agents, Evolutionary Games, and Social Networks}
-\linebreak
-\linebreak
-\textbf{Resnick, P., and Zeckhauser, R. 2002.} \textsl{Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay?s Reputation System. Advances in Applied Microeconomics 11:127?157}
-\linebreak
-\linebreak
-\textbf{Stack Exchange about page} \textsl{http://stackexchange.com/about}
-\linebreak
-\linebreak
-\textbf{SO: What is reputation?} \textsl{http://stackoverflow.com/help/whats-reputation}
 
 \end{thebibliography}
 \label{endpage}

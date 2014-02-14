@@ -1,16 +1,12 @@
 \contentsline {chapter}{Specification}{2}{chapter*.2}
 \contentsline {chapter}{Abstract}{3}{chapter*.3}
-\contentsline {chapter}{\numberline {1}Introduction (aim for 2 pages)}{4}{chapter.1}
-\contentsline {chapter}{\numberline {2}Background Research (aim for 6 pages)}{5}{chapter.2}
-\contentsline {section}{\numberline {2.1}Trust}{5}{section.2.1}
-\contentsline {section}{\numberline {2.2}Reputation}{5}{section.2.2}
-\contentsline {section}{\numberline {2.3}Evolution of the Web}{5}{section.2.3}
-\contentsline {section}{\numberline {2.4}Case studies}{6}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Stack Exchange}{6}{subsection.2.4.1}
-\contentsline {subsubsection}{Users.xml}{6}{section*.4}
-\contentsline {subsubsection}{Posts.xml}{7}{section*.5}
-\contentsline {subsection}{\numberline {2.4.2}Klout}{7}{subsection.2.4.2}
-\contentsline {subsection}{\numberline {2.4.3}HayStaks}{7}{subsection.2.4.3}
-\contentsline {section}{\numberline {2.5}Reputation Algorithms}{7}{section.2.5}
-\contentsline {subsection}{\numberline {2.5.1}Collaboration Events}{7}{subsection.2.5.1}
-\contentsline {section}{\numberline {2.6}Development Tools}{7}{section.2.6}
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}Evolution of the Web}{4}{section.1.1}
+\contentsline {chapter}{\numberline {2}Background Research (6 pages)}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introduction}{6}{section.2.1}
+\contentsline {section}{\numberline {2.2}Trust and Reputation}{6}{section.2.2}
+\contentsline {section}{\numberline {2.3}Reputation Algorithms}{6}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Weighted Sum}{7}{subsection.2.3.1}
+\contentsline {section}{\numberline {2.4}Case studies}{7}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Stack Exchange -- An activity based approach}{7}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}eBay -- A feedback-based approach}{7}{subsection.2.4.2}
