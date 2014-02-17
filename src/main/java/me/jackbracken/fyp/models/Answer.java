@@ -1,27 +1,27 @@
 package main.java.me.jackbracken.fyp.models;
 
 public class Answer {
-	int id, ownerId, parentId, score;
+	int id, ownerID, parentID, score;
 	String site;
 	
-	public Answer(int id, int ownerId, int parentId, int score, String site) {
+	public Answer(int id, int ownerID, int parentID, int score, String site) {
 		this.id = id;
-		this.ownerId = ownerId;
-		this.parentId = parentId;
+		this.ownerID = ownerID;
+		this.parentID = parentID;
 		this.score = score;
 		this.site = site;
 	}
 	
-	public int getId() {
+	public int getID() {
 		return id;
 	}
 	
-	public int getOwnerId() {
-		return ownerId;
+	public int getOwnerID() {
+		return ownerID;
 	}
 	
-	public int getParentId() {
-		return parentId;
+	public int getParentID() {
+		return parentID;
 	}
 	
 	public int getScore() {
@@ -31,5 +31,8 @@ public class Answer {
 	public String getSite() {
 		return site;
 	}
-	
+		
+	public String toString() {
+		return "ID:  " + id + " owner ID: " + ownerID + " parent ID: " + parentID + " score: " + score;
+	}
 }

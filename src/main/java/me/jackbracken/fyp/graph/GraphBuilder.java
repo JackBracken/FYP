@@ -1,20 +1,18 @@
 package main.java.me.jackbracken.fyp.graph;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 
-import main.java.me.jackbracken.fyp.models.Post;
+import main.java.me.jackbracken.fyp.models.Answer;
+import main.java.me.jackbracken.fyp.models.Question;
 import main.java.me.jackbracken.fyp.models.User;
 
 import org.gephi.graph.api.DirectedGraph;
+import org.gephi.graph.api.Edge;
 import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
 import org.gephi.graph.api.Node;
-import org.gephi.graph.api.Edge;
 import org.gephi.project.api.ProjectController;
-import org.gephi.project.api.Workspace;
 import org.openide.util.Lookup;
 
 public class GraphBuilder {
@@ -25,7 +23,14 @@ public class GraphBuilder {
 	private Edge e;
 	private String id;
 	
-	public GraphBuilder(Vector<User> users, Vector<Post> posts) {
+	private Vector<User> users = new Vector<User>();
+	private Vector<Answer> answers = new Vector<Answer>();
+	private Vector<Question> questions = new Vector<Question>();
+	
+	public GraphBuilder(Vector<User> users, Vector<Answer> answers, Vector<Question> questions) {
+		this.users = users;
+		this.answers = answers;
+		this.questions = questions;
 		
 		// Init a gephi project
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
@@ -42,13 +47,19 @@ public class GraphBuilder {
 			nodes.put(u.getUserId(), n);
 		}
 		
-		for(Post p: posts) {
-			if(p.getPostTypeID() == 2) {
-				e = gm.factory().newEdge(nodes.get(p.getOwnerID()), nodes.get(100), p.getScore(), true);
-				edges.put(p.getID(), e);
-			}
-		}
+		for(Answer a: answers) {
+			System.out.println("parent id " + a.getParentID() + " : size of vector? " + questions.size());	
+			e = gm.factory().newEdge(
+						nodes.get(questions.get(a.getParentID()).getOwnerID()),
+						nodes.get(a.getOwnerID()),
+						a.getScore(),
+						true
+					);
+			
+			edges.put(a.getID(), e);
 		
+		}
+		 
 		// Append to graph
 		DirectedGraph diGraph = gm.getDirectedGraph();
 		for(Node n: nodes.values()) {
@@ -60,6 +71,7 @@ public class GraphBuilder {
 		}
 		
 		System.out.println("Nodes: " + diGraph.getNodeCount() + " Edges: " + diGraph.getEdgeCount());
+		System.out.println(answers.size());
 	}
 
 }

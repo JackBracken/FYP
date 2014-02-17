@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.Vector;
 
 import main.java.me.jackbracken.fyp.graph.GraphBuilder;
+import main.java.me.jackbracken.fyp.models.Answer;
 import main.java.me.jackbracken.fyp.models.Post;
+import main.java.me.jackbracken.fyp.models.Question;
 import main.java.me.jackbracken.fyp.models.User;
 
 public class ParserLauncher {
@@ -12,7 +14,8 @@ public class ParserLauncher {
 	// exchange files, each site in its own sub-directory
 	
 	public Vector<User> userList = new Vector<User>();
-	public Vector<Post> postList = new Vector<Post>();
+	public Vector<Question> questionList = new Vector<Question>();
+	public Vector<Answer> answerList = new Vector<Answer>();
 	int x = 0;
 
 	public ParserLauncher(File dataRoot) {
@@ -44,7 +47,13 @@ public class ParserLauncher {
 						filesParsed++;
 					} else if (fileName.equals("Posts.xml")) {
 						System.out.println("Parsing file:\t" + fileName);
-						postList = new ParsePosts(dataFile, site).getPostList();
+						
+						// Get Q and A lists
+						
+						ParsePosts pp = new ParsePosts(dataFile, site);
+						questionList = pp.getQuestionList();
+						answerList = pp.getAnswerList();
+						
 						filesParsed++;
 					} else {
 						System.out.println("Ignoring file:\t" + fileName);
@@ -55,17 +64,8 @@ public class ParserLauncher {
 					System.out.println("Only " + filesParsed + " files were parsed in directory: " + site);
 					System.exit(1);
 				}
-				
-/*				
-				try {
-					new UpsertUsers(userList);
-					new UpsertPosts(postList);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-*/		
-				new GraphBuilder(userList, postList);
+						
+				new GraphBuilder(userList, answerList, questionList);
 				x++;
 				
 			} else {
@@ -73,13 +73,5 @@ public class ParserLauncher {
 			}
 		}
 		
-	}
-	
-	public Vector<User> getUserList() {
-		return userList;
-	}
-	
-	public Vector<Post> getPostList() {
-		return postList;
 	}
 }
