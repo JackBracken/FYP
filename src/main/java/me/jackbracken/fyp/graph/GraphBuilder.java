@@ -1,17 +1,24 @@
 package main.java.me.jackbracken.fyp.graph;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.LinkedList;
 
 import main.java.me.jackbracken.fyp.models.Answer;
 import main.java.me.jackbracken.fyp.models.Question;
 import main.java.me.jackbracken.fyp.models.User;
 
+import org.apache.batik.ext.awt.geom.Cubic;
 import org.gephi.graph.api.DirectedGraph;
 import org.gephi.graph.api.Edge;
 import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
 import org.gephi.graph.api.Node;
+import org.gephi.io.exporter.api.ExportController;
+import org.gephi.preview.api.PreviewController;
+import org.gephi.preview.api.PreviewModel;
+import org.gephi.preview.api.PreviewProperty;
 import org.gephi.project.api.ProjectController;
 import org.openide.util.Lookup;
 
@@ -23,14 +30,14 @@ public class GraphBuilder {
 	private Edge e;
 	private String id;
 	
-	private Vector<User> users = new Vector<User>();
-	private Vector<Answer> answers = new Vector<Answer>();
-	private Vector<Question> questions = new Vector<Question>();
+//	private LinkedList<User> users = new LinkedList<User>();
+//	private HashMap<Integer, Answer> answers = new HashMap<Integer, Answer>();
+//	private HashMap<Integer, Question> questions = new HashMap<Integer, Question>();
 	
-	public GraphBuilder(Vector<User> users, Vector<Answer> answers, Vector<Question> questions) {
-		this.users = users;
-		this.answers = answers;
-		this.questions = questions;
+	public GraphBuilder(LinkedList<User> users, HashMap<Integer, Answer> answers, HashMap<Integer, Question> questions) {
+//		this.users = users;
+//		this.answers = answers;
+//		this.questions = questions;
 		
 		// Init a gephi project
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
@@ -38,6 +45,10 @@ public class GraphBuilder {
 		
 		// Get a GraphModel from Workspace
 		GraphModel gm = Lookup.getDefault().lookup(GraphController.class).getModel();
+		
+		System.out.println("Beginning graph builder");
+		
+		long startTime = System.currentTimeMillis();
 		
 		// Create nodes from users
 		for(User u: users) {
@@ -47,8 +58,13 @@ public class GraphBuilder {
 			nodes.put(u.getUserId(), n);
 		}
 		
-		for(Answer a: answers) {
-			System.out.println("parent id " + a.getParentID() + " : size of vector? " + questions.size());	
+		long endTime = System.currentTimeMillis();
+		System.out.println("Time to create nodes: " + ((endTime - startTime) / 1000) + " seconds");
+		
+		startTime = System.currentTimeMillis();
+		
+		for(Answer a: answers.values()) {
+//			System.out.println("parent id " + a.getParentID() + " : size of vector? " + questions.size());	
 			e = gm.factory().newEdge(
 						nodes.get(questions.get(a.getParentID()).getOwnerID()),
 						nodes.get(a.getOwnerID()),
@@ -56,10 +72,17 @@ public class GraphBuilder {
 						true
 					);
 			
+//			System.out.println("Creating edge" + e.toString());
+			
 			edges.put(a.getID(), e);
 		
 		}
-		 
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("Time to create edges: " + ((endTime - startTime) / 1000) + " seconds"); 
+		
+		startTime = System.currentTimeMillis();
+		
 		// Append to graph
 		DirectedGraph diGraph = gm.getDirectedGraph();
 		for(Node n: nodes.values()) {
@@ -70,8 +93,38 @@ public class GraphBuilder {
 			diGraph.addEdge(e);
 		}
 		
+		endTime = System.currentTimeMillis();
+		System.out.println("Time to append to graph: " + ((endTime - startTime) / 1000) + " seconds");
+
 		System.out.println("Nodes: " + diGraph.getNodeCount() + " Edges: " + diGraph.getEdgeCount());
 		System.out.println(answers.size());
+		
+		PreviewController previewController = Lookup.getDefault().lookup(PreviewController.class);
+		PreviewModel previewModel = previewController.getModel();
+		previewModel.getProperties().putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
+		
+		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
+		try {
+			ec.exportFile(new File("graph.gexf"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+//		AutoLayout autoLayout = new AutoLayout(1,  TimeUnit.MINUTES);
+//		autoLayout.setGraphModel(gm);
+//		YifanHuLayout firstLayout = new YifanHuLayout(null, new StepDisplacement(1f));
+//		ForceAtlasLayout secondLayout = new ForceAtlasLayout(null);
+//		
+//		AutoLayout.DynamicProperty adjustBySizeProperty = AutoLayout.createDynamicProperty("Adjust by sizes", Boolean.TRUE, 0.1f);
+//		AutoLayout.DynamicProperty repulsionProperty = AutoLayout.createDynamicProperty("Repulsion strength", new Double(500.), 0f);
+//	
+//		autoLayout.addLayout(firstLayout, 0.5f);
+//		autoLayout.addLayout(secondLayout, 0.5f, new AutoLayout.DynamicProperty[]{
+//				adjustBySizeProperty, repulsionProperty
+//			});
+//		autoLayout.execute();
+	
 	}
 
 }

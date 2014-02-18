@@ -2,7 +2,7 @@ package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,7 +10,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import main.java.me.jackbracken.fyp.models.Answer;
-import main.java.me.jackbracken.fyp.models.Post;
 import main.java.me.jackbracken.fyp.models.Question;
 
 import org.xml.sax.Attributes;
@@ -20,9 +19,10 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParsePosts extends DefaultHandler {
 	File file;
 	String site;
-	Vector<Question> questionList = new Vector<Question>();
-	Vector<Answer> answerList = new Vector<Answer>();
-
+	HashMap<Integer, Question> questionList = new HashMap<Integer, Question>();
+	HashMap<Integer, Answer> answerList = new HashMap<Integer, Answer>();
+	int answers = 0, questions = 0, foo = 0;
+	
 	public ParsePosts(File file, String site) {
 		this.file = file;
 		this.site = site;
@@ -35,6 +35,7 @@ public class ParsePosts extends DefaultHandler {
 		try {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(file, this);
+			System.out.println("Answers: " + answers + " Questions: " + questions);
 		} catch (ParserConfigurationException e) {
 			System.out.println("ParserConfig error");
 		} catch (SAXException e) {
@@ -44,11 +45,11 @@ public class ParsePosts extends DefaultHandler {
 		}
 	}
 
-	public Vector<Answer> getAnswerList() {
+	public HashMap<Integer, Answer> getAnswerList() {
 		return answerList;
 	}
 	
-	public Vector<Question> getQuestionList() {
+	public HashMap<Integer, Question> getQuestionList() {
 		return questionList;
 	}
 	
@@ -57,13 +58,12 @@ public class ParsePosts extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 
 		if (elementName.equalsIgnoreCase("row")) {
-			int id, acceptedAnswer, ownerID, parentID;
-			byte postTypeID;
-			short score, answers;
+			int id, acceptedAnswer, ownerID, parentID, postTypeID;
+			short score;
 			String creationDate;
 
 			id = Integer.parseInt(attributes.getValue("Id"));
-			postTypeID = Byte.parseByte(attributes.getValue("PostTypeId"));
+			postTypeID = Integer.parseInt(attributes.getValue("PostTypeId"));
 			creationDate = attributes.getValue("CreationDate");
 			score = Short.parseShort(attributes.getValue("Score"));
 
@@ -88,16 +88,6 @@ public class ParsePosts extends DefaultHandler {
 			}
 
 			try {
-				answers = Short.parseShort(
-					attributes.getValue("AnswerCount")
-				);
-				
-			} catch (NumberFormatException e) {
-				// Not a question, does not have answers
-				answers = -1;
-			}
-			
-			try {
 				parentID = Integer.parseInt(
 						attributes.getValue("ParentId")
 				);
@@ -107,14 +97,15 @@ public class ParsePosts extends DefaultHandler {
 			}
 			
 			if(postTypeID == 1) {
-				 questionList.add(new Question(id, ownerID, site)); 
-			} else if(postTypeID == 2) {
-				if (id <  20){
-					System.out.println("id: " + id + " parent: " + parentID);
-				}
-				answerList.add(new Answer(id, ownerID, parentID, score, site));
-				
+				 questionList.put(id, new Question(id, ownerID, site)); 
+				 questions += 1;
 			} 
+			
+			if(postTypeID == 2) {
+				answerList.put(id, new Answer(id, ownerID, parentID, score, site));
+				answers++;
+			} 
+			
 		}
 	}
 }

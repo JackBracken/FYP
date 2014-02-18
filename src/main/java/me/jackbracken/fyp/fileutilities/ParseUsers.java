@@ -2,6 +2,7 @@ package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,7 +18,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParseUsers extends DefaultHandler {
 	File file;
 	String site;
-	Vector<User> userList = new Vector<User>();
+	LinkedList<User> userList = new LinkedList<User>();
 
 	public ParseUsers(File file, String site) {		
 		this.file = file;
@@ -40,7 +41,7 @@ public class ParseUsers extends DefaultHandler {
 		}
 	}
 
-	public Vector<User> getUserList() {
+	public LinkedList<User> getUserList() {
 		return userList;
 	}
 	
