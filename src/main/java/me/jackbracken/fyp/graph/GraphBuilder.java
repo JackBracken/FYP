@@ -105,26 +105,10 @@ public class GraphBuilder {
 		
 		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
 		try {
-			ec.exportFile(new File("graph.gexf"));
+			ec.exportFile(new File(users.get(0).getSite() + ".gexf"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-//		AutoLayout autoLayout = new AutoLayout(1,  TimeUnit.MINUTES);
-//		autoLayout.setGraphModel(gm);
-//		YifanHuLayout firstLayout = new YifanHuLayout(null, new StepDisplacement(1f));
-//		ForceAtlasLayout secondLayout = new ForceAtlasLayout(null);
-//		
-//		AutoLayout.DynamicProperty adjustBySizeProperty = AutoLayout.createDynamicProperty("Adjust by sizes", Boolean.TRUE, 0.1f);
-//		AutoLayout.DynamicProperty repulsionProperty = AutoLayout.createDynamicProperty("Repulsion strength", new Double(500.), 0f);
-//	
-//		autoLayout.addLayout(firstLayout, 0.5f);
-//		autoLayout.addLayout(secondLayout, 0.5f, new AutoLayout.DynamicProperty[]{
-//				adjustBySizeProperty, repulsionProperty
-//			});
-//		autoLayout.execute();
-	
 	}
 
 }

@@ -18,7 +18,7 @@ public class FYP {
 		flyway.migrate();
 
 		final String HOME = System.getenv("HOME");
-		final File DATA_ROOT = new File(HOME + "/stackoverflow");
+		final File DATA_ROOT = new File(HOME + "/stack");
 		
 		new ParserLauncher(DATA_ROOT);
 		

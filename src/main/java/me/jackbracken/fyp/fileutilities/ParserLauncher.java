@@ -66,6 +66,7 @@ public class ParserLauncher {
 					} else {
 //						System.out.println("Ignoring file:\t" + fileName);
 					}
+
 				}
 				
 				if (filesParsed < 2) {
@@ -77,7 +78,7 @@ public class ParserLauncher {
 				x++;
 				
 			} else {
-				System.out.println("Unnecessary file " + siteDirectory.getName() + "found.");
+				System.out.println("Unnecessary file " + siteDirectory.getName() + " found.");
 			}
 		}
 		
