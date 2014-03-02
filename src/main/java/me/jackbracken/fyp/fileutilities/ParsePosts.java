@@ -3,7 +3,6 @@ package main.java.me.jackbracken.fyp.fileutilities;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
