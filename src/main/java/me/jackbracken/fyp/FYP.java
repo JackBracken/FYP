@@ -17,8 +17,10 @@ public class FYP {
 		flyway.setDataSource("jdbc:postgresql:fyp", "karma", "karma");
 		flyway.migrate();
 
-		final String HOME = System.getenv("HOME");
+		final String HOME = System.getProperty("user.home");
 		final File DATA_ROOT = new File(HOME + "/stack");
+		
+		System.out.println(DATA_ROOT);
 		
 		new ParserLauncher(DATA_ROOT);
 		
