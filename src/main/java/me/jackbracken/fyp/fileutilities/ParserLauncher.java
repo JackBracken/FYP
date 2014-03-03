@@ -30,6 +30,7 @@ public class ParserLauncher {
 			if(!siteDirectory.isFile() && x < 1) {
 				File[] siteDataFiles = siteDirectory.listFiles();
 				site = siteDirectory.getName();
+				
 				byte filesParsed = 0;
 
 				System.out.println("Directory:\t" + site);
@@ -60,10 +61,10 @@ public class ParserLauncher {
 						
 						questionList = pp.getQuestionList();
 						answerList = pp.getAnswerList();
-//						
+						
 						filesParsed++;
 					} else {
-//						System.out.println("Ignoring file:\t" + fileName);
+						System.out.println("Ignoring file:\t" + fileName);
 					}
 
 				}
@@ -74,12 +75,11 @@ public class ParserLauncher {
 				}
 						
 				new GraphBuilder(userList, answerList, questionList);
-				x++;
+//				x++;
 				
 			} else {
 				System.out.println("Unnecessary file " + siteDirectory.getName() + " found.");
 			}
 		}
-		
 	}
 }

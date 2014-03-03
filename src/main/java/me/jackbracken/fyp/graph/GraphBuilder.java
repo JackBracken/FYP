@@ -29,14 +29,7 @@ public class GraphBuilder {
 	private Edge e;
 	private String id;
 	
-//	private LinkedList<User> users = new LinkedList<User>();
-//	private HashMap<Integer, Answer> answers = new HashMap<Integer, Answer>();
-//	private HashMap<Integer, Question> questions = new HashMap<Integer, Question>();
-	
 	public GraphBuilder(LinkedList<User> users, HashMap<Integer, Answer> answers, HashMap<Integer, Question> questions) {
-//		this.users = users;
-//		this.answers = answers;
-//		this.questions = questions;
 		
 		// Init a gephi project
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
@@ -63,16 +56,13 @@ public class GraphBuilder {
 		startTime = System.currentTimeMillis();
 		
 		for(Answer a: answers.values()) {
-//			System.out.println("parent id " + a.getParentID() + " : size of vector? " + questions.size());	
 			e = gm.factory().newEdge(
 						nodes.get(questions.get(a.getParentID()).getOwnerID()),
 						nodes.get(a.getOwnerID()),
 						a.getScore(),
 						true
 					);
-			
-//			System.out.println("Creating edge" + e.toString());
-			
+
 			edges.put(a.getID(), e);
 		
 		}
@@ -96,7 +86,6 @@ public class GraphBuilder {
 		System.out.println("Time to append to graph: " + ((endTime - startTime) / 1000) + " seconds");
 
 		System.out.println("Nodes: " + diGraph.getNodeCount() + " Edges: " + diGraph.getEdgeCount());
-		System.out.println(answers.size());
 		
 		PreviewController previewController = Lookup.getDefault().lookup(PreviewController.class);
 		PreviewModel previewModel = previewController.getModel();
