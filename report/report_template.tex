@@ -2,6 +2,8 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{caption}
+\usepackage[backend=bibtex]{biblatex}
+%\bibliography{report_template.bib}
 \setcounter{tocdepth}{3}
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -71,7 +73,7 @@ Any (but not limited to) the following:
 \begin{itemize}
 \item Stack Exchange: http://stackexchange.com/
 \item Stack Exchange Data Explorer: http://data.stackexchange.com/
-\item A Model of Collaboration-based Reputation for the Social Web – ICWSM 2013 (attached)
+\item A Model of Collaboration-based Reputation for the Social Web – ICWSM 2013 
 \item Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay’s Reputation System - Advances in Applied Microeconomics 2012 (attached)
 \end{itemize}
 \end{specification}
@@ -83,10 +85,14 @@ Any (but not limited to) the following:
 
 \begin{abstract}
 
-In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. An attempt will also be made to improve upon the performance of the algorithms, and analyse their robustness against attack.
+In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. These algorithms will include a simple inbound weighted sum, Page and Brin's PageRank, and Kleinburg's Hubs and Authorities algorithm. Performance will be analysed by evaluating correlation between these algorithms scores and the bespoke Stack Exchange reputation model.
+
+I will also attempt to predict the correct answers to questions using user reputation scores, and perform user trials on Q\&A data.
 
 \end{abstract}
 \newpage
+
+\chapter*{Acknowledgments}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Introduction
@@ -109,7 +115,9 @@ Over time however, computers became more sophisticated, and so-called web 2.0 te
 
 In many cases this is not an issue, as many of these forms of communication are entirely--and transparently--opinion based. But there are increasingly more cases these days where it is beneficial to know if another person should be trusted.
 
-To give an example, a user Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua name Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie dog treats instead. Mallory, out of some sense of bizarre Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie is spared the grim fate of diabetes.
+To give an example, Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie treats made especially for dogs instead. Mallory, out of some sense of bizarre Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie is spared the grim fate of diabetes.
+
+Not all negatively impactful users are malicious. Some users may just be misinformed, or have the illusory superiority cognitive bias, in which a person overestimates their own abilities or knowledge (Hoorens 1993).
 
 While the above example is contrived, it illustrates the potential dangers of this social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others serious harm, due to the maliciousness or ignorance of a stranger.
 
@@ -121,7 +129,7 @@ In chapter 2, I describe some reputation algorithms at a high level, and present
 
 
 
-\chapter{Background Research (6 pages)}
+\chapter{Background Research (10 pages)}
 
 \section{Introduction}
 
@@ -142,8 +150,7 @@ There are a number of generic and ad-hoc implementation across the web. Examples
 
 
 \section{Reputation Algorithms}
-In the following section I discuss a number of ways that reputation can be measured. In
-these techniques the term producer refers to a creator of content, consumer to the person who receives that content, and score is a number awarded to the producer for that content.
+In the following section I discuss a number of ways that reputation can be measured. In these techniques the term producer refers to a creator of content, consumer to the person who receives that content, and score is a number awarded to the producer for that content.
 
 %\subsection{Weighted Sum}
 %Description of Weighted Sum.
@@ -222,12 +229,16 @@ Although Klout does not specify exactly how it calculates reputation, there is e
 
 \section{Conclusion}
 
-\chapter{Progress Report}
+\chapter{Main Chapter (8 Pages)}
 
+\chapter{Design \& Implementation (5 Pages)}
+
+\chapter{Testing \& Evaluation (8 Pages)}
+
+\chapter{Conclusions \& Future Work}
 
 %%%% ADD YOUR BIBLIOGRAPHY HERE
 \newpage
-%\begin{thebibliography}{99}
 \raggedright
 \textbf{McNally, K., O'Mahony, M.P., and Smyth, B. 2013} -- A Model of Collaboration-based Reputation for the Social Web
 \linebreak
@@ -244,7 +255,15 @@ Although Klout does not specify exactly how it calculates reputation, there is e
 \textbf{Resnick, P., and Zeckhauser, R. 2002} -- Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay's Reputation System. Advances in Applied Microeconomics 11:127?157
 \linebreak
 \linebreak
+\textbf{Gyongyi, Z., Garcia-Molina, H., Pedersen, J.} -- Combating Web Spam with TrustRank
+\linebreak
+\linebreak
 \textbf{Massa, P., Avesani, P. 2007} -- Trust-Aware Recommender Systems
+\linebreak
+\linebreak
+\textbf{Hoorens, Vera} -- Self-enhancement and Superiority Biases in Social Comparison. The European Review of Social Psychology (1993), Volume 4, Issue 1 p113-139
+
+%\begin{thebibliography}{99}
 
 
 %\end{thebibliography}

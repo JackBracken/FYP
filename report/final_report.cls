@@ -124,7 +124,7 @@
 \title{Final Year Project Report\\[0.5cm]\rule{4cm}{1pt}\\[0.7cm]
 \textbf{\projecttitle}}\\[1cm]
 \author{\LARGE \studentname}\\[0.5cm]\rule{4cm}{1pt}\\[0.5cm]
-\textsf{\Large  An interim report submitted in part fulfilment of the degree of\\[0.5cm]
+\textsf{\Large  A thesis submitted in part fulfilment of the degree of\\[0.5cm]
 \textbf{BA/BSc (hons) in Computer Science}}\\[0.5cm]
 \textsf{\Large  \textbf{Supervisor:}  \supervisorname}\\[0.5cm]
 %\textsf{\Large  \textbf{Moderator:}  \moderatorname}\\[1.8cm]
@@ -132,7 +132,7 @@
 \textsf{\Large UCD School of Computer Science and Informatics\\
 College of Engineering Mathematical and Physical Sciences\\
 University College Dublin\\\vfill
-\normalsize February 9, 2014}
+\normalsize \today}
 \end{center}
 \vfil
 \null
