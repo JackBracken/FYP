@@ -29,7 +29,7 @@ public class GraphBuilder {
 	private Edge e;
 	private String id;
 	
-	public GraphBuilder(LinkedList<User> users, HashMap<Integer, Answer> answers, HashMap<Integer, Question> questions) {
+	public GraphBuilder(HashMap<Integer, User> users, HashMap<Integer, Answer> answers, HashMap<Integer, Question> questions) {
 		
 		// Init a gephi project
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
@@ -43,10 +43,10 @@ public class GraphBuilder {
 		long startTime = System.currentTimeMillis();
 		
 		// Create nodes from users
-		for(User u: users) {
+		for(User u: users.values()) {
 			id = String.valueOf(u.getUserId());
 			n = gm.factory().newNode(id);
-			n.getNodeData().setLabel(u.getName());
+			n.getNodeData().setLabel(u.getReputation() + ", " + u.getName());
 			nodes.put(u.getUserId(), n);
 		}
 		

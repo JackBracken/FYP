@@ -2,6 +2,7 @@ package main.java.me.jackbracken.fyp.fileutilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,7 +18,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParseUsers extends DefaultHandler {
 	File file;
 	String site;
-	LinkedList<User> userList = new LinkedList<User>();
+	HashMap<Integer, User> userList = new HashMap<Integer, User>();
 
 	public ParseUsers(File file, String site) {		
 		this.file = file;
@@ -40,7 +41,7 @@ public class ParseUsers extends DefaultHandler {
 		}
 	}
 
-	public LinkedList<User> getUserList() {
+	public HashMap<Integer, User> getUserList() {
 		return userList;
 	}
 	
@@ -56,7 +57,7 @@ public class ParseUsers extends DefaultHandler {
 			reputation = Integer.parseInt(attributes.getValue("Reputation"));
 			name = attributes.getValue("DisplayName");
 			
-			userList.add(new User(id, reputation, name, site));
+			userList.put(id, new User(id, reputation, name, site));
 		}
 	}
 }

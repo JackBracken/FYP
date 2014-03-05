@@ -3,12 +3,23 @@ package main.java.me.jackbracken.fyp.models;
 public class User {
 	int id, reputation;
 	String name, site;
+	double ws;
 	
 	public User(int id, int reputation, String name, String site) {
 		this.id = id;
 		this.reputation = reputation;
 		this.name = name;
 		this.site = site;
+		
+		ws = 0.0;
+	}
+	
+	public void increaseWS(double r) {
+		ws += r;
+	}
+	
+	public double getWS() {
+		return ws;
 	}
 
 	public String toString() {

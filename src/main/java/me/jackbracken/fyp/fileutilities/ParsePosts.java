@@ -57,7 +57,7 @@ public class ParsePosts extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 
 		if (elementName.equalsIgnoreCase("row")) {
-			int id, acceptedAnswer, ownerID, parentID, postTypeID;
+			int id, acceptedAnswer, ownerID, parentID, postTypeID, numberOfAnswers;
 			short score;
 			String creationDate;
 
@@ -95,8 +95,17 @@ public class ParsePosts extends DefaultHandler {
 				parentID = -1;
 			}
 			
+			try {
+				numberOfAnswers = Integer.parseInt(
+						attributes.getValue("AnswerCount")
+				);
+					
+			} catch (NumberFormatException e) {
+				numberOfAnswers = 0;
+			}
+			
 			if(postTypeID == 1) {
-				 questionList.put(id, new Question(id, ownerID, site)); 
+				 questionList.put(id, new Question(id, ownerID, numberOfAnswers, site)); 
 				 questions += 1;
 			} 
 			

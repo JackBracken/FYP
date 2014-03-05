@@ -1,19 +1,21 @@
 package main.java.me.jackbracken.fyp.fileutilities;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
 
-import main.java.me.jackbracken.fyp.graph.GraphBuilder;
 import main.java.me.jackbracken.fyp.models.Answer;
 import main.java.me.jackbracken.fyp.models.Question;
 import main.java.me.jackbracken.fyp.models.User;
+import main.java.me.jackbracken.fyp.reputation.WeightedSum;
 
 public class ParserLauncher {
 	// dataRoot should be the directory with the unzipped stack 
 	// exchange files, each site in its own sub-directory
 	
-	public LinkedList<User> userList = new LinkedList<User>();
+	public HashMap<Integer, User> userList = new HashMap<Integer, User>();
 	public HashMap<Integer, Question> questionList = new HashMap<Integer, Question>();
 	public HashMap<Integer, Answer> answerList = new HashMap<Integer, Answer>();
 	int x = 0;
@@ -73,8 +75,29 @@ public class ParserLauncher {
 					System.out.println("Only " + filesParsed + " files were parsed in directory: " + site);
 					System.exit(1);
 				}
-						
-				new GraphBuilder(userList, answerList, questionList);
+				new WeightedSum(questionList, answerList, userList);
+
+				// Quick hack, write WS values to file for analysis
+				
+				try {
+					File wsFile = new File("WS_values_" + site + ".txt");
+					if(!wsFile.exists()) {
+						wsFile.createNewFile();
+					}
+					
+					FileWriter fw = new FileWriter(wsFile.getAbsoluteFile());
+					BufferedWriter bw = new BufferedWriter(fw);
+					
+					for(User u: userList.values()) {
+						bw.write(u.getWS() + "\r\n");
+					}
+					
+					bw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//				new GraphBuilder(userList, answerList, questionList);
 //				x++;
 				
 			} else {
