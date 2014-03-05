@@ -2,7 +2,7 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{caption}
-\usepackage[backend=bibtex]{biblatex}
+%\usepackage[backend=bibtex]{biblatex}
 %\bibliography{report_template.bib}
 \setcounter{tocdepth}{3}
 
@@ -99,33 +99,33 @@ I will also attempt to predict the correct answers to questions using user reput
 
 \chapter{Introduction}
 
-With the increasing use of the internet in our day-to-day tasks, it has become more and more important that we be able to verify the trustworthiness of the strangers we so often rely on. While the use of technologies such as public key encryption allow us to verify \textsl{who} we are talking to with reasonable confidence, we are still left with the problem of determining that person's trustworthiness as an individual---whether that be trust in their knowledge in a particular field, or that they can be relied upon to deliver a good or service to satisfaction.
+With the increasing use of the internet in our day-to-day tasks, it has become more and more important that we be able to verify the trustworthiness of the people we interact with. While the use of technologies such as public key encryption allow us to verify \textsl{who} we are talking to with reasonable confidence, we are still left with the problem of determining that person's trustworthiness as an individual---whether that be trust in their knowledge in a particular field, or that they can be relied upon to deliver a good or service to satisfaction.
 
 To that end there has been considerable recent research into the fields of peer-to-peer trust and user reputation systems in social networks (McNally, O'Mahony and Smyth 2013; Cheng and Vassileva 2005; Mui 2002).
 
 There are numerous contexts in which an indication of trust may be desired online, from internet transactions to Question \& Answer sites. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the \textsl{Stack Exchange Question and Answer} network. We will define trust as a relationship between users, and reputation will refer to an aggregate score allocated to a user that reflects their trustworthiness.
 
-In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum; Hubs and Authorities, or HITS; and PageRank) and comparing their performance on the Stack Exchange datasets to each other and to the Stack Exchange ad-hoc reputation model.
+In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum, Hubs and Authorities, and PageRank) and comparing their performance on the Stack Exchange data-sets to each other and Stack Exchange's own proprietary reputation model.
 
-To demonstrate the necessity for these reputation modelling, it is important to pay attention to the history of the Web up to its present state, and to look at current trends to predict its future.
+To demonstrate that evaluating the reputation of users is even necessary, it is important that we pay attention to the history of the Web's growth up to its present state, and to look at current trends to predict its future.
 
-When the web first exploded into widespread use in the nineties, it was a static compilation of pages connected by hyper links. Typically, websites were only published by universities, government organisations and corporations, with content being controlled by their respective web-masters. It was much easier, then, to evaluate the trustworthiness of online resources; content related to hardware published by IBM was likely to be accurate, but IBM's advice on cake-baking may be taken with a pinch of salt (or perhaps not).
+When the web first exploded into widespread use in the nineties, it was a static compilation of pages connected by hyperlinks. Typically, websites were only published by universities, government organisations and large corporations, with content being controlled by their respective web-masters. It was much easier, then, to evaluate the trustworthiness of online resources; content related to hardware published by IBM was likely to be accurate, but IBM's advice on cake-baking may need to be taken with a pinch of salt (or perhaps not).
 
-Over time however, computers became more sophisticated, and so-called web 2.0 technologies such as PHP and JavaScript evolved which allowed end-users to interact dynamically with the web. At the same time, the number of internet users exploded, and the line between the roles of producer and consumer began to blur. Instead, anyone could post on a social network, publish a music review to potentially millions of people, or share crude comments on YouTube videos.
+Over time however, computers rapidly became much more sophisticated, and so-called web 2.0 technologies such as PHP and JavaScript emerged, which allowed end-users to interact dynamically with websites. At the same time, the number of internet users exploded, and the line between the roles of producer and consumer began to blur. Instead, anyone could post on a social network, publish a music review to potentially millions of people, or share their opinions on YouTube videos, whether or not anyone else wants to read them.
 
-In many cases this is not an issue, as many of these forms of communication are entirely--and transparently--opinion based. But there are increasingly more cases these days where it is beneficial to know if another person should be trusted.
+In many cases this is not an issue. With many of these social networks, the users you interact with are friends, or people you already know, and you will already have some degree of trust or distrust in them. In other cases, the material posted by others is obviously opinional, or not important enough to you for reputation to be important. But there are increasingly more networks emerging these days where it is beneficial to know if another person should be trusted.
 
 To give an example, Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie treats made especially for dogs instead. Mallory, out of some sense of bizarre Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie is spared the grim fate of diabetes.
 
-Not all negatively impactful users are malicious. Some users may just be misinformed, or have the illusory superiority cognitive bias, in which a person overestimates their own abilities or knowledge (Hoorens 1993).
+Not all negatively impactful users are malicious. Some users may just be misinformed, or ignorant, or have the illusory superiority cognitive bias, in which a person overestimates their own abilities or knowledge (Hoorens 1993). In the previous example, you may see answers where the user presents anecdotal evidence that they have been feeding their own dogs chocolate for years with no ill effects, and it is probably fine to feed them to Charlie. While well-intentioned, such responses are unhelpful to the community as a whole. They worsen the signal-to-noise ratio of the social web and being able to determine they are disreputable at a glance is beneficial.
 
-While the above example is contrived, it illustrates the potential dangers of this social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others serious harm, due to the maliciousness or ignorance of a stranger.
+While the previous example is contrived, it illustrates the potential dangers of this social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others harm, due to the maliciousness or ignorance of a stranger.
 
 With over a billion active users and more than ten billion messages every day on Facebook \textsl{alone}\footnote{Some figures taken from presentation 'A focus on Efficiency' by Facebook, Ericsson and Qualcomm 2013 (internet.org, September 16, 2013)}, for example, there is a considerable amount of potentially inaccurate information being spread social networks, and it would be nice to be able to filter some of the what from the chaff.
 
-This filtering of unsatisfactory content can take many different forms. Favourable content may 'rise to the top' of a user's news feed in order of best to worst. Negative content might be given some visual de-emphasis to indicate its lower quality, or may even be hidden from the user altogether. Users might be able to customize how strict this filtering is, or create whitelists and blacklists of people they trust and distrust respectively.
+This filtering of unsatisfactory content can take many different forms. Favourable content may 'rise to the top' of a user's news feed in order of best to worst. Unfavourable content might be given some visual de-emphasis to indicate its lower quality, or may even be hidden from the user altogether. Users might be able to customize how strict this filtering is, or create whitelists and blacklists of people they trust and distrust respectively. Users might be encouraged to improve their contributions to a community by gaining additional privileges or prestige for improving their reputation.
 
-In chapter 2, I describe some reputation algorithms at a high level, and present three case studies of reputation systems used online.
+This report is structured as follows. In chapter two, I describe some reputation algorithms at a high level, and present some case studies of reputation systems used online. In chapter three, I will go into depth on the producer-consumer model, and on the algorithms I will be evaluating. I will also discuss the evaluation methods used. In chapter four, I describe the actual implementation of this project. In chapter five, I evaluate the results obtained from the data-sets, and in the final chapter I present my conclusions and outline possible future research in the area.
 
 
 
@@ -133,9 +133,9 @@ In chapter 2, I describe some reputation algorithms at a high level, and present
 
 \section{Introduction}
 
-In the following chapter I outline the research I have undertaken so far on online reputation systems.
+In the following chapter I outline the research I have undertaken on online reputation systems.
 
-I define trust and reputation, and briefly explain their differences and why drawing a distinction between the two is important. I  briefly describe the user reputation algorithms that are currently in use across the web, and go into further detail on the algorithms I will be evaluating. Finally,  I will present a number of case studies on sites that use a user reputation model, such as the Stack Exchange Network, eBay and Klout.
+I define trust and reputation, briefly explain their differences and why drawing a distinction between the two is important. I  briefly describe some examples of the user reputation algorithms that are currently in use across the web, and go into further detail on the algorithms I will be evaluating. Finally,  I will present a number of case studies on sites that use a user reputation model, such as the Stack Exchange Network, eBay and Klout.
 
 
 \section{Trust and Reputation}
@@ -154,8 +154,10 @@ In the following section I discuss a number of ways that reputation can be measu
 
 %\subsection{Weighted Sum}
 %Description of Weighted Sum.
-%\subsection{PageRank}
-%Words go here.
+
+\subsection{TrustRank}
+TrustRank is a link-analysis algorithm 
+
 %\subsection{Hubs and Authorities}
 %Words go here.
 \section{Case studies}
@@ -207,7 +209,7 @@ Additionally, users can leave reviews with their feedback, where they may descri
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=140mm]{ebayfeedback.png}
+\includegraphics[width=140mm]{ebayfeedback.PNG}
 \caption{An example of eBay feedback}
 \end{figure}
 
@@ -255,13 +257,16 @@ Although Klout does not specify exactly how it calculates reputation, there is e
 \textbf{Resnick, P., and Zeckhauser, R. 2002} -- Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay's Reputation System. Advances in Applied Microeconomics 11:127?157
 \linebreak
 \linebreak
-\textbf{Gyongyi, Z., Garcia-Molina, H., Pedersen, J.} -- Combating Web Spam with TrustRank
+\textbf{Gyongyi, Z., Garcia-Molina, H., Pedersen, J.} -- Combating Web Spam with TrustRank, proceedings of the thirtieth International Conference on Very Large Data Bases (2004), Volume 30, p576-587
 \linebreak
 \linebreak
 \textbf{Massa, P., Avesani, P. 2007} -- Trust-Aware Recommender Systems
 \linebreak
 \linebreak
 \textbf{Hoorens, Vera} -- Self-enhancement and Superiority Biases in Social Comparison. The European Review of Social Psychology (1993), Volume 4, Issue 1 p113-139
+\linebreak
+\linebreak
+\textbf{Jøsang, A., Ismail, B., Boyd, C.} -- A survey of trust and reputation systems for online service provision, Decision Support Systems, Volume 43, Issue 2, March 2007, p618–644
 
 %\begin{thebibliography}{99}
 
