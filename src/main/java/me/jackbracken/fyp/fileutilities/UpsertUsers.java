@@ -32,12 +32,12 @@ public class UpsertUsers {
 				ps = con.prepareStatement(upsertQuery);
 
 				ps.setString(1, user.getName());
-				ps.setInt(2, user.getReputation());
+				ps.setInt(2, user.getStackReputation());
 				ps.setInt(3, user.getUserId());
 				ps.setString(4, user.getSite());
 				ps.setInt(5, user.getUserId());
 				ps.setString(6, user.getName());
-				ps.setInt(7, user.getReputation());
+				ps.setInt(7, user.getStackReputation());
 				ps.setString(8, user.getSite());
 				ps.setInt(9, user.getUserId());
 				ps.setString(10, user.getSite());

@@ -1,37 +1,37 @@
 package main.java.me.jackbracken.fyp.models;
 
 public class User {
-	int id, reputation;
+	int id, stackReputation;
 	String name, site;
-	double ws;
+	double weightedSumScore;
 	
-	public User(int id, int reputation, String name, String site) {
+	public User(int id, int stackReputation, String name, String site) {
 		this.id = id;
-		this.reputation = reputation;
+		this.stackReputation = stackReputation;
 		this.name = name;
 		this.site = site;
 		
-		ws = 0.0;
+		weightedSumScore = 0.0;
 	}
 	
 	public void increaseWS(double r) {
-		ws += r;
+		weightedSumScore += r;
 	}
 	
 	public double getWS() {
-		return ws;
+		return weightedSumScore;
 	}
 
 	public String toString() {
-		return "id: " + id + " \trep" + reputation + " \tname: " + name;
+		return "id: " + id + " \trep" + stackReputation + " \tname: " + name;
 	}
 
 	public int getUserId() {
 		return id;
 	}
 
-	public int getReputation() {
-		return reputation;
+	public int getStackReputation() {
+		return stackReputation;
 	}
 
 	public String getName() {

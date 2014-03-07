@@ -46,7 +46,7 @@ public class GraphBuilder {
 		for(User u: users.values()) {
 			id = String.valueOf(u.getUserId());
 			n = gm.factory().newNode(id);
-			n.getNodeData().setLabel(u.getReputation() + ", " + u.getName());
+			n.getNodeData().setLabel(u.getStackReputation() + ", " + u.getName());
 			nodes.put(u.getUserId(), n);
 		}
 		
