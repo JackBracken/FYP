@@ -5,7 +5,7 @@
 \contentsline {section}{\numberline {2.1}Introduction}{8}{section.2.1}
 \contentsline {section}{\numberline {2.2}Trust and Reputation}{8}{section.2.2}
 \contentsline {section}{\numberline {2.3}Reputation Algorithms}{8}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}PageRank}{9}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.1}TrustRank}{9}{subsection.2.3.1}
 \contentsline {section}{\numberline {2.4}Case studies}{9}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}Stack Exchange -- An activity based approach}{9}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}eBay -- A feedback-based approach}{10}{subsection.2.4.2}

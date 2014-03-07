@@ -24,10 +24,6 @@
 
 \textbf{\textsl{Subject:}} Social Network Analysis, Reputation Systems
 
-\textbf{\textsl{Prerequisites:}} None
-
-\textbf{\textsl{Corequisites:}} None
-
 \textbf{\textsl{Coverage}} Social Network Analysis, Reputation Systems
 
 \textbf{\textsl{Project Type:}} Design and Implementation
@@ -39,8 +35,7 @@
 \textbf{\textsl{Preassigned:}} No
 
 
-\textbf{Description}
-\textsl{General Information:}
+\textbf{General Information}
 
 The social web reflects an important paradigm shift in the nature of our online transactions. We increasingly rely on the opinions of others to mediate these transactions and as such the reliability of these users becomes an important indicator of quality. Thus, the concept of user reputation has become increasingly important in the context of today's social web. Recently, there has been considerable research on various approaches to model the reputation of users as they participate in a diverse array of online interactions.
 
@@ -103,7 +98,7 @@ With the increasing use of the internet in our day-to-day tasks, it has become m
 
 To that end there has been considerable recent research into the fields of peer-to-peer trust and user reputation systems in social networks (McNally, O'Mahony and Smyth 2013; Cheng and Vassileva 2005; Mui 2002).
 
-There are numerous contexts in which an indication of trust may be desired online, from internet transactions to Question \& Answer sites. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the \textsl{Stack Exchange Question and Answer} network. We will define trust as a relationship between users, and reputation will refer to an aggregate score allocated to a user that reflects their trustworthiness.
+There are numerous contexts in which an indication of trust may be desired online, from internet transactions to social Question \& Answer sites. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the \textsl{Stack Exchange Question and Answer} network. We will define trust as a relationship between users, and reputation will refer to an aggregate score allocated to a user that reflects their trustworthiness.
 
 In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum, Hubs and Authorities, and PageRank) and comparing their performance on the Stack Exchange data-sets to each other and Stack Exchange's own proprietary reputation model.
 
@@ -113,17 +108,23 @@ When the web first exploded into widespread use in the nineties, it was a static
 
 Over time however, computers rapidly became much more sophisticated, and so-called web 2.0 technologies such as PHP and JavaScript emerged, which allowed end-users to interact dynamically with websites. At the same time, the number of internet users exploded, and the line between the roles of producer and consumer began to blur. Instead, anyone could post on a social network, publish a music review to potentially millions of people, or share their opinions on YouTube videos, whether or not anyone else wants to read them.
 
-In many cases this is not an issue. With many of these social networks, the users you interact with are friends, or people you already know, and you will already have some degree of trust or distrust in them. In other cases, the material posted by others is obviously opinional, or not important enough to you for reputation to be important. But there are increasingly more networks emerging these days where it is beneficial to know if another person should be trusted.
+In many cases this is not an issue. With many of these social networks, the users you interact with are already your friends, or people you know, and you will already have some degree of trust or distrust in them. In other cases, the material posted by others is obviously subjective or not entirely objective. But there are increasingly more of these social networks emerging where it is beneficial to know if another person is in good standing.
 
-To give an example, Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie treats made especially for dogs instead. Mallory, out of some sense of bizarre Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie is spared the grim fate of diabetes.
+To give an example, Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua named Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie treats made especially for dogs instead. Mallory, out of some sense of bizarre Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie is spared the grim fate of diabetes.
 
 Not all negatively impactful users are malicious. Some users may just be misinformed, or ignorant, or have the illusory superiority cognitive bias, in which a person overestimates their own abilities or knowledge (Hoorens 1993). In the previous example, you may see answers where the user presents anecdotal evidence that they have been feeding their own dogs chocolate for years with no ill effects, and it is probably fine to feed them to Charlie. While well-intentioned, such responses are unhelpful to the community as a whole. They worsen the signal-to-noise ratio of the social web and being able to determine they are disreputable at a glance is beneficial.
 
-While the previous example is contrived, it illustrates the potential dangers of this social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others harm, due to the maliciousness or ignorance of a stranger.
+While the previous example may seem minor, it serves to illustrate the potential dangers of this social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others harm, due to the maliciousness or ignorance of a stranger.
 
-With over a billion active users and more than ten billion messages every day on Facebook \textsl{alone}\footnote{Some figures taken from presentation 'A focus on Efficiency' by Facebook, Ericsson and Qualcomm 2013 (internet.org, September 16, 2013)}, for example, there is a considerable amount of potentially inaccurate information being spread social networks, and it would be nice to be able to filter some of the what from the chaff.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=100mm]{dog.PNG}
+\caption{The above example.}
+\end{figure}
 
-This filtering of unsatisfactory content can take many different forms. Favourable content may 'rise to the top' of a user's news feed in order of best to worst. Unfavourable content might be given some visual de-emphasis to indicate its lower quality, or may even be hidden from the user altogether. Users might be able to customize how strict this filtering is, or create whitelists and blacklists of people they trust and distrust respectively. Users might be encouraged to improve their contributions to a community by gaining additional privileges or prestige for improving their reputation.
+With over a billion active users and more than ten billion messages every day on Facebook \textsl{alone}\footnote{Some figures taken from presentation `A focus on Efficiency' by Facebook, Ericsson and Qualcomm 2013 (internet.org, September 16, 2013)}, for example, there is a considerable amount of potentially inaccurate information being spread social networks, and it would be nice to be able to filter some of the what from the chaff.
+
+This filtering of unsatisfactory content can take many different forms. Favourable content may `rise to the top' of a user's news feed in order of best to worst. Unfavourable content might be given some visual de-emphasis to indicate its lower quality, or may even be hidden from the user altogether. Users might be able to customize how strict this filtering is, or create whitelists and blacklists of people they trust and distrust respectively. Users might be encouraged to improve their contributions to a community by gaining additional privileges or prestige for improving their reputation.
 
 This report is structured as follows. In chapter two, I describe some reputation algorithms at a high level, and present some case studies of reputation systems used online. In chapter three, I will go into depth on the producer-consumer model, and on the algorithms I will be evaluating. I will also discuss the evaluation methods used. In chapter four, I describe the actual implementation of this project. In chapter five, I evaluate the results obtained from the data-sets, and in the final chapter I present my conclusions and outline possible future research in the area.
 
@@ -183,12 +184,12 @@ The Stack Exchange network uses a bespoke model of reputation. A user's reputati
 \hline \textbf{Site activity} & \textbf{Reputation reward} \\ 
 \hline Your question voted up & +5 \\ 
 \hline Your answer voted up & +10 \\ 
-\hline Your answer 'accepted' as correct & +15 \\ 
-\hline You 'accept' an answer to your own question & +2 \\ 
+\hline Your answer `accepted' as correct & +15 \\ 
+\hline You `accept' an answer to your own question & +2 \\ 
 \hline Your suggested edit accepted & +2 (up to a total of 1000) \\ 
 \hline 
 \end{tabular}\par
-\captionof{table}{Stack Exchange reputation rewards} \label{tab:title}
+\captionof{table}{Stack Exchange reputation rewards.} \label{tab:title}
 \end{minipage}
 
 
@@ -203,14 +204,14 @@ With such a large volume of transactions passing through the site, evaluating tr
 
 In the event that there are multiple transactions between users in a single week, eBay aggregates the reputation points the user would have received. If this number is then positive, the reputation score is increased by one, if it is neutral, it does not change, and if it is negative, they lose one reputation point.
 
-As a user's feedback score grows, they gain a coloured star next to their display name as a quick visual indicator of their reputation. Sellers who consistently gain lots of positive feedback and make frequent sales can also gain a 'top-rated seller' badge that informs buyers that they consistently provide good service\footnote{Information taken from 'How feedback works'. Available at http://pages.ebay.co.uk/help/feedback/howitworks.html, last accessed 10th February 2014.}.
+As a user's feedback score grows, they gain a coloured star next to their display name as a quick visual indicator of their reputation. Sellers who consistently gain lots of positive feedback and make frequent sales can also gain a `top-rated seller' badge that informs buyers that they consistently provide good service\footnote{Information taken from `How feedback works'. Available at http://pages.ebay.co.uk/help/feedback/howitworks.html, last accessed 10th February 2014.}.
 
 Additionally, users can leave reviews with their feedback, where they may describe their interactions with the seller, the quality of the product, and the cost and speed of shipping.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=140mm]{ebayfeedback.PNG}
-\caption{An example of eBay feedback}
+\caption{An example of eBay feedback for one user.}
 \end{figure}
 
 This combination of easy to understand reputation score and collection of user reviews allows buyers to quickly find trustworthy sellers and decide from which of them they wish to conduct their business.
@@ -219,7 +220,7 @@ This combination of easy to understand reputation score and collection of user r
 
 Klout is an online service and mobile application that attempts to measure a user's \textsl{influence} across social networks. Launched in 2008, it uses analytics from eight different social media websites to evaluate its users' reputation scores, which they call the \textsl{Klout Score}. This reputation score is an integer value bounded between 1 and 100, and becomes increasingly difficult to improve upon as it increases\footnote{http://klout.com/corp/about and http://klout.com/corp/score}.
 
-Among the metrics Klout uses to determine reputation are activity from Twitter, Facebook, the user's Wikipedia page (if they are fortunate enough to have one), Google+ and others. When a user produces content on these sites that gains 'likes', generates discussion or is shared with others, Klout deems that this content generates \textsl{influence} to a lesser or greater degree, and so affects their reputation.
+Among the metrics Klout uses to determine reputation are activity from Twitter, Facebook, the user's Wikipedia page (if they are fortunate enough to have one), Google+ and others. When a user produces content on these sites that gains `likes', generates discussion or is shared with others, Klout deems that this content generates \textsl{influence} to a lesser or greater degree, and so affects their reputation.
 
 \begin{figure}[ht!]
 \centering
@@ -227,13 +228,19 @@ Among the metrics Klout uses to determine reputation are activity from Twitter, 
 \caption{Barack Obama is considerably more reputable than I am.}
 \end{figure}
 
-Although Klout does not specify exactly how it calculates reputation, there is evidence that the algorithms used on these \textsl{signals} or \textsl{collaboration events} are actually quite simple. In June, 2011, a Ph.D candidate in Montana State University, Sean Golliher, managed to calculate Klout's reputation score with an accuracy of 94\% simply by calculating a logarithm of the number of a user's followers and retweets\footnote{http://www.seangolliher.com/2011/uncategorized/how-i-reversed-engineered-klout-score-to-an-r2-094/}.
+Although Klout does not specify exactly how it calculates influence, there is evidence that the algorithms used on these \textsl{signals} or \textsl{collaboration events} are actually quite simple. In June, 2011, a Ph.D candidate in Montana State University, Sean Golliher, managed to calculate Klout's reputation score with an accuracy of 94\% simply by calculating a logarithm of the number of a user's followers and retweets\footnote{http://www.seangolliher.com/2011/uncategorized/how-i-reversed-engineered-klout-score-to-an-r2-094/}.
 
 \section{Conclusion}
 
 \chapter{Main Chapter (8 Pages)}
 
 \chapter{Design \& Implementation (5 Pages)}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=140mm]{classdiagram.png}
+\caption{Class diagram of the project.}
+\end{figure}
 
 \chapter{Testing \& Evaluation (8 Pages)}
 
