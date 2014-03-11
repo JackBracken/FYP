@@ -130,7 +130,7 @@
 %\textsf{\Large  \textbf{Moderator:}  \moderatorname}\\[1.8cm]
 \includegraphics[height=6cm]{logo}\\[1cm]
 \textsf{\Large UCD School of Computer Science and Informatics\\
-College of Engineering Mathematical and Physical Sciences\\
+College of Science\\
 University College Dublin\\\vfill
 \normalsize \today}
 \end{center}
