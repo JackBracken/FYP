@@ -185,7 +185,7 @@ In collaborative filtering, the recommender system will instead compare the user
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=140mm]{chap2/recommender.png}
+\includegraphics[width=140mm]{chap2/recommender.PNG}
 \caption{Amazon recommending batteries, among other things, to a customer viewing a flash-light.}
 \end{figure}\label{gra:amazon}
 
@@ -274,7 +274,7 @@ Besides being an ad-hoc system, the \textsl{Klout score} suffers the drawback th
 
 This chapter has described some of the methods used to calculate reputation, and how different sites use reputation. It can be seen that many of these reputation models in the wild today are completely proprietary systems that require a lot of specific domain knowledge and are difficult to adapt for other uses. The main goal of this project is to demonstrate that a simplified, generic approach to reputation is an appropriate and viable alternative to engineering an ad-hoc reputation model. This generic approach shall be applicable to any domain in which there are producers and consumers of content.
 
-\chapter{Creating a generic model of user reputation for social networks}
+\chapter{Creating a generic model of user reputation for the social web}
 % % % 2 / 8 PAGES
 This chapter provides an in-depth explanation of how to create a model of user representation for social networks that is generic and can be used in many contexts. The core concepts of this project such as the producer-consumer model of social networks, the collaboration event and collaboration graph, and exactly how to compute reputation are explained in depth.
 
@@ -299,7 +299,7 @@ collaboration event is a trust interaction between consumer and producer, and in
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=40mm]{chap3/singlecollabevent.png}
+\includegraphics[width=40mm]{chap3/singlecollabevent.PNG}
 \caption{A collaboration event with three producers and one consumer taken from McNally et al. 2013.}
 \end{figure}\label{gra:singlecollabevent}
 
@@ -313,39 +313,49 @@ The collaboration events outlined above do not occur in isolation. Active users 
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=130mm]{chap3/collabeventstime.png}
+\includegraphics[width=130mm]{chap3/collabeventstime.PNG}
 \caption{Demonstration of a series of collaboration events for social web-search recommendation tool HayStaks as a function of time (McNally et al. 2010).}
 \end{figure}\label{gra:collabtime}
 
-To build this graph, all of the collaboration events that make up this network must be examined in order over time. Figure \ref{gra:collabtime} demonstrates a small series of collaboration events as a function of time. At time t$_{2}$, the producer u$_{1}$ is assigned a unit of reputation by u$_{2}$ for their recommendation. At time t$_{4}$, producers u$_{1}$ u$_{2}$ and u$_{3}$ are each assigned a fraction of a reputation unit by u$_{4}$. As the number of collaboration events grows, so too does the graph which also becomes increasingly inter-linked, with the possibility for multiple edges in both directions between the same nodes.
+To build this graph, all of the collaboration events that make up this network must be examined in order over time. Figure \ref{gra:collabtime} demonstrates a small series of collaboration events as a function of time. At time t$_{2}$, the producer u$_{1}$ is assigned a unit of reputation by u$_{2}$ for their recommendation. At time t$_{4}$, producers u$_{1}$ u$_{2}$ and u$_{3}$ are each assigned a fraction of a reputation unit by u$_{4}$. As the number of collaboration events grows, so too does the graph which also becomes increasingly inter-linked, with the possibility for multiple edges in both directions between the same nodes as shown in Figure \ref{gra:collabgraph} where node $u_{c}$ is both a producer and consumer for nodes $u_{b}$ and $u_{d}$.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=100mm]{chap3/collabgraph.png}
+\caption{Example of a collaboration graph with weights omitted.}
+\end{figure}\label{gra:collabgraph}
 
 \section{Computing reputation}
 
-Once a collaboration graph has been constructed, it is then time to compute the reputation of the users in the graph. 
+Once a collaboration graph has been constructed, it is then time to compute the reputation scores of the users in the graph. This project examined two algorithms from the literature (McNally et al. 2013) that can be leveraged to evaluate a reputation score for a user, Google's PageRank (Brin and Page 1998) and a simple in-degree Weighted Sum technique.
 
-\subsection{Weighted sum}
+\subsection{Weighted Sum}
 
-Intro describing weighted sum
+The Weighted Sum algorithm calculates the reputation score of a node by computing the sum of the weights of all incoming edges for that node. The formula for calculating reputation is as follows:
+\[
+rep(pi) = \sum_{e\in E_{pi}}^{} w_{e} 
+\]
+where $E_{pi}$ is the set of incoming edges for the producer $p$, $_{e}$ is the current incoming edge and $w_{e}$ is the weight of $_{e}$\footnote{Formula and description for Weighted Sum and PageRank in the following section are taken from McNally et al. 2013}. This Weighted Sum model encourages users to gain reputation by becoming producers of content across many and may cause an increase in the number of producers, for example users on the Stack Exchange network may feel more inclined to provide answers for questions. This model may also lead to less repetiton of information as a user is less likely to receive as much reputation for simply repeating an answer that has already been given, instead producers are encouraged to produce their own unique content (McNally et al. 2013).
 
-Formula or pseudo code
-
-Highlight its genericness
+This algorithm has the benefit of being generic. It can apply to a wide range of contexts. For example with the social media platform Twitter, `retweets' can fit into our collaboration event model and the Weighted Sum can be calculated as a ratio of the consumers' retweets over time. If a producer's tweet is retweeted by five consumer, and between them those five consumers have retweeted a total of thirty-five tweets, the producer may gain a reputation score of $\frac{5}{35}$ for the production of that content.
 
 \subsection{PageRank}
 
-Intro describing PageRank
+PageRank is perhaps one of the most well-known link-analysis algorithms in use today. Originall developed by Sergey Brin and Larry Page at Google (Brin and Page 1998), it works by making the assumption that important pages in the web (or nodes in a graph) are also the ones most fequently linked to, and that the more important a page or node is, the more weight its own links to other pages should carry (see Figure \ref{gra:pagerank} for a visual example). This insight into the nature of the structure of hyperlinked web-pages allowed them to create the PageRank algorithm to sort results for the Google search engine.
 
-Formula or pseudo code
-
-Highlight its genericness
+The PageRank algorithm is slightly more complex than the Weighted Sum. The PageRank score for each user $p_{i}$ is computed as thus:
+\[
+rep(p_{i}) = \frac{1 - d}{N} + d \sum_{p_{j} \in M(p_{i})} \frac{PR(p_{j})}{|L(p_{j})|}
+\]
+where $d$ is a damping factor, $N$ is the number of users, $M(p_{i})$ is the set of in-links from consumers to the producer $p_{i}$ and $L(p_{j})$ is the set of out-links from $p_{j}$ (i.e. the users from which $p_{j}$ has consumed content). In the context of the Stack Exchange network, the PageRank score for a given user can be thought of as the likelihood that a randomly selected `good' answer will have been given by that user.
 
 \section{Predicting quality answers using reputation}
 
-Describe methodology of answer prediction? The 80/20 fitting/testing split.
+Placeholder until answer prediction is finished. Describe the methodology of answer prediction (the 80/20 fitting/testing split).
 
 \section{Conclusion}
 
-Talk about the generic approach
+In conclusion, it has been demonstrated that it is possible to create a model of user reputation in a generic fashion when there are consumers and producers of content. With a little thought it is possible define appropriate collaboration events wiith which a collaboration graph can be built, which can then be leveraged to perform a number of generic algorithms to computer reputation for user nodes. 
 
 \chapter{Design \& Implementation}
 
@@ -384,13 +394,13 @@ The Users and Posts files are then parsed, and the data is stored in one of thre
 
 \subsection{Processing users}
 
-Each User artefact in the Users file contains data corresponding to their unique identifying number, user name, their reputation on this Stack Exchange network and so on. Much of the data provided is extraneous for the purposes of this project and is ignored. When the Users file is parsed, the only data taken directly from it is the user's ID, their user-name and their reputation score on that site.
+Each User artefact in the Users file contains data corresponding to their unique identifying number, user name, their reputation on this Stack Exchange network and so on. Much of the data provided is extraneous for the purposes of this project and is ignored. When the Users file is parsed, the only data taken directly from it is the user's ID, their user-name and reputation score on that site.
 
 \subsection{Processing posts}
 
-As with the Users file, the Posts file contains a lot of information that is unneeded for this project, such as the number of views a post has and its edit history. For the purposes of this project the only data that is parsed is the post's unique ID, the ID of the author of the post, the post type, the ID of the parent post (if this is an answer) or the number of responses this post has received (if it is a question), and the post's score.
+As with the Users file, the Posts file contains a large amount of information that is unneeded for this project, such as the number of views a post has and its edit history. For the purposes of this project the only data that is parsed is the post's unique ID, the ID of the author of the post, the post type, the ID of the parent post (if this is an answer) or the number of responses this post has received (if it is a question), and the post's Stack Exchange score.
 
-As we are not told directly whether a post is a question, answer, or something else, we must manually infer this ourselves from the PostTypeId field. Each integer from 1 - 8 corresponds to a type of post. Since we are only concerned with questions and answers, any post which does not have a PostTypeId of 1 or 2 is ignored. See Table \ref{tab:posttypes} for a full list of post type IDs.
+As we are not told directly whether a post is a question, answer, or something else, we must manually infer this ourselves from the PostTypeId field. Each integer from 1 - 8 corresponds to a post type. Since we are only concerned with questions and answers, any post which does not have a PostTypeId of 1 or 2 is ignored. See Table \ref{tab:posttypes} for a full list of post type IDs.
 
 \begin{minipage}{\linewidth}
 \centering
@@ -426,7 +436,7 @@ try {
     e.printStackTrace();
 }
 \end{verbatim}
-\caption{Example code for writing the graph to file.}
+\caption{Writing the graph to file.}
 \end{program}
 
 \section{Computing reputation scores}
@@ -439,30 +449,30 @@ Gephi makes it a simple matter to computer the In-degree Weighted Sum and PageRa
 %\caption{Gephi stats pane and report view.}
 %\end{figure}\label{gra:gephistats}
 
-Once the Weighted Sum and PageRank values have been computed, they are inserted into the `Data Laboratory' view. From this view it is possible to interact with the data in a number of ways, from searching for specific nodes, adding, deleting and duplicating nodes and edges, and changing the properties of nodes. It is also possible to export this data to a comma-separated-value file for later analysis.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=100mm]{chap4/gephidata.PNG}
+\caption{Gephi data-lab showing users on the bicycles stack exchange network sorted by Weighted Sum score.}
+\end{figure}\label{gra:gephidata}
 
-%\begin{figure}[ht!]
-%\centering
-%\includegraphics[width=80mm]{chap4/gephidata.png}
-%\caption{Gephi data-lab.}
-%\end{figure}\label{gra:gephidata}
+Once the Weighted Sum and PageRank values have been computed, they are inserted into the `Data Laboratory' view. From this view it is possible to interact with the data in a number of ways, from searching for specific nodes, adding, deleting and duplicating nodes or edges, sorting by property (see Figure \ref{gra:gephidata}), and changing the properties of nodes. It is also possible to export this data to a comma-separated-value file for later analysis.
 
 \section{Predicting correct answers}
 
-/* Place-holder until this is completed */
+Placeholder until answer prediction completed
 
 \chapter{Testing \& Evaluation}
 
-Use this here somewhere (remake zoomed in more with less nodes + labels and maybe node size representative of rep?)
+Remake this figure zoomed in more with less nodes and add labels (maybe make node size representative of rep)
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=100mm]{chap4/gephigraph.png}
+\includegraphics[width=100mm]{chap4/gephigraph.PNG}
 \caption{A close-up view of the graph created from the bicycles network data.}
 \end{figure}\label{gra:network}
 
 \section{The data-sets}
 
-Describe the data-sets. Which ones I chose, why I chose them, give tables with stats (number of users, questions and answers)
+Describe the data-sets. Which ones were chosen, why they were chosen, give tables with stats (number of users, questions and answers)
 
 \section{Methodology}
 
@@ -512,19 +522,19 @@ The results of this analysis can be found in table \ref{tab:corrresults} and are
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=100mm]{chap3/bicycles_hist.png}
+\includegraphics[width=120mm]{chap3/bicycles_hist.png}
 \caption{Distribution of reputation scores across the Bicycles SE network.}\label{fig:histogram}
 \end{figure}\label{gra:bicyclehist}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=100mm]{chap3/cooking_hist.png}
+\includegraphics[width=120mm]{chap3/cooking_hist.png}
 \caption{Distribution of reputation scores across the Seasoned Advice SE network.}
 \end{figure}\label{gra:cookinghist}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=100mm]{chap3/electronics_hist.png}
+\includegraphics[width=120mm]{chap3/electronics_hist.png}
 \caption{Distribution of reputation scores across the Electronics SE network.}
 \end{figure}\label{gra:electronicshist}
 
@@ -576,25 +586,23 @@ Charts detailing coverage (include PageRank)
 
 \section{Predicting the answers to questions}
 
-Train on first 80\% of questions (fitting), compute rep scores 
-
-Final 20\% attempt to predict the correct answers (2 pages of notes on this in notebook)
+Placeholder until answer prediction finished. Train on first 80\% of questions (fitting), compute rep scores. Final 20\% attempt to predict the correct answers 
 
 \chapter{Conclusions \& Future Work}
 
-Aiming for 4 pages
+Placeholder
 
 \section{Fulfilment of project goals}
 
-Address the stated project goals, which ones were attempted, and success in challenging them
+Address the stated project goals, which ones were attempted, and success in completing them
 
 \section{Learning outcome}
 
-Outline what I have learned throughout the course of this project
+Outline learning outcomes throughout the course of this project
 
 \section{Failings}
 
-What didn't work? Where could I have done better? Personal criticisms of my approach to the project.
+What didn't work? What could have been done better? Criticisms of approach to the project.
 
 \section{Future work}
 
