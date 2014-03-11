@@ -80,8 +80,6 @@ Any (but not limited to) the following:
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Your Abstract herebstract
 
-% TODO: Remove hard embedded date from cls file
-
 \begin{abstract}
 
 In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. These algorithms will include a simple inbound weighted sum, Page and Brin's PageRank, and Kleinburg's Hubs and Authorities algorithm. Performance will be analysed by evaluating correlation between these algorithms' scores and the bespoke Stack Exchange reputation model.
@@ -91,7 +89,9 @@ In this project I intend to compare the performance of generic reputation algori
 \end{abstract}
 \newpage
 
-%\chapter*{Acknowledgments}
+%\chapter*{Acknowledgements}
+
+%My thanks go out to my project supervisor Dr. Michael P. O'Mahony  for his help and guidance throughout the course of this project. His kind support epitomises the nature of a good educator and I am eternally thankful to have had him as a supervisor. My thanks also go out to my family and friends for always being there to support me, and to my two dogs Sasha and Trudy for taking me on regular walks. I would also like to thank the Stack Exchange network for making their data so readily available and for answring so many of my questions.
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Introduction 2/2 pages
@@ -193,7 +193,7 @@ Like PageRank, however, these collaborative filtering recommender systems are vu
 
 In his research, Massa proposes a reputation model whereby each user explicitly `rates' other users to create tailored trust statements. This system then aggregates all trust into a single trust network that represents all users' relationships. This trust network can be leveraged to filter out possibly untrustworthy recommendations from reaching the end user (Massa and Avesani 2007).
 
-DESCRIBE JOHN O'DONOVAN'S WORK (O'Donovan and Smyth 2005).
+TODO: DESCRIBE JOHN O'DONOVAN'S WORK (O'Donovan and Smyth 2005).
 
 %\subsection{Hubs and Authorities}
 %Words go here.
@@ -274,10 +274,9 @@ Besides being an ad-hoc system, the \textsl{Klout score} suffers the drawback th
 
 This chapter has described some of the methods used to calculate reputation, and how different sites use reputation. It can be seen that many of these reputation models in the wild today are completely proprietary systems that require a lot of specific domain knowledge and are difficult to adapt for other uses. The main goal of this project is to demonstrate that a simplified, generic approach to reputation is an appropriate and viable alternative to engineering an ad-hoc reputation model. This generic approach shall be applicable to any domain in which there are producers and consumers of content.
 
-\chapter{Main Chapter}
-
-Aiming for 8 pages
+\chapter{Creating a generic model of user reputation for social networks}
 % % % 2 / 8 PAGES
+This chapter provides an in-depth explanation of how to create a model of user representation for social networks that is generic and can be used in many contexts. The core concepts of this project such as the producer-consumer model of social networks, the collaboration event and collaboration graph, and exactly how to compute reputation are explained in depth.
 
 \section{The producer-consumer model}
 
@@ -289,39 +288,40 @@ The producer consumer model is defined as a model of user relationships across a
 \caption{Diagram demonstrating examples of direct, indirect, implicit and explicit trust interactions taken from McNally et al. 2013.}
 \end{figure}\label{gra:trusttypes}
 
-Direct trust interactions occur directly between two participants, that is to say that one user is rating another user in particular, whether by following them on twitter or leaving a review on eBay as shown in Figure. Conversely, an indirect trust interaction does not occur directly between two users and may instead be a group or community of users collectively voting on a single user's contributions, for example people voting on an article submitted to Digg or Reddit, or multiple people retweeting a tweet. An explicit trust interaction is one in which the measure of trust being given is an explicit signal, such as with a Reddit `up-vote' or eBay review. Implicit trust interactions, then, are ones in which there is no explicit, easy to define signal that can be used to indicate the trust (McNally et al. 2013, refer to Figure \ref{gra:trusttypes} for examples).
+Direct trust interactions occur directly between two participants, that is to say that one user is rating another user in particular (more specifically a \textsl{consumer} is rating a \textsl{producer}), whether by following them on twitter or leaving a review on their eBay profile. Conversely, an indirect trust interaction does not occur directly between two users and may instead be a collective or community of \textsl{consumers} voting on a single \textsl{producer's} submission as opposed to voting on the \textsl{producer} themselves, for example people voting on an article submitted to Digg or Reddit, or multiple people retweeting a tweet. An explicit trust interaction is one in which the measure of trust being given is an explicit quantifiable signal, such as with a Reddit `up-vote' or an eBay review. Implicit trust interactions, then, are ones in which there is no explicit, easy to define signal that can be used to indicate the trust (McNally et al. 2013, refer to Figure \ref{gra:trusttypes} for examples).
 
-Give two or three examples of producer-consumer relationships
-
-How does it apply to our generic reputation model
-
-
-
-Refer to graphic above
+The generic model of user reputation being investigated in the course of this project will be applicable to any producer-consumer interactions whether direct, indirect, explicit or implicit. Furthermore, this reputation model should be entirely generic, and applicable across a wide range of possible domains by identifying these trust interactions (McNally et al. 2013).
 
 \section{The collaboration event}
 
-Intro para - description of collaboration events.
-
-How does this apply to above generic examples
+Collaboration event is the name given to the flow of trust outlined above. Every 
+collaboration event is a trust interaction between consumer and producer, and in many cases between consumer and multiple producers. For every collaboration event, the producers are awarded with some trust score, which may be positive, negative or neutral. When there is a single producer and consumer, the producer will receive the entirety of the trust score awarded by the consumer. In cases where there are multiple producers, the trust score will be divided among them, with each receiving a trust score corresponding to the perceived value of their contribution as compared to the other producers as seen in Figure \ref{gra:singlecollabevent}.
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=140mm]{chap3/collabeventstime.png}
-\caption{Placeholder caption.}
-\end{figure}\label{gra:collabtime}
+\includegraphics[width=40mm]{chap3/singlecollabevent.png}
+\caption{A collaboration event with three producers and one consumer taken from McNally et al. 2013.}
+\end{figure}\label{gra:singlecollabevent}
 
-Graphic - explicit versus implicit, the fancy over-time diagram of collaboration events
+Identifying collaboration events varies in difficulty. In some instances, such as with an explicit trust interaction (see Figure \ref{gra:trusttypes}) it can be very simple, for example it may just be a unit of positive feedback on an eBay transaction. Other more implicit trust interactions may be more difficult to extract a collaboration event from. It is difficult to determine what some user activities and interactions may mean with regard to trust. A person's contribution to a Wikipedia page being edited may mean that their contribution was of poor quality, or it may simply mean that new information has since arisen that the editor has appended to the Wikipedia page.
+
+To use Figure \ref{gra:singlecollabevent} as an example, a consumer on a Stack Exchange site, u$_{q}$, poses a question which receives three answers from the producers u$_{a1}$, u$_{a2}$ and u$_{a3}$. For their answers, these producers receive 5, 4 and 2 stack reputation respectively. As a total amount of 11 stack reputation is awarded for this collaboration event, u$_{a1}$ is rewarded $\frac{5}{11}$ of the reputation, u$_{a2}$ receives $\frac{4}{11}$ and u$_{a2}$ receives $\frac{2}{11}$ (McNally et al. 2013).
 
 \section{Building the collaboration graph}
 
-Intro para - describe why we build it
+The collaboration events outlined above do not occur in isolation. Active users of these social networks may be involved in many collaboration events as both producer and consumer over time. The accumulation of these collaboration events can be represented by a directed weighted graph, with the users of the network as nodes in the graph, and the collaboration events between users represented by weighted directed edges between the users involved.
 
-Graphic of a network
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=130mm]{chap3/collabeventstime.png}
+\caption{Demonstration of a series of collaboration events for social web-search recommendation tool HayStaks as a function of time (McNally et al. 2010).}
+\end{figure}\label{gra:collabtime}
+
+To build this graph, all of the collaboration events that make up this network must be examined in order over time. Figure \ref{gra:collabtime} demonstrates a small series of collaboration events as a function of time. At time t$_{2}$, the producer u$_{1}$ is assigned a unit of reputation by u$_{2}$ for their recommendation. At time t$_{4}$, producers u$_{1}$ u$_{2}$ and u$_{3}$ are each assigned a fraction of a reputation unit by u$_{4}$. As the number of collaboration events grows, so too does the graph which also becomes increasingly inter-linked, with the possibility for multiple edges in both directions between the same nodes.
 
 \section{Computing reputation}
 
-Intro to computing rep
+Once a collaboration graph has been constructed, it is then time to compute the reputation of the users in the graph. 
 
 \subsection{Weighted sum}
 

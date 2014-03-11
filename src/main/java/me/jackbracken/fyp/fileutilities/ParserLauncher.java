@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
+import main.java.me.jackbracken.fyp.graph.GraphBuilder;
 import main.java.me.jackbracken.fyp.models.Answer;
 import main.java.me.jackbracken.fyp.models.Question;
 import main.java.me.jackbracken.fyp.models.User;
@@ -75,30 +76,8 @@ public class ParserLauncher {
 					System.out.println("Only " + filesParsed + " files were parsed in directory: " + site);
 					System.exit(1);
 				}
-				new WeightedSum(questionList, answerList, userList);
-
-				// Quick hack, write WS values to file for analysis
 				
-				try {
-					File wsFile = new File("WS_values_" + site + ".txt");
-					if(!wsFile.exists()) {
-						wsFile.createNewFile();
-					}
-					
-					FileWriter fw = new FileWriter(wsFile.getAbsoluteFile());
-					BufferedWriter bw = new BufferedWriter(fw);
-					
-					for(User u: userList.values()) {
-						bw.write(u.getWS() + "\r\n");
-					}
-					
-					bw.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				//				new GraphBuilder(userList, answerList, questionList);
-//				x++;
+				new GraphBuilder(userList, answerList, questionList);
 				
 			} else {
 				System.out.println("Unnecessary file " + siteDirectory.getName() + " found.");

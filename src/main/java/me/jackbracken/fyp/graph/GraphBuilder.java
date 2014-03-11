@@ -9,6 +9,8 @@ import main.java.me.jackbracken.fyp.models.Answer;
 import main.java.me.jackbracken.fyp.models.Question;
 import main.java.me.jackbracken.fyp.models.User;
 
+import org.gephi.data.attributes.api.AttributeController;
+import org.gephi.data.attributes.api.AttributeModel;
 import org.gephi.graph.api.DirectedGraph;
 import org.gephi.graph.api.Edge;
 import org.gephi.graph.api.GraphController;
@@ -19,6 +21,7 @@ import org.gephi.preview.api.PreviewController;
 import org.gephi.preview.api.PreviewModel;
 import org.gephi.preview.api.PreviewProperty;
 import org.gephi.project.api.ProjectController;
+import org.gephi.statistics.plugin.WeightedDegree;
 import org.openide.util.Lookup;
 
 public class GraphBuilder {
@@ -37,6 +40,7 @@ public class GraphBuilder {
 		
 		// Get a GraphModel from Workspace
 		GraphModel gm = Lookup.getDefault().lookup(GraphController.class).getModel();
+		AttributeModel am = Lookup.getDefault().lookup(AttributeController.class).getModel();
 		
 		System.out.println("Beginning graph builder");
 		
@@ -93,7 +97,8 @@ public class GraphBuilder {
 		
 		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
 		try {
-			ec.exportFile(new File(users.get(0).getSite() + ".gexf"));
+			String site = users.entrySet().iterator().next().getValue().getSite();
+			ec.exportFile(new File(site + ".gexf"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

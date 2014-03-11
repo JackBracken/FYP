@@ -12,34 +12,34 @@
 \contentsline {subsection}{\numberline {2.4.2}eBay -- A feedback-based approach}{12}{subsection.2.4.2}
 \contentsline {subsection}{\numberline {2.4.3}Klout -- A measure of influence}{13}{subsection.2.4.3}
 \contentsline {section}{\numberline {2.5}Conclusion}{14}{section.2.5}
-\contentsline {chapter}{\numberline {3}Main Chapter}{15}{chapter.3}
+\contentsline {chapter}{\numberline {3}Creating a generic model of user reputation for social networks}{15}{chapter.3}
 \contentsline {section}{\numberline {3.1}The producer-consumer model}{15}{section.3.1}
 \contentsline {section}{\numberline {3.2}The collaboration event}{16}{section.3.2}
-\contentsline {section}{\numberline {3.3}Building the collaboration graph}{16}{section.3.3}
+\contentsline {section}{\numberline {3.3}Building the collaboration graph}{17}{section.3.3}
 \contentsline {section}{\numberline {3.4}Computing reputation}{17}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Weighted sum}{17}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}PageRank}{17}{subsection.3.4.2}
-\contentsline {section}{\numberline {3.5}Predicting quality answers using reputation}{17}{section.3.5}
-\contentsline {section}{\numberline {3.6}Conclusion}{17}{section.3.6}
-\contentsline {chapter}{\numberline {4}Design \& Implementation}{18}{chapter.4}
-\contentsline {section}{\numberline {4.1}Project structure}{18}{section.4.1}
-\contentsline {section}{\numberline {4.2}Development tools}{20}{section.4.2}
-\contentsline {section}{\numberline {4.3}Obtaining the data}{20}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Processing users}{20}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Processing posts}{21}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Building the graph}{21}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Computing reputation scores}{22}{section.4.4}
-\contentsline {section}{\numberline {4.5}Predicting correct answers}{22}{section.4.5}
-\contentsline {chapter}{\numberline {5}Testing \& Evaluation}{23}{chapter.5}
-\contentsline {section}{\numberline {5.1}The data-sets}{23}{section.5.1}
-\contentsline {section}{\numberline {5.2}Methodology}{23}{section.5.2}
-\contentsline {section}{\numberline {5.3}Analysis}{23}{section.5.3}
-\contentsline {section}{\numberline {5.4}Evaluating performance}{24}{section.5.4}
-\contentsline {section}{\numberline {5.5}Correlation analysis}{25}{section.5.5}
-\contentsline {section}{\numberline {5.6}Coverage}{25}{section.5.6}
-\contentsline {section}{\numberline {5.7}Predicting the answers to questions}{26}{section.5.7}
-\contentsline {chapter}{\numberline {6}Conclusions \& Future Work}{27}{chapter.6}
-\contentsline {section}{\numberline {6.1}Fulfilment of project goals}{27}{section.6.1}
-\contentsline {section}{\numberline {6.2}Learning outcome}{27}{section.6.2}
-\contentsline {section}{\numberline {6.3}Failings}{27}{section.6.3}
-\contentsline {section}{\numberline {6.4}Future work}{27}{section.6.4}
+\contentsline {subsection}{\numberline {3.4.2}PageRank}{18}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Predicting quality answers using reputation}{18}{section.3.5}
+\contentsline {section}{\numberline {3.6}Conclusion}{18}{section.3.6}
+\contentsline {chapter}{\numberline {4}Design \& Implementation}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Project structure}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Development tools}{21}{section.4.2}
+\contentsline {section}{\numberline {4.3}Obtaining the data}{21}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Processing users}{21}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Processing posts}{22}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Building the graph}{22}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Computing reputation scores}{23}{section.4.4}
+\contentsline {section}{\numberline {4.5}Predicting correct answers}{23}{section.4.5}
+\contentsline {chapter}{\numberline {5}Testing \& Evaluation}{24}{chapter.5}
+\contentsline {section}{\numberline {5.1}The data-sets}{24}{section.5.1}
+\contentsline {section}{\numberline {5.2}Methodology}{24}{section.5.2}
+\contentsline {section}{\numberline {5.3}Analysis}{24}{section.5.3}
+\contentsline {section}{\numberline {5.4}Evaluating performance}{25}{section.5.4}
+\contentsline {section}{\numberline {5.5}Correlation analysis}{26}{section.5.5}
+\contentsline {section}{\numberline {5.6}Coverage}{26}{section.5.6}
+\contentsline {section}{\numberline {5.7}Predicting the answers to questions}{27}{section.5.7}
+\contentsline {chapter}{\numberline {6}Conclusions \& Future Work}{28}{chapter.6}
+\contentsline {section}{\numberline {6.1}Fulfilment of project goals}{28}{section.6.1}
+\contentsline {section}{\numberline {6.2}Learning outcome}{28}{section.6.2}
+\contentsline {section}{\numberline {6.3}Failings}{28}{section.6.3}
+\contentsline {section}{\numberline {6.4}Future work}{28}{section.6.4}
