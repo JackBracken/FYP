@@ -8,7 +8,7 @@
 \floatname{program}{Code snippet}
 %\usepackage[backend=bibtex]{biblatex}
 %\bibliography{report_template.bib}
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%% Input project details
@@ -88,9 +88,9 @@ In this project I intend to compare the performance of generic reputation algori
 \end{abstract}
 \newpage
 
-%\chapter*{Acknowledgements}
+\chapter*{Acknowledgements}
 
-%My thanks go out to my project supervisor Dr. Michael P. O'Mahony  for his help and guidance throughout the course of this project. His kind support epitomises the nature of a good educator and I am eternally thankful to have had him as a supervisor. My thanks also go out to my family and friends for always being there to support me, and to my two dogs Sasha and Trudy for taking me on regular walks. I would also like to thank the Stack Exchange network for making their data so readily available and for answring so many of my questions.
+My thanks go out to my project supervisor Dr. Michael P. O'Mahony  for his help and guidance throughout the course of this project. His kind support epitomises the nature of a good educator and I am eternally thankful to have had him as a supervisor. I would also like to thank my family and friends for always being there to support me, and to my two dogs Sasha and Trudy for taking me on regular walks. Finally, I would like to express my gratitude to the Stack Exchange network for making their data so readily available and easy to work with.
 
 \tableofcontents\pdfbookmark[0]{Table of Contents}{toc}\newpage
 
@@ -306,7 +306,7 @@ collaboration event is a trust interaction between consumer and producer, and in
 
 Identifying collaboration events varies in difficulty. In some instances, such as with an explicit trust interaction (see Figure \ref{gra:trusttypes}) it can be very simple, for example it may just be a unit of positive feedback on an eBay transaction. Other more implicit trust interactions may be more difficult to extract a collaboration event from. It is difficult to determine what some user activities and interactions may mean with regard to trust. A person's contribution to a Wikipedia page being edited may mean that their contribution was of poor quality, or it may simply mean that new information has since arisen that the editor has appended to the Wikipedia page.
 
-To use Figure \ref{gra:singlecollabevent} as an example, a consumer on a Stack Exchange site, u$_{q}$, poses a question which receives three answers from the producers u$_{a1}$, u$_{a2}$ and u$_{a3}$. For their answers, these producers receive 5, 4 and 2 stack reputation respectively. As a total amount of 11 stack reputation is awarded for this collaboration event, u$_{a1}$ is rewarded $\frac{5}{11}$ of the reputation, u$_{a2}$ receives $\frac{4}{11}$ and u$_{a2}$ receives $\frac{2}{11}$ (McNally et al. 2013).
+To use Figure \ref{gra:singlecollabevent} as an example, a consumer on a Stack Exchange site, u$_{q}$, poses a question which receives three answers from the producers u$_{a1}$, u$_{a2}$ and u$_{a3}$. For their answers, these producers receive 5, 4 and 2 stack reputation (i.e. positive votes for their answers) respectively. As a total amount of 11 stack reputation is awarded for this collaboration event, u$_{a1}$ is rewarded $\frac{5}{11}$ of the reputation, u$_{a2}$ receives $\frac{4}{11}$ and u$_{a2}$ receives $\frac{2}{11}$ (McNally et al. 2013).
 
 \section{Building the collaboration graph}
 
@@ -336,19 +336,19 @@ The Weighted Sum algorithm calculates the reputation score of a node by computin
 \[
 rep(pi) = \sum_{e\in E_{pi}}^{} w_{e} 
 \]
-where $E_{pi}$ is the set of incoming edges for the producer $p$, $_{e}$ is the current incoming edge and $w_{e}$ is the weight of $_{e}$\footnote{Formula and description for Weighted Sum and PageRank in the following section are taken from McNally et al. 2013}. This Weighted Sum model encourages users to gain reputation by becoming producers of content across many and may cause an increase in the number of producers, for example users on the Stack Exchange network may feel more inclined to provide answers for questions. This model may also lead to less repetiton of information as a user is less likely to receive as much reputation for simply repeating an answer that has already been given, instead producers are encouraged to produce their own unique content (McNally et al. 2013).
+where $E_{pi}$ is the set of incoming edges for the producer $p$, $_{e}$ is the current incoming edge and $w_{e}$ is the weight of $_{e}$. This Weighted Sum model encourages users to gain reputation by becoming producers of content across many questions and may cause an increase in the number of producers, for example users on the Stack Exchange network may feel more inclined to provide answers for questions. This model may also lead to less repetition of information as a user is less likely to receive as much reputation for simply repeating an answer that has already been given, instead producers are encouraged to produce their own unique content (McNally et al. 2013).
 
-This algorithm has the benefit of being generic. It can apply to a wide range of contexts. For example with the social media platform Twitter, `retweets' can fit into our collaboration event model and the Weighted Sum can be calculated as a ratio of the consumers' retweets over time. If a producer's tweet is retweeted by five consumer, and between them those five consumers have retweeted a total of thirty-five tweets, the producer may gain a reputation score of $\frac{5}{35}$ for the production of that content.
+%This algorithm has the benefit of being generic. It can apply to a wide range of contexts. For example with the social media platform Twitter, `retweets' can fit into our collaboration event model and the Weighted Sum can be calculated as a ratio of the consumers' retweets over time. If a producer's tweet is retweeted by five consumer, and between them those five consumers have retweeted a total of thirty-five tweets, the producer may gain a reputation score of $\frac{5}{35}$ for the production of that content.
 
 \subsection{PageRank}
 
-PageRank is perhaps one of the most well-known link-analysis algorithms in use today. Originall developed by Sergey Brin and Larry Page at Google (Brin and Page 1998), it works by making the assumption that important pages in the web (or nodes in a graph) are also the ones most fequently linked to, and that the more important a page or node is, the more weight its own links to other pages should carry (see Figure \ref{gra:pagerank} for a visual example). This insight into the nature of the structure of hyperlinked web-pages allowed them to create the PageRank algorithm to sort results for the Google search engine.
+PageRank is perhaps one of the most well-known link-analysis algorithms in use today. Originall developed by Sergey Brin and Larry Page at Google (Brin and Page 1998), it works by making the assumption that important pages in the web (or nodes in a graph) are also the ones most fequently linked to, and that the more important a page or node is, the more weight its own links to other pages should carry (see Figure \ref{gra:pagerank} for a visual example). This insight into the nature of the structure of hyper-linked web-pages allowed them to create the PageRank algorithm to sort results for the Google search engine.
 
 The PageRank algorithm is slightly more complex than the Weighted Sum. The PageRank score for each user $p_{i}$ is computed as thus:
 \[
 rep(p_{i}) = \frac{1 - d}{N} + d \sum_{p_{j} \in M(p_{i})} \frac{PR(p_{j})}{|L(p_{j})|}
 \]
-where $d$ is a damping factor, $N$ is the number of users, $M(p_{i})$ is the set of in-links from consumers to the producer $p_{i}$ and $L(p_{j})$ is the set of out-links from $p_{j}$ (i.e. the users from which $p_{j}$ has consumed content). In the context of the Stack Exchange network, the PageRank score for a given user can be thought of as the likelihood that a randomly selected `good' answer will have been given by that user.
+where $d$ is a damping factor, $N$ is the number of users, $M(p_{i})$ is the set of in-links from consumers to the producer $p_{i}$ and $L(p_{j})$ is the set of out-links from $p_{j}$ (i.e. the users from which $p_{j}$ has consumed content). In the context of the Stack Exchange network, the PageRank score for a given user can be thought of as the likelihood that a randomly selected `good' answer will have been given by that user (McNally et al 2013).
 
 \section{Predicting quality answers using reputation}
 
@@ -356,7 +356,7 @@ Placeholder until answer prediction is finished. Describe the methodology of ans
 
 \section{Conclusion}
 
-In conclusion, it has been demonstrated that it is possible to create a model of user reputation in a generic fashion when there are consumers and producers of content. With a little thought it is possible define appropriate collaboration events wiith which a collaboration graph can be built, which can then be leveraged to perform a number of generic algorithms to computer reputation for user nodes. 
+In conclusion, it has been demonstrated that it is possible to create a model of user reputation in a generic fashion when there are consumers and producers of content. With a little thought it is possible define appropriate collaboration events with which a collaboration graph can be built, which can then be leveraged to compute reputation for users using a variety of algorithms.. 
 
 \chapter{Design \& Implementation}
 
@@ -464,16 +464,26 @@ Placeholder until answer prediction completed
 
 \chapter{Testing \& Evaluation}
 
-Remake this figure zoomed in more with less nodes and add labels (maybe make node size representative of rep)
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=100mm]{chap4/gephigraph.PNG}
-\caption{A close-up view of the graph created from the bicycles network data.}
-\end{figure}\label{gra:network}
+
 
 \section{The data-sets}
 
-Describe the data-sets. Which ones were chosen, why they were chosen, give tables with stats (number of users, questions and answers)
+For the purposes of this project, three different data-sets were selected 
+
+\begin{minipage}{\linewidth}
+\centering
+\begin{tabular}{|l|r|r|r|}
+\hline
+\multirow{2}{*}~ & \multicolumn{3}{c|}{\textbf{Dataset}} \\
+\cline{2-4}
+~ 					& Bicycles & Cooking & Electronics \\ \hline\hline
+\# Users 			&  8,009 &  15,802 &  25,335 \\ \hline
+\# Questions asked 	&  4,023 &   9,037 &  24,404 \\ \hline
+\# Answers given 	& 12,196 &  24,679 &  49,006 \\ \hline
+\# Answers on votes & 62,974 & 130,446 & 210,694 \\ \hline
+\end{tabular}\par
+\captionof{table}{Statistics for the three Stack Exchange sites used in the course of this project--the bicycles, cooking and electronics sites.} \label{tab:corrresults}
+\end{minipage}
 
 \section{Methodology}
 
@@ -520,6 +530,13 @@ The results of this analysis can be found in table \ref{tab:corrresults} and are
 %\includegraphics[width=160mm]{chap3/histograms.png}
 %\caption{Distribution of reputation scores across different sites and algorithms.}
 %\end{figure}
+
+Remake this figure zoomed in more with less nodes and add labels (maybe make node size representative of rep)
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=100mm]{chap4/gephigraph.PNG}
+\caption{A close-up view of the graph created from the bicycles network data.}
+\end{figure}\label{gra:network}
 
 \begin{figure}[ht!]
 \centering

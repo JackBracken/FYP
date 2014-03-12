@@ -1,45 +1,45 @@
 \contentsline {chapter}{Specification}{1}{chapter*.1}
 \contentsline {chapter}{Abstract}{3}{chapter*.2}
-\contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}
-\contentsline {chapter}{\numberline {2}Background Research}{8}{chapter.2}
-\contentsline {section}{\numberline {2.1}Introduction}{8}{section.2.1}
-\contentsline {section}{\numberline {2.2}Trust and reputation}{8}{section.2.2}
-\contentsline {section}{\numberline {2.3}Reputation algorithms}{8}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}TrustRank}{9}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Trust-aware recommenders}{10}{subsection.2.3.2}
-\contentsline {section}{\numberline {2.4}Case studies}{11}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Stack Exchange -- An activity based approach}{11}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {2.4.2}eBay -- A feedback-based approach}{12}{subsection.2.4.2}
-\contentsline {subsection}{\numberline {2.4.3}Klout -- A measure of influence}{13}{subsection.2.4.3}
-\contentsline {section}{\numberline {2.5}Conclusion}{14}{section.2.5}
-\contentsline {chapter}{\numberline {3}Creating a generic model of user reputation for the social web}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}The producer-consumer model}{15}{section.3.1}
-\contentsline {section}{\numberline {3.2}The collaboration event}{16}{section.3.2}
-\contentsline {section}{\numberline {3.3}Building the collaboration graph}{17}{section.3.3}
-\contentsline {section}{\numberline {3.4}Computing reputation}{18}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Weighted Sum}{18}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}PageRank}{18}{subsection.3.4.2}
-\contentsline {section}{\numberline {3.5}Predicting quality answers using reputation}{19}{section.3.5}
-\contentsline {section}{\numberline {3.6}Conclusion}{19}{section.3.6}
-\contentsline {chapter}{\numberline {4}Design \& Implementation}{20}{chapter.4}
-\contentsline {section}{\numberline {4.1}Project structure}{20}{section.4.1}
-\contentsline {section}{\numberline {4.2}Development tools}{22}{section.4.2}
-\contentsline {section}{\numberline {4.3}Obtaining the data}{22}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Processing users}{22}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Processing posts}{23}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Building the graph}{23}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Computing reputation scores}{24}{section.4.4}
-\contentsline {section}{\numberline {4.5}Predicting correct answers}{24}{section.4.5}
-\contentsline {chapter}{\numberline {5}Testing \& Evaluation}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}The data-sets}{25}{section.5.1}
-\contentsline {section}{\numberline {5.2}Methodology}{25}{section.5.2}
-\contentsline {section}{\numberline {5.3}Analysis}{25}{section.5.3}
-\contentsline {section}{\numberline {5.4}Evaluating performance}{26}{section.5.4}
-\contentsline {section}{\numberline {5.5}Correlation analysis}{26}{section.5.5}
-\contentsline {section}{\numberline {5.6}Coverage}{28}{section.5.6}
-\contentsline {section}{\numberline {5.7}Predicting the answers to questions}{28}{section.5.7}
-\contentsline {chapter}{\numberline {6}Conclusions \& Future Work}{29}{chapter.6}
-\contentsline {section}{\numberline {6.1}Fulfilment of project goals}{29}{section.6.1}
-\contentsline {section}{\numberline {6.2}Learning outcome}{29}{section.6.2}
-\contentsline {section}{\numberline {6.3}Failings}{29}{section.6.3}
-\contentsline {section}{\numberline {6.4}Future work}{29}{section.6.4}
+\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}
+\contentsline {chapter}{\numberline {2}Background Research}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introduction}{9}{section.2.1}
+\contentsline {section}{\numberline {2.2}Trust and reputation}{9}{section.2.2}
+\contentsline {section}{\numberline {2.3}Reputation algorithms}{9}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}TrustRank}{10}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Trust-aware recommenders}{11}{subsection.2.3.2}
+\contentsline {section}{\numberline {2.4}Case studies}{12}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Stack Exchange -- An activity based approach}{12}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}eBay -- A feedback-based approach}{13}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Klout -- A measure of influence}{14}{subsection.2.4.3}
+\contentsline {section}{\numberline {2.5}Conclusion}{15}{section.2.5}
+\contentsline {chapter}{\numberline {3}Creating a generic model of user reputation for the social web}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}The producer-consumer model}{16}{section.3.1}
+\contentsline {section}{\numberline {3.2}The collaboration event}{17}{section.3.2}
+\contentsline {section}{\numberline {3.3}Building the collaboration graph}{18}{section.3.3}
+\contentsline {section}{\numberline {3.4}Computing reputation}{19}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Weighted Sum}{19}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}PageRank}{19}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Predicting quality answers using reputation}{20}{section.3.5}
+\contentsline {section}{\numberline {3.6}Conclusion}{20}{section.3.6}
+\contentsline {chapter}{\numberline {4}Design \& Implementation}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}Project structure}{21}{section.4.1}
+\contentsline {section}{\numberline {4.2}Development tools}{23}{section.4.2}
+\contentsline {section}{\numberline {4.3}Obtaining the data}{23}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Processing users}{23}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Processing posts}{24}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Building the graph}{24}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Computing reputation scores}{25}{section.4.4}
+\contentsline {section}{\numberline {4.5}Predicting correct answers}{25}{section.4.5}
+\contentsline {chapter}{\numberline {5}Testing \& Evaluation}{26}{chapter.5}
+\contentsline {section}{\numberline {5.1}The data-sets}{26}{section.5.1}
+\contentsline {section}{\numberline {5.2}Methodology}{26}{section.5.2}
+\contentsline {section}{\numberline {5.3}Analysis}{26}{section.5.3}
+\contentsline {section}{\numberline {5.4}Evaluating performance}{27}{section.5.4}
+\contentsline {section}{\numberline {5.5}Correlation analysis}{28}{section.5.5}
+\contentsline {section}{\numberline {5.6}Coverage}{29}{section.5.6}
+\contentsline {section}{\numberline {5.7}Predicting the answers to questions}{29}{section.5.7}
+\contentsline {chapter}{\numberline {6}Conclusions \& Future Work}{30}{chapter.6}
+\contentsline {section}{\numberline {6.1}Fulfilment of project goals}{30}{section.6.1}
+\contentsline {section}{\numberline {6.2}Learning outcome}{30}{section.6.2}
+\contentsline {section}{\numberline {6.3}Failings}{30}{section.6.3}
+\contentsline {section}{\numberline {6.4}Future work}{30}{section.6.4}

@@ -51,10 +51,10 @@ public class ParserLauncher {
 						startTime = System.currentTimeMillis();
 						userList = new ParseUsers(dataFile, site).getUserList();
 						endTime = System.currentTimeMillis();
-						System.out.println("Parse users execution time: " + ((endTime - startTime) / 1000) + " seconds");
+						 System.out.println("Parse users execution time: " + ((endTime - startTime) / 1000) + " seconds");
 						filesParsed++;
 					} else if (fileName.equals("Posts.xml")) {
-						System.out.println("Parsing file:\t" + fileName);
+						 System.out.println("Parsing file:\t" + fileName);
 						
 						// Get Q and A lists
 						startTime = System.currentTimeMillis();
@@ -77,10 +77,10 @@ public class ParserLauncher {
 					System.exit(1);
 				}
 				
-				new GraphBuilder(userList, answerList, questionList);
+				//new GraphBuilder(userList, answerList, questionList);
 				
 			} else {
-				System.out.println("Unnecessary file " + siteDirectory.getName() + " found.");
+				// System.out.println("Unnecessary file " + siteDirectory.getName() + " found.");
 			}
 		}
 	}

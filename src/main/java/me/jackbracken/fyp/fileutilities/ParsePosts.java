@@ -26,6 +26,7 @@ public class ParsePosts extends DefaultHandler {
 		this.file = file;
 		this.site = site;
 		parseDocument();
+		System.out.println("# Votes:\t" + foo);
 	}
 
 	private void parseDocument() {
@@ -34,7 +35,6 @@ public class ParsePosts extends DefaultHandler {
 		try {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(file, this);
-			System.out.println("Answers: " + answers + " Questions: " + questions);
 		} catch (ParserConfigurationException e) {
 			System.out.println("ParserConfig error");
 		} catch (SAXException e) {
@@ -65,7 +65,8 @@ public class ParsePosts extends DefaultHandler {
 			postTypeID = Integer.parseInt(attributes.getValue("PostTypeId"));
 			creationDate = attributes.getValue("CreationDate");
 			score = Short.parseShort(attributes.getValue("Score"));
-
+			foo += score;
+			
 			try {
 				acceptedAnswer = Integer.parseInt(
 					attributes.getValue("AcceptedAnswerId")

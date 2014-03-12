@@ -20,7 +20,7 @@ public class FYP {
 		final String HOME = System.getProperty("user.home");
 		final File DATA_ROOT = new File(HOME + "/stack");
 		
-		System.out.println(DATA_ROOT);
+		System.out.println("DATA_ROOT is: " + DATA_ROOT);
 		
 		new ParserLauncher(DATA_ROOT);
 		
