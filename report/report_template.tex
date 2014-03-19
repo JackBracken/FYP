@@ -4,8 +4,8 @@
 \usepackage{caption}
 \usepackage{multirow}
 \usepackage{float}
-\newfloat{program}{thp}{lop}
-\floatname{program}{Code snippet}
+%\newfloat{program}{thp}{lop}
+%\floatname{program}{Code snippet}
 %\usepackage[backend=bibtex]{biblatex}
 %\bibliography{report_template.bib}
 \setcounter{tocdepth}{2}
@@ -81,7 +81,9 @@ Any (but not limited to) the following:
 
 \begin{abstract}
 
-In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. These algorithms will include a simple inbound weighted sum, Page and Brin's PageRank, and Kleinburg's Hubs and Authorities algorithm. Performance will be analysed by evaluating correlation between these algorithms' scores and the bespoke Stack Exchange reputation model.
+In this project I intend to compare the performance of generic reputation algorithms using the Stack Exchange Question and Answer sites' open-sourced data dumps. These algorithms will include a simple inbound Weighted Sum and Page and Brin's PageRank algorithm. Performance will be analysed by evaluating correlation between these algorithms' scores and the bespoke Stack Exchange reputation model, and by examining the distribution of reputation scores across users.
+
+It is found that the Weighted Sum approach significantly out-performs the PageRank method, and is an excellent generic alternative to Stack Exchange's ad-hoc model.
 
 %I will also attempt to predict the correct answers to questions using user reputation scores, and perform user trials on Q\&A data.
 
@@ -90,7 +92,11 @@ In this project I intend to compare the performance of generic reputation algori
 
 \chapter*{Acknowledgements}
 
-My thanks go out to my project supervisor Dr. Michael P. O'Mahony  for his help and guidance throughout the course of this project. His kind support epitomises the nature of a good educator and I am eternally thankful to have had him as a supervisor. I would also like to thank my family and friends for always being there to support me, and to my two dogs Sasha and Trudy for taking me on regular walks. Finally, I would like to express my gratitude to the Stack Exchange network for making their data so readily available and easy to work with.
+My thanks go out to my project supervisor Dr. Michael P. O'Mahony  for his help and guidance throughout the course of this project. His kind support epitomises the nature of a good educator and I am eternally thankful to have had him as a supervisor. 
+
+I would also like to thank my family and friends for their support, in particular Sam Dunne, Shane Quigley and my parents for being good sounding boards, and my two dogs Sasha and Trudy for taking me on regular walks. 
+
+Finally, I would like to express my gratitude to the Stack Exchange network for making their data so readily available and easy to work with.
 
 \tableofcontents\pdfbookmark[0]{Table of Contents}{toc}\newpage
 
@@ -101,9 +107,9 @@ My thanks go out to my project supervisor Dr. Michael P. O'Mahony  for his help 
 
 With the increasing use of the internet in our day-to-day tasks, it has become more and more important that we be able to verify the trustworthiness of the people we interact with. While the use of technologies such as public key encryption allow us to verify \textsl{who} we are talking to with reasonable confidence, we are still left with the problem of determining that person's trustworthiness as an individual---whether that be trust in their knowledge in a particular field, or that they can be relied upon to deliver a good or service to satisfaction.
 
-To that end there has been considerable recent research in the fields of peer-to-peer trust and user reputation systems in social networks (McNally, O'Mahony and Smyth 2013; Cheng and Vassileva 2005; Mui 2002). There are numerous contexts in which an indication of trust may be desired online, from internet transactions to social Question \& Answer sites. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the \textsl{Stack Exchange Question and Answer} network. We will define trust as a relationship between users, and reputation will refer to an aggregate score allocated to a user that reflects their trustworthiness.
+To that end there has been considerable recent research in the fields of peer-to-peer trust and user reputation systems in social networks (1, 2, 4). There are numerous contexts in which an indication of trust may be desired online, from internet transactions to social Question \& Answer sites. For the purposes of this project we will be focusing on the exchange of knowledge and expertise between users on the \textsl{Stack Exchange Question and Answer} network. We will define trust as a relationship between users, and reputation will refer to an aggregate score allocated to a user that reflects their trustworthiness.
 
-In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum, Hubs and Authorities, and PageRank) and comparing their performance on the Stack Exchange data-sets to each other and Stack Exchange's own proprietary reputation model. To demonstrate that evaluating the reputation of users is even necessary, it is important that we pay attention to the history of the Web's growth up to its present state, and to look at current trends to predict its future.
+In this project, I will be implementing a number of generic approaches to reputation (Weighted Sum and PageRank) and comparing their performance on the Stack Exchange datasets to each other and Stack Exchange's own proprietary reputation model. To demonstrate that evaluating the reputation of users is even necessary, it is important that we pay attention to the history of the Web's growth up to its present state, and to look at current trends to predict its future.
 
 When the web first exploded into widespread use in the nineties, it was a static compilation of pages connected by hyper-links. Typically, websites were only published by universities, government organisations and large corporations, with content being controlled by their respective web-masters. It was much easier, then, to evaluate the trustworthiness of online resources; content related to hardware published by IBM was likely to be accurate, but IBM's advice on cake-baking may need to be taken with a pinch of salt.
 
@@ -113,7 +119,7 @@ In many cases this is not an issue. With many of these social networks, the user
 
 To give an example, a lady named Alice asks a dog lovers' web-forum how much chocolate is safe to feed to her chihuahua named Charlie. She may get a range of different answers. Bob helpfully gives her the correct answer that chocolate is bad for humans and worse for dogs, and to feed Charlie treats made especially for dogs instead. Mallory, out of some bizarre sense of Schadenfreude, intentionally gives her a malicious answer framed as genuine advice. Alice does not know who to trust, but errs on the side of caution and Charlie is spared the grim fate of diabetes.
 
-Not all negatively impactful users are malicious. Some users may just be misinformed, or ignorant, or have the illusory superiority cognitive bias, in which a person overestimates their own abilities or knowledge (Hoorens 1993). In the previous example, you may see answers where the user presents anecdotal evidence that they have been feeding their own dogs chocolate for years with no ill effects, and it is probably fine to feed them to Charlie. While well-intentioned, such responses are unhelpful to the community as a whole. They worsen the signal-to-noise ratio of the social web and being able to determine that these users are disreputable at a glance is beneficial.
+Not all negatively impactful users are malicious. Some users may just be misinformed, or ignorant, or have the illusory superiority cognitive bias, in which a person overestimates their own abilities or knowledge (10). In the previous example, you may see answers where the user presents anecdotal evidence that they have been feeding their own dogs chocolate for years with no ill effects, and it is probably fine to feed them to Charlie. While well-intentioned, such responses are unhelpful to the community as a whole. They worsen the signal-to-noise ratio of the social web and being able to determine that these users are disreputable at a glance is beneficial.
 
 While the previous example may seem minor, it serves to illustrate the potential dangers of this social web. Credulous users may take inaccurate information at face value, and in the worst case cause themselves or others harm, due to the maliciousness or ignorance of a stranger.
 
@@ -127,7 +133,7 @@ With over a billion active users and more than ten billion messages every day on
 
 This filtering of unsatisfactory content can take many different forms. Favourable content may `rise to the top' of a user's news feed in order of best to worst. Unfavourable content might be given some visual de-emphasis to indicate its lower quality, or may even be hidden from the user altogether. Users might be able to customize how strict this filtering is, or create whitelists and blacklists of people they trust and distrust respectively. In addition, users can be encouraged to improve their contributions to a community by gaining additional privileges or prestige for improving their reputation.
 
-The rest of this report is structured as follows. In chapter two, a description is given of some reputation algorithms at a high level, and some case studies are examined of reputation systems currently in use online. In chapter three there will be an in-depth description of the producer-consumer model, collaboration events and constructing the collaboration graph, and using this graph to compute reputation. In chapter four there will be a description of the design and implementation of this project. In chapter five, there will be a description and justification of the data-sets and methodologies that were used, as well as a presentation of the results and findings. The final chapter presents the conclusions drawn in the course of this project, outlines criticisms of the project, and describes some possible future areas of research in the topic.
+The rest of this report is structured as follows. In chapter two, a description is given of some reputation algorithms at a high level, and some case studies are examined of reputation systems currently in use online. In chapter three there will be an in-depth description of the producer-consumer model, collaboration events and constructing the collaboration graph, and using this graph to compute reputation. In chapter four there will be a description of the design and implementation of this project. In chapter five, there will be a description and justification of the datasets and methodologies that were used, as well as a presentation of the results and findings. The final chapter presents the conclusions drawn in the course of this project, outlines criticisms of the project, and describes some possible future areas of research in the topic.
 
 \chapter{Background Research}
 
@@ -140,11 +146,11 @@ The following chapter outlines the research undertaken into online reputation sy
 
 \section{Trust and reputation}
 
-For the purposes of this project, \textsl{trust} is defined as a relationship between two parties. A trustor is an entity who places a certain amount of faith in the actions or knowledge of another entity (or the trustee). Trust is not a symmetric relationship, so while, for example, a student may trust a teacher's knowledge in their subject matter, the teacher will likely have less (or no) trust in their student's knowledge  (McNally, O'Mahony and Smyth 2013).
+For the purposes of this project, \textsl{trust} is defined as a relationship between two parties. A trustor is an entity who places a certain amount of faith in the actions or knowledge of another entity (or the trustee). Trust is not a symmetric relationship, so while, for example, a student may trust a teacher's knowledge in their subject matter, the teacher will likely have less (or no) trust in their student's knowledge.
 
-Trust can occur between numerous types of entities, such as between people or web-pages (Page, L., Brin S., Motwani, R., and Winograd, T. 1999). It is inherently a difficult property to quantify in any accurate way, and is why the need to draw a distinction between \textsl{trust} and \textsl{reputation} arises.
+Trust can occur between numerous types of entities, such as between people or web-pages (3). It is inherently a difficult property to quantify in any accurate way, and is why the need to draw a distinction between \textsl{trust} and \textsl{reputation} arises.
 
-For the purposes of this paper, \textsl{reputation} is defined as a numeric measure of a user's \textsl{trustworthiness} according to some metric performed on their individual trust scores (McNally, O'Mahony and Smyth 2013).
+For the purposes of this paper, \textsl{reputation} is defined as a numeric measure of a user's \textsl{trustworthiness} according to some metric performed on their individual trust scores (1).
 
 There are a number of generic and ad-hoc implementation across the web. Examples of these are Google's PageRank algorithm for measuring a web-page's importance, Stack Exchange's system based on user activity, or eBay's implementation which uses user reviews to calculate reputation. Many of these implementations are bespoke systems, designed especially for their own domain. While these approaches may perform well, the development of a generic reputation algorithm which is applicable in many potential contexts would clearly beneficial. The development of such a generic reputation algorithm is the focus of this project.
 
@@ -158,43 +164,46 @@ In the following section there is a discussion of a number of ways that reputati
 
 \subsection{TrustRank}
 
-TrustRank is a link-analysis algorithm that evolved out of PageRank due to an abuse of the algorithm's weaknesses being exploited to create web-spam. The PageRank algorithm was developed by Page and Brin as they needed an approach to rank search results being presented to users by Google. It works simply by representing the web as a large graph, where web-pages are vertices, and links between them are directed edges between those vertices. PageRank assumes that the more incoming links a page has, the more popular and relevant it must be, and gives each vertex a PageRank score determined by the number of incoming edges it has and the scores of the vertices those edges originated from (Brin, Page 1998). Figure \ref{gra:pagerank} depicts a small network to which the PageRank has been applied. Larger vertex size is indicative of a higher PageRank score.
+TrustRank is a link-analysis algorithm that evolved out of PageRank due to an abuse of the algorithm's weaknesses being exploited to create web-spam. The PageRank algorithm was developed by Page and Brin as they needed an approach to rank search results being presented to users by Google. It works simply by representing the web as a large graph, where web-pages are vertices, and links between them are directed edges between those vertices. PageRank assumes that the more incoming links a page has, the more popular and relevant it must be, and gives each vertex a PageRank score determined by the number of incoming edges it has and the scores of the vertices those edges originated from (9). Figure \ref{gra:pagerank} depicts a small network to which the PageRank has been applied. Larger vertex size is indicative of a higher PageRank score.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=80mm]{chap2/pagerank.png}
 \caption{A visualisation of PageRank on a very small graph.}
-\end{figure}\label{gra:pagerank}
+\label{gra:pagerank}
+\end{figure}
 
-The main vulnerability to the PageRank algorithm is that it can not differentiate between a legitimate incoming link and one manufactured to artificially inflate a page's score, which led to huge \textsl{link-farms}\footnote{http://www.nytimes.com/2011/02/13/business/13search.html} being created, where people bought and sold links to and from their sites to raise their rankings in search results.  To combat this, TrustRank creates a small set of \textsl{seed} pages which are manually verified by experts as being legitimate, non-spam web-pages. These seed pages are used to identify incoming links from other pages that are similarly `good', and this propagates through the graph as it is assumed a `good' page is unlikely to link to a `bad' page (Gyongyi et al. 2004).
+The main vulnerability to the PageRank algorithm is that it can not differentiate between a legitimate incoming link and one manufactured to artificially inflate a page's score, which led to huge \textsl{link-farms}\footnote{http://www.nytimes.com/2011/02/13/business/13search.html} being created, where people bought and sold links to and from their sites to raise their rankings in search results.  To combat this, TrustRank creates a small set of \textsl{seed} pages which are manually verified by experts as being legitimate, non-spam web-pages. These seed pages are used to identify incoming links from other pages that are similarly `good', and this propagates through the graph as it is assumed a `good' page is unlikely to link to a `bad' page (6).
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=60mm]{chap2/trustrank.png}
-\caption{A graph of good and bad nodes, taken from Gyongyi et al. 2004.}
-\end{figure}\label{gra:trustrank}
+\caption{A graph of good and bad nodes, taken from (6).}
+\label{gra:trustrank}
+\end{figure}
 
 Pages can also be seeded negatively in the case that they are found to be `bad', and distrust can propagate through \textsl{outward} links from these pages, as bad pages are likely to link to other similarly bad pages. As figure \ref{gra:trustrank} demonstrates, TrustRank has some built in resistance to false-positives and negatives--cases where a `good' page links to a `bad' one and vice-versa can be accounted for due to nature of this positive and negative seeding. In this way the effect of manufactured links on page ranking results is significantly reduced.
 
 \subsection{Trust-aware recommenders}
 
-Traditionally, recommender systems use one of two approaches (or a hybrid of both) to produce a list of recommendations--content-based filtering, and collaborative filtering(Resnick et al. 1994; Balabanovic and Shoham 1997). 
+Traditionally, recommender systems use one of two approaches (or a hybrid of both) to produce a list of recommendations--content-based filtering, and collaborative filtering(5, 13). 
 
 Content-based filtering compares the properties of items to suggest similar ones to the end-user that they might like. This approach is often used to recommend things such as music and films. This can be less helpful in cases where a `more like this' form of recommendation tends to provide stale recommendations with little diversity or variety. Figure \ref{gra:amazon} demonstrates Amazon's recommendation system recommending batteries to a customer viewing a flash-light.
 
-In collaborative filtering, the recommender system will instead compare the user's history against that of other users, and make recommendations based on shared viewing, purchase and feedback history (Breese et al. 1998). These recommendations, when relevant, are useful to both the user and the merchant. The user may be reminded to buy something they had forgotten, and the merchant makes another sale. This information can also be leveraged in other ways, for example a merchant may see that many items are bought together and bundle them at a small discount to encourage further sales.
+In collaborative filtering, the recommender system will instead compare the user's history against that of other users, and make recommendations based on shared viewing, purchase and feedback history (8). These recommendations, when relevant, are useful to both the user and the merchant. The user may be reminded to buy something they had forgotten, and the merchant makes another sale. This information can also be leveraged in other ways, for example a merchant may see that many items are bought together and bundle them at a small discount to encourage further sales.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=140mm]{chap2/recommender.PNG}
 \caption{Amazon recommending batteries, among other things, to a customer viewing a flash-light.}
-\end{figure}\label{gra:amazon}
+\label{gra:amazon}
+\end{figure}
 
-Like PageRank, however, these collaborative filtering recommender systems are vulnerable to manipulation. It is often a trivial matter for a person to fabricate a user and artificially create a viewing and feedback history tailored to draw users to their own products. To that end, there has been research into applying reputation to recommender systems (Massa and Avesani 2007; O'Mahony et al. 2004).
+Like PageRank, however, these collaborative filtering recommender systems are vulnerable to manipulation. It is often a trivial matter for a person to fabricate a user and artificially create a viewing and feedback history tailored to draw users to their own products. To that end, there has been research into applying reputation to recommender systems (7, 14).
 
-In his research, Massa proposes a reputation model whereby each user explicitly `rates' other users to create tailored trust statements. This system then aggregates all trust into a single trust network that represents all users' relationships. This trust network can be leveraged to filter out possibly untrustworthy recommendations from reaching the end user (Massa and Avesani 2007).
+In his research, Massa proposes a reputation model whereby each user explicitly `rates' other users to create tailored trust statements. This system then aggregates all trust into a single trust network that represents all users' relationships. This trust network can be leveraged to filter out possibly untrustworthy recommendations from reaching the end user (7).
 
-TODO: DESCRIBE JOHN O'DONOVAN'S WORK (O'Donovan and Smyth 2005).
+%TODO: DESCRIBE JOHN O'DONOVAN'S WORK (O'Donovan and Smyth 2005).
 
 %\subsection{Hubs and Authorities}
 %Words go here.
@@ -210,9 +219,10 @@ The Stack Exchange network\footnote{http://stackexchange.com/} is a collection o
 \centering
 \includegraphics[width=100mm]{chap2/serep.png}
 \caption{A cooking.stackexchange.com profile, showing reputation score.}
-\end{figure}\label{gra:serep}
+\label{gra:serep}
+\end{figure}
 
-The Stack Exchange network uses a bespoke model of reputation. A user's reputation is calculated as a sum of points earned by contributing to the sites in various ways. Nearly every site activity, from asking and answering questions, to suggesting edits and flagging content for moderation can earn the user reputation points (see Figure \ref{tab:serep} for examples). This system is aimed more towards encouraging site activity than accurately evaluating a user's trust. A user can theoretically gain a considerable amount of reputation without actually demonstrating any domain knowledge.
+The Stack Exchange network uses a bespoke model of reputation. A user's reputation is calculated as a sum of points earned by contributing to the sites in various ways (see Figure \ref{gra:serep} for an example of a Stack Exchange user profile indicating reputation score). Nearly every site activity, from asking and answering questions, to suggesting edits and flagging content for moderation can earn the user reputation points (see Table \ref{tab:serep} for examples). This system is aimed more towards encouraging site activity than accurately evaluating a user's trust. A user can theoretically gain a considerable amount of reputation without actually demonstrating any domain knowledge.
 
 \begin{minipage}{\linewidth}
 \centering
@@ -225,7 +235,8 @@ The Stack Exchange network uses a bespoke model of reputation. A user's reputati
 \hline Your suggested edit accepted & +2 (up to a total of 1000) \\ 
 \hline 
 \end{tabular}\par
-\captionof{table}{Stack Exchange reputation rewards.} \label{tab:serep}
+\captionof{table}{Stack Exchange reputation rewards.} 
+\label{tab:serep}
 \end{minipage}
 
 
@@ -249,25 +260,27 @@ Additionally, users can leave reviews with their feedback, where they may descri
 \centering
 \includegraphics[width=140mm]{chap2/ebayfeedback.PNG}
 \caption{An example of eBay feedback for one user.}
-\end{figure}\label{gra:ebay}
+\label{gra:ebay}
+\end{figure}
 
 This combination of easy to understand reputation score and collection of user reviews allows buyers to quickly find trustworthy sellers and decide from which of them they wish to conduct their business.
 
-However, this approach has its limitations. As a whole, users receive very few negative feedback scores, and there is considerable evidence of a high degree of reciprocation in feedback scores (Resnick and Zeckhauser 2002).
+However, this approach has its limitations. As a whole, users receive very few negative feedback scores, and there is considerable evidence of a high degree of reciprocation in feedback scores (12).
 
 \subsection{Klout -- A measure of influence}
 
 Klout is an online service and mobile application that attempts to measure a user's \textsl{influence} across social networks. Launched in 2008, it uses analytics from eight different social media websites to evaluate its users' reputation scores, which is referred to as the \textsl{Klout Score}. This reputation score is an integer value bounded between 1 and 100, and becomes increasingly difficult to improve upon as it increases\footnote{http://klout.com/corp/about and http://klout.com/corp/score, last accessed accessed 10th March 2014}.
 
-Among the metrics Klout uses to determine reputation are activity from Twitter, Facebook, the user's Wikipedia page (if one exists), Google+ and others. When a user produces content on these sites that gains `likes', generates discussion or is shared with others, Klout deems that this content generates \textsl{influence} to a lesser or greater degree, and so affects their Klout score.
-
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=80mm]{chap2/klout.png}
 \caption{Barack Obama is considerably more influential than I am.}
-\end{figure}\label{gra:klout}
+\label{gra:klout}
+\end{figure}
 
-Although Klout does not specify exactly how it calculates influence, there is evidence that the algorithms used on these \textsl{signals} or \textsl{collaboration events} are actually quite simple. In June, 2011, a Ph.D candidate in Montana State University, Sean Golliher, managed to calculate Klout's reputation score with an accuracy of 94\% simply by calculating a logarithm of the number of a user's followers and retweets\footnote{http://www.seangolliher.com/2011/uncategorized/how-i-reversed-engineered-klout-score-to-an-r2-094/}.
+Among the metrics Klout uses to determine reputation are activity from Twitter, Facebook, the user's Wikipedia page (if one exists), Google+ and others. When a user produces content on these sites that gains `likes', generates discussion or is shared with others, Klout deems that this content generates \textsl{influence} to a lesser or greater degree, and so affects their Klout score, an example of which can be seen in Figure \ref{gra:klout} which compares a typical Klout score with that of Barack Obama.
+
+Although Klout does not specify exactly how it calculates influence, there is evidence that the algorithms used on these \textsl{signals} or \textsl{collaboration events} are actually quite simple. In June, 2011, a Ph.D candidate in Montana State University, Sean Golliher, managed to calculate Klout's reputation score with an accuracy of 94\% simply by calculating a logarithm of the number of a user's followers and retweets\footnote{Available at: http://www.seangolliher.com/2011/uncategorized/how-i-reversed-engineered-klout-score-to-an-r2-094/, last accessed March 12, 2014}.
 
 Besides being an ad-hoc system, the \textsl{Klout score} suffers the drawback that a high score is not necessarily indicative of knowledge or reputability in a specific context. A user may develop a high Klout score through a combination of celebrity status and regular use of social media.
 
@@ -281,17 +294,18 @@ This chapter provides an in-depth explanation of how to create a model of user r
 
 \section{The producer-consumer model}
 
-The producer consumer model is defined as a model of user relationships across an internet site in which there are trust interactions between \textsl{producers} and \textsl{consumers} of content. Trust interactions may be direct or indirect, and can be explicitly or implicitly defined (O'Donovan and Smyth 2005).
+The producer consumer model is defined as a model of user relationships across an internet site in which there are trust interactions between \textsl{producers} and \textsl{consumers} of content. Trust interactions may be direct or indirect, and can be explicitly or implicitly defined (15).
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=90mm]{chap3/trusttypes.png}
-\caption{Diagram demonstrating examples of direct, indirect, implicit and explicit trust interactions taken from McNally et al. 2013.}
-\end{figure}\label{gra:trusttypes}
+\caption{Diagram demonstrating examples of direct, indirect, implicit and explicit trust interactions taken from (1).}
+\label{gra:trusttypes}
+\end{figure}
 
-Direct trust interactions occur directly between two participants, that is to say that one user is rating another user in particular (more specifically a \textsl{consumer} is rating a \textsl{producer}), whether by following them on twitter or leaving a review on their eBay profile. Conversely, an indirect trust interaction does not occur directly between two users and may instead be a collective or community of \textsl{consumers} voting on a single \textsl{producer's} submission as opposed to voting on the \textsl{producer} themselves, for example people voting on an article submitted to Digg or Reddit, or multiple people retweeting a tweet. An explicit trust interaction is one in which the measure of trust being given is an explicit quantifiable signal, such as with a Reddit `up-vote' or an eBay review. Implicit trust interactions, then, are ones in which there is no explicit, easy to define signal that can be used to indicate the trust (McNally et al. 2013, refer to Figure \ref{gra:trusttypes} for examples).
+Direct trust interactions occur directly between two participants, that is to say that one user is rating another user in particular (more specifically a \textsl{consumer} is rating a \textsl{producer}), whether by following them on twitter or leaving a review on their eBay profile. Conversely, an indirect trust interaction does not occur directly between two users and may instead be a collective or community of \textsl{consumers} voting on a single \textsl{producer's} submission as opposed to voting on the \textsl{producer} themselves, for example people voting on an article submitted to Digg or Reddit, or multiple people retweeting a tweet. An explicit trust interaction is one in which the measure of trust being given is an explicit quantifiable signal, such as with a Reddit `up-vote' or an eBay review. Implicit trust interactions, then, are ones in which there is no explicit, easy to define signal that can be used to indicate the trust ((1), refer to Figure \ref{gra:trusttypes} for examples).
 
-The generic model of user reputation being investigated in the course of this project will be applicable to any producer-consumer interactions whether direct, indirect, explicit or implicit. Furthermore, this reputation model should be entirely generic, and applicable across a wide range of possible domains by identifying these trust interactions (McNally et al. 2013).
+The generic model of user reputation being investigated in the course of this project will be applicable to any producer-consumer interactions whether direct, indirect, explicit or implicit. Furthermore, this reputation model should be entirely generic, and applicable across a wide range of possible domains by identifying these trust interactions (1).
 
 \section{The collaboration event}
 
@@ -301,12 +315,13 @@ collaboration event is a trust interaction between consumer and producer, and in
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=40mm]{chap3/singlecollabevent.PNG}
-\caption{A collaboration event with three producers and one consumer taken from McNally et al. 2013.}
-\end{figure}\label{gra:singlecollabevent}
+\caption{A collaboration event with three producers and one consumer taken (1).}
+\label{gra:singlecollabevent}
+\end{figure}
 
 Identifying collaboration events varies in difficulty. In some instances, such as with an explicit trust interaction (see Figure \ref{gra:trusttypes}) it can be very simple, for example it may just be a unit of positive feedback on an eBay transaction. Other more implicit trust interactions may be more difficult to extract a collaboration event from. It is difficult to determine what some user activities and interactions may mean with regard to trust. A person's contribution to a Wikipedia page being edited may mean that their contribution was of poor quality, or it may simply mean that new information has since arisen that the editor has appended to the Wikipedia page.
 
-To use Figure \ref{gra:singlecollabevent} as an example, a consumer on a Stack Exchange site, u$_{q}$, poses a question which receives three answers from the producers u$_{a1}$, u$_{a2}$ and u$_{a3}$. For their answers, these producers receive 5, 4 and 2 stack reputation (i.e. positive votes for their answers) respectively. As a total amount of 11 stack reputation is awarded for this collaboration event, u$_{a1}$ is rewarded $\frac{5}{11}$ of the reputation, u$_{a2}$ receives $\frac{4}{11}$ and u$_{a2}$ receives $\frac{2}{11}$ (McNally et al. 2013).
+To use Figure \ref{gra:singlecollabevent} as an example, a consumer on a Stack Exchange site, u$_{q}$, poses a question which receives three answers from the producers u$_{a1}$, u$_{a2}$ and u$_{a3}$. For their answers, these producers receive 5, 4 and 2 stack reputation (i.e. positive votes for their answers) respectively. As a total amount of 11 stack reputation is awarded for this collaboration event, u$_{a1}$ is rewarded $\frac{5}{11}$ of the reputation, u$_{a2}$ receives $\frac{4}{11}$ and u$_{a2}$ receives $\frac{2}{11}$ (1).
 
 \section{Building the collaboration graph}
 
@@ -315,8 +330,9 @@ The collaboration events outlined above do not occur in isolation. Active users 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=130mm]{chap3/collabeventstime.PNG}
-\caption{Demonstration of a series of collaboration events for social web-search recommendation tool HayStaks as a function of time (McNally et al. 2010).}
-\end{figure}\label{gra:collabtime}
+\caption{Demonstration of a series of collaboration events for social web-search recommendation tool HayStaks as a function of time (11).}
+\label{gra:collabtime}
+\end{figure}
 
 To build this graph, all of the collaboration events that make up this network must be examined in order over time. Figure \ref{gra:collabtime} demonstrates a small series of collaboration events as a function of time. At time t$_{2}$, the producer u$_{1}$ is assigned a unit of reputation by u$_{2}$ for their recommendation. At time t$_{4}$, producers u$_{1}$ u$_{2}$ and u$_{3}$ are each assigned a fraction of a reputation unit by u$_{4}$. As the number of collaboration events grows, so too does the graph which also becomes increasingly inter-linked, with the possibility for multiple edges in both directions between the same nodes as shown in Figure \ref{gra:collabgraph} where node $u_{c}$ is both a producer and consumer for nodes $u_{b}$ and $u_{d}$.
 
@@ -324,11 +340,12 @@ To build this graph, all of the collaboration events that make up this network m
 \centering
 \includegraphics[width=100mm]{chap3/collabgraph.png}
 \caption{Example of a collaboration graph with weights omitted.}
-\end{figure}\label{gra:collabgraph}
+\label{gra:collabgraph}
+\end{figure}
 
 \section{Computing reputation}
 
-Once a collaboration graph has been constructed, it is then time to compute the reputation scores of the users in the graph. This project examined two algorithms from the literature (McNally et al. 2013) that can be leveraged to evaluate a reputation score for a user, Google's PageRank (Brin and Page 1998) and a simple in-degree Weighted Sum technique.
+Once a collaboration graph has been constructed, it is then time to compute the reputation scores of the users in the graph. This project examined two algorithms from the literature (1) that can be leveraged to evaluate a reputation score for a user, Google's PageRank (9) and a simple in-degree Weighted Sum technique.
 
 \subsection{Weighted Sum}
 
@@ -336,23 +353,23 @@ The Weighted Sum algorithm calculates the reputation score of a node by computin
 \[
 rep(pi) = \sum_{e\in E_{pi}}^{} w_{e} 
 \]
-where $E_{pi}$ is the set of incoming edges for the producer $p$, $_{e}$ is the current incoming edge and $w_{e}$ is the weight of $_{e}$. This Weighted Sum model encourages users to gain reputation by becoming producers of content across many questions and may cause an increase in the number of producers, for example users on the Stack Exchange network may feel more inclined to provide answers for questions. This model may also lead to less repetition of information as a user is less likely to receive as much reputation for simply repeating an answer that has already been given, instead producers are encouraged to produce their own unique content (McNally et al. 2013).
+where $E_{pi}$ is the set of incoming edges for the producer $p$, $_{e}$ is the current incoming edge and $w_{e}$ is the weight of $_{e}$. This Weighted Sum model encourages users to gain reputation by becoming producers of content across many questions and may cause an increase in the number of producers, for example users on the Stack Exchange network may feel more inclined to provide answers for questions. This model may also lead to less repetition of information as a user is less likely to receive as much reputation for simply repeating an answer that has already been given, instead producers are encouraged to produce their own unique content (1).
 
 %This algorithm has the benefit of being generic. It can apply to a wide range of contexts. For example with the social media platform Twitter, `retweets' can fit into our collaboration event model and the Weighted Sum can be calculated as a ratio of the consumers' retweets over time. If a producer's tweet is retweeted by five consumer, and between them those five consumers have retweeted a total of thirty-five tweets, the producer may gain a reputation score of $\frac{5}{35}$ for the production of that content.
 
 \subsection{PageRank}
 
-PageRank is perhaps one of the most well-known link-analysis algorithms in use today. Originall developed by Sergey Brin and Larry Page at Google (Brin and Page 1998), it works by making the assumption that important pages in the web (or nodes in a graph) are also the ones most fequently linked to, and that the more important a page or node is, the more weight its own links to other pages should carry (see Figure \ref{gra:pagerank} for a visual example). This insight into the nature of the structure of hyper-linked web-pages allowed them to create the PageRank algorithm to sort results for the Google search engine.
+PageRank is perhaps one of the most well-known link-analysis algorithms in use today. Originally developed by Sergey Brin and Larry Page at Google (9), it works by making the assumption that important pages in the web (or nodes in a graph) are also the ones most frequently linked to, and that the more important a page or node is, the more weight its own links to other pages should carry (see Figure \ref{gra:pagerank} for a visual example). This insight into the nature of the structure of hyper-linked web-pages allowed them to create the PageRank algorithm to sort results for the Google search engine.
 
 The PageRank algorithm is slightly more complex than the Weighted Sum. The PageRank score for each user $p_{i}$ is computed as thus:
 \[
 rep(p_{i}) = \frac{1 - d}{N} + d \sum_{p_{j} \in M(p_{i})} \frac{PR(p_{j})}{|L(p_{j})|}
 \]
-where $d$ is a damping factor, $N$ is the number of users, $M(p_{i})$ is the set of in-links from consumers to the producer $p_{i}$ and $L(p_{j})$ is the set of out-links from $p_{j}$ (i.e. the users from which $p_{j}$ has consumed content). In the context of the Stack Exchange network, the PageRank score for a given user can be thought of as the likelihood that a randomly selected `good' answer will have been given by that user (McNally et al 2013).
+where $d$ is a damping factor, $N$ is the number of users, $M(p_{i})$ is the set of in-links from consumers to the producer $p_{i}$ and $L(p_{j})$ is the set of out-links from $p_{j}$ (i.e. the users from which $p_{j}$ has consumed content). In the context of the Stack Exchange network, the PageRank score for a given user can be thought of as the likelihood that a randomly selected `good' answer will have been given by that user (1).
 
-\section{Predicting quality answers using reputation}
+%\section{Predicting quality answers using reputation}
 
-Placeholder until answer prediction is finished. Describe the methodology of answer prediction (the 80/20 fitting/testing split).
+%Placeholder until answer prediction is finished. Describe the methodology of answer prediction (the 80/20 fitting/testing split).
 
 \section{Conclusion}
 
@@ -366,7 +383,7 @@ In conclusion, it has been demonstrated that it is possible to create a model of
 
 Throughout this project, every attempt has been made to ensure the code written is as concise, clear and efficient as possible. What follows is an attempt to give a brief explanation of the structure of the project and a description of what each class does where appropriate. 
 
-The main, root class named `FYP' begins by finding the user's home directory, and then spawning the `ParserLauncher' class with the sub-directory of home named `stack' as a parameter. This ParserLauncher checks the `stack' directory for any sub-directories. 
+The main, root class named `FYP' begins by finding the user's home directory\footnote{In Windows systems this will fall under `C:\textbackslash Users\textbackslash username', on Unix systems it will be `/home/username'}, and then spawning the `ParserLauncher' class with the sub-directory of home named `stack' as a parameter. This ParserLauncher checks the `stack' directory for any sub-directories. 
 
 For each sub-directory found, it is assumed that this directory will contain the input files Users.xml and Posts.xml that need to be parsed, and will launch the appropriate parsers. Once the files have been successfully parsed, the `ParserLauncher' then creates a `GraphBuilder' class. Finally, this `GraphBuilder' class generates the Gephi graphs that will be used later on to computer reputation scores.
 
@@ -376,12 +393,13 @@ A UML class diagram of this project structure can be seen in figure \ref{fig:cla
 \centering
 \includegraphics[width=140mm]{chap4/classdiagram.png}
 \caption{Class diagram of the overall project structure.}
-\end{figure}\label{fig:classdiagram}
+\label{fig:classdiagram}
+\end{figure}
 
 \newpage
 \section{Development tools}
 
-A number tools were used throughout this project. The majority of the code was written in Java.\footnote{Oracle's Java 1.7 on Windows machines and OpenJDK 7 on Unix.} Apache's Maven was used for dependency management via the m2e plugin bundled with the Eclipse IDE. Initially a PostgreSQL\footnote{http://www.postgresql.org/} database was used for persistent storage of data, and the Flyway and JDBI\footnote{http://flywaydb.org/ and http://jdbi.org/} Java libraries were used for handling database migrations and executing queries respectively, however the database was abandoned for an in-memory model instead when it became clear the data-sets were suitably small.
+A number tools were used throughout this project. The majority of the code was written in Java.\footnote{Oracle's Java 1.7 on Windows machines and OpenJDK 7 on Unix.} Apache's Maven was used for dependency management via the m2e plugin bundled with the Eclipse IDE. Initially a PostgreSQL\footnote{http://www.postgresql.org/} database was used for persistent storage of data, and the Flyway and JDBI\footnote{http://flywaydb.org/ and http://jdbi.org/} Java libraries were used for handling database migrations and executing queries respectively, however the database was abandoned for an in-memory model instead when it became clear the datasets were suitably small.
 
 All code and the contents of this report were kept under version control using git, with a remote on GitHub.com\footnote{https://github.com/JackBracken/FYP} as a backup. In addition, Gephi\footnote{https://gephi.org/} was used to construct the graph and Matlab was used to perform analysis on the results.
 
@@ -417,7 +435,8 @@ As we are not told directly whether a post is a question, answer, or something e
 \hline 8 & PrivilegeWiki \\
 \hline 
 \end{tabular}\par
-\captionof{table}{Post type IDs and their meanings.} \label{tab:posttypes}
+\captionof{table}{Post type IDs and their meanings.} 
+\label{tab:posttypes}
 \end{minipage}
 
 \subsection{Building the graph}
@@ -428,47 +447,28 @@ To create this file, first the graph is populated with nodes. This is a simple m
 
 Once the nodes and edges have been successfully appended to the graph, creation of the graph file is accomplished using the tool-kit's ExportController class. This class can create either a PDF document with a visualization of the graph or a Gephi graph file with the .gexf extension. Which type of file is created simply depends on the file extension used when writing. The implementation of this project creates a separate graph file for each network examined.
 
-\begin{program}
-\begin{verbatim}
-ExportController ec = Lookup.getDefault().lookup(ExportController.class);
-try {
-    ec.exportFile(new File(siteName + ".gexf"));
-} catch (IOException e) {
-    e.printStackTrace();
-}
-\end{verbatim}
-\caption{Writing the graph to file.}
-\end{program}
-
 \section{Computing reputation scores}
+\label{sec:computingrep}
 
 Gephi makes it a simple matter to computer the In-degree Weighted Sum and PageRank scores for the nodes in our graph, among other things. Open the generated graph file in Gephi. In the right-hand pane of the overview tab, there is a statistics view, which can be used to compute statistical data for the nodes and edges of the graph by clicking the corresponding `run' button. Once this is done, a report view is displayed which can be ignored.
-
-%\begin{figure}[ht!]
-%\centering
-%\includegraphics[width=80mm]{chap4/gephistats.png}
-%\caption{Gephi stats pane and report view.}
-%\end{figure}\label{gra:gephistats}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=100mm]{chap4/gephidata.PNG}
 \caption{Gephi data-lab showing users on the bicycles stack exchange network sorted by Weighted Sum score.}
-\end{figure}\label{gra:gephidata}
+\label{gra:gephidata}
+\end{figure}
 
 Once the Weighted Sum and PageRank values have been computed, they are inserted into the `Data Laboratory' view. From this view it is possible to interact with the data in a number of ways, from searching for specific nodes, adding, deleting and duplicating nodes or edges, sorting by property (see Figure \ref{gra:gephidata}), and changing the properties of nodes. It is also possible to export this data to a comma-separated-value file for later analysis.
 
-\section{Predicting correct answers}
-
-Placeholder until answer prediction completed
 
 \chapter{Testing \& Evaluation}
 
+This chapter is a presentation of the results of this project, with a description of testing methodology, and an explanation of the findings.
 
+\section{The datasets}
 
-\section{The data-sets}
-
-For the purposes of this project, three different data-sets were selected 
+For the purposes of this project, three different datasets were selected from the Stack Exchange network. These datasets were the bicycles, cooking (Seasoned Advice or SA) and electronic engineering (EE) networks, and were primarily chosen to attempt to create a somewhat complete spread of the types of questions that may be asked on a social Q\&A site. More specifically, the questions asked on SA may be of a more qualitative type, where the answers can vary wildly according to the outlook of the person answering, where as the questions on the EE network are likely to have more concrete `correct' and `incorrect' answers, although of course a large number of questions may still be entirely qualitative. The bicycles site was chosen for questions that are largely a mix between qualitative and `right or wrong' questions.
 
 \begin{minipage}{\linewidth}
 \centering
@@ -476,91 +476,69 @@ For the purposes of this project, three different data-sets were selected
 \hline
 \multirow{2}{*}~ & \multicolumn{3}{c|}{\textbf{Dataset}} \\
 \cline{2-4}
-~ 					& Bicycles & Cooking & Electronics \\ \hline\hline
-\# Users 			&  8,009 &  15,802 &  25,335 \\ \hline
-\# Questions asked 	&  4,023 &   9,037 &  24,404 \\ \hline
-\# Answers given 	& 12,196 &  24,679 &  49,006 \\ \hline
-\# Answers on votes & 62,974 & 130,446 & 210,694 \\ \hline
+~ 					& Bicycles &      SA &      EE \\ \hline\hline
+\# Users 			&    8,009 &  15,802 &  25,335 \\ \hline
+\# Questions asked 	&    4,023 &   9,037 &  24,404 \\ \hline
+\# Answers given 	&   12,196 &  24,679 &  49,006 \\ \hline
+\# Answers on votes &   62,974 & 130,446 & 210,694 \\ \hline
 \end{tabular}\par
-\captionof{table}{Statistics for the three Stack Exchange sites used in the course of this project--the bicycles, cooking and electronics sites.} \label{tab:corrresults}
+\captionof{table}{Statistics for the three Stack Exchange sites used in the course of this project--the bicycles, SA and EE networks.} 
+\label{tab:sitestats}
 \end{minipage}
+
+Table \ref{tab:sitestats} gives some exact figures to give an idea of the scale of the sites chosen. The Bicycles site was the smallest of the three and EE was the largest, while SA fell quite close to the median between them. The bicycles site had the most average number of answers per question at 3.03 answers, while the EE site had the least with 2.01 answers per question on average. Conversely the EE site had the most answers per user at 1.93, while the bicycles site had the least at 1.52 answers per user. In both instances the SA site fell somewhat in the middle, however SA had the most average votes per answer at 5.29, while EE and bicycles had 4.30 and 5.16 respectively.
 
 \section{Methodology}
 
+Once reputation figures have been calculated as outline in section \ref{sec:computingrep} and the results have been exported to comma-separated-value format, it is then time perform analysis of the data. To determine the accuracy of results, histograms of distribution of the different reputation scores were generated with Matlab, and in the case of the SA and EE datasets were compared to the findings in the work by McNally et al. It is important to note that the range of values for each set of reputation scores was normalised between 0 and 1 as follows, where $v$ is the vector of values, $n$ is the vector of normalised values and $max(v)$ is the largest value in $v$:
+\[
+ n = \frac{v}{max(v)}
+\]
+
+Once the accuracy of the reputation scores has been determined to be in line with the results in the literature as outlined above, a correlation analysis is then performed on the scores. Correlation was calculated between each combination of scores, i.e., between SE and WS, SE and PR and WS and PR scores. For each dataset, this correlation was calculated on a series of `buckets' of data, i.e. the top 10, 50, 100, 200, 500, 1000 and 1500 users by WS score.
+
+% PLACEHOLDER FOR PREDICTIONS
+
 \section{Analysis}
 
-%*class(es) for analysis - e.g. to compute correlations between rep model scores and to evaluate accuracy of predicted answers
-Once the csv files were created, I then opened them up using spreadsheet software\footnote{LibreOffice Calc in my case, but any will suffice.} to extract the data for Matlab. Because the Weighted Sum score as a model of reputation is the `main' focus of this project, I sorted the data by the Weighted Sum column in descending order. Due to the fact that a large number of users never deign to answer any questions, and our reputation scores are based off of the Producer-Consumer model, we end up with a large number of users with no Weighted Sum score, so we discard these.
+This section presents the results of the experiments carried out for this project and a description and analysis of those results. Comparisons are drawn between the performance of the generic models for reputation with Stack Exchange's own ad-hoc system.
 
+\subsection{Evaluating performance}
 
-
-Now that we have the data, it is time to analyse it with Matlab. Column vectors were created for the SE, WS and PR scores, the scores are all normalised to be between 0 and 1, and the results are then plotted on a histogram to be compared with previous research and ensure the results seem to be within bounds. Histograms were created for each algorithm before being super-imposed over each other using an image manipulation program, the results of which can be seen in \ref{fig:histogram}.
-
-%\begin{program}
-%\begin{verbatim}
-%se = [29588 11774 17885 12804 11267]'
-%normalised_se = se/max(se)
-%hist(normalised_se)
-%\end{verbatim}
-%\caption{Normalising a vector and plotting a histogram of its values.}
-%\end{program}
-
-After the histograms of normalised user score vs. number of users were generated, it was then time to analyse the correlation between reputation algorithm scores. To do so, for each site being evaluated, three rounds of analysis were performed. One round on the top 10 users by WS score, a second by the top 50 users by WS score, and finally once for all users with computable WS scores. For each round of analysis, a column vector was created for each of the SE, WS and PR scores. The correlation was then found between each permutation of reputation score (i.e., between SE and WS, SE and PR and between WS and PR), and both the Pearson and Spearman correlation scores were computed and recorded in each case.
-
-%\begin{program}
-%\begin{verbatim}
-%se = [29588 11774 17885 12804 11267]'
-%ws = [1740 1017 893 777 682]'
-%corr(se, ws, 'type', 'Pearson')
-%ans =
-%    0.9219
-%corr(se, ws, 'type', 'Spearman')
-%ans =
-%    0.7000
-%\end{verbatim}
-%\caption{Creating column vectors with SE and WS scores, then computing Pearson and Spearman correlation with results shown.}
-%\end{program}
-
-The results of this analysis can be found in table \ref{tab:corrresults} and are discussed at length there.
-
-\section{Evaluating performance}
-
-%\begin{figure}[ht!]
-%\centering
-%\includegraphics[width=160mm]{chap3/histograms.png}
-%\caption{Distribution of reputation scores across different sites and algorithms.}
-%\end{figure}
-
-Remake this figure zoomed in more with less nodes and add labels (maybe make node size representative of rep)
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=100mm]{chap4/gephigraph.PNG}
-\caption{A close-up view of the graph created from the bicycles network data.}
-\end{figure}\label{gra:network}
+The distribution of reputation scores for the three reputation models--SE, WS and PR--were plotted on a line-plot using Matlab, and are shown below. Figure \ref{gra:bicyclehist} displays the distribution of scores across the bicycles network, Figure \ref{gra:cookinghist} displays the reputation distribution across the SA network and Figure \ref{gra:electronicshist} is the distribution of reputation across the EE network. The x-axis on each plot indicates number of users, while the y-axis is the normalised reputation score of those users. Line thickness was adjusted for maximum visibility of the plots and is not indicative of anything.
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=120mm]{chap3/bicycles_hist.png}
-\caption{Distribution of reputation scores across the Bicycles SE network.}\label{fig:histogram}
-\end{figure}\label{gra:bicyclehist}
+\includegraphics[width=130mm]{chap5/bicycle_line.png}
+\caption{Distribution of reputation scores across the Bicycles SE network.}
+\label{gra:bicyclehist}
+\end{figure}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=120mm]{chap3/cooking_hist.png}
+\includegraphics[width=130mm]{chap5/cooking_line.png}
 \caption{Distribution of reputation scores across the Seasoned Advice SE network.}
-\end{figure}\label{gra:cookinghist}
+\label{gra:cookinghist}
+\end{figure}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=120mm]{chap3/electronics_hist.png}
+\includegraphics[width=130mm]{chap5/electronics_line.png}
 \caption{Distribution of reputation scores across the Electronics SE network.}
-\end{figure}\label{gra:electronicshist}
+\label{gra:electronicshist}
+\end{figure}
 
-Long-tailed distribution in histograms. Talk about scores being normalised between 0 and 1. Describe the histograms
+As can be seen in Figures \ref{gra:bicyclehist}, \ref{gra:cookinghist} and \ref{gra:electronicshist}, the normalised reputation scores follows a long-tailed distribution in line with the experiments performed by McNally et al. (it is important to note that the axis plotting number of users in the histograms in the literature is set to a logarithmic scale, which accounts for the slight difference with the data plotted here). That is, a very small number of users have extremely high scores for each reputation model, while the vast majority have middling or lower scores.
 
-\section{Correlation analysis}
+In conclusion the generic algorithms for reputation being investigated have a very similar spread of distribution of scores as the ad-hoc Stack Exchange model, which is indicative of a level of accuracy in these scores.
 
-Discuss the correlation results. Low Spearman rank means results ordered very differently, think about why and explain.
+\subsection{Correlation analysis}
+
+%Discuss the correlation results. Low Spearman rank means results ordered very differently, think about why and explain.
+
+Correlation analysis was performed only on sets of users for whom WS and PR scores could be calculated. For each `bucket' of users being evaluated, both Pearson and Spearman correlation was calculated between each combination of reputation algorithm. For the purposes of this analysis, the Spearman correlation is considered the more accurate of the two. The Pearson correlation algorithm makes the assumption that the two datasets are linked by some linear relationship, whereas the Spearman rank accounts for the fact that this may not be true. Pearson was calculated as it cost little extra effort and out of interest in the results Pearson would return.
+
+Both the Spearman and Pearson correlation coefficients produce a decimal number between $-1$, which indicates a total negative correlation and $+1$, which indicates a total positive correlation (a score of $0$ indicates absolutely no correlation between the datasets whatsoever). Ideally both the WS and PR algorithms should correlate very highly with the SE model (scores of $0.90$ and above, for example). This would indicate that they have a very similar performance to the SE model and are a suitable alternative. In reality it is expected that the WS algorithm correlates very highly with the SE model and the PR algorithm will correlate moderately well with SE.
 
 % Table of results for correlation analysis
 \begin{minipage}{\linewidth}
@@ -570,114 +548,212 @@ Discuss the correlation results. Low Spearman rank means results ordered very di
 \textbf{Site} & \textbf{Users} & \multicolumn{3}{l||}{\textbf{Pearson}} & \multicolumn{3}{l|}{\textbf{Spearman}} \\ \hline
 \multicolumn{2}{|l||}{\textbf{Correlations between}} & \textbf{SE/WS} & \textbf{SE/PR} & \textbf{WS/PR} & \textbf{SE/WS} & \textbf{SE/PR} & \textbf{WS/PR} \\
 \hline
-~ 					& Top 10 & 0.9523 & 0.8225 & 0.7222 & 0.9515 & 0.5636 & 0.4182 \\      
-\textbf{Bicycles}	& Top 50 & 0.9791 & 0.8846 & 0.8501 & 0.9520 & 0.8023 & 0.8082 \\
-~ 					& All    & 0.9838 & 0.8966 & 0.8785 & 0.8237 & 0.5140 & 0.5434 \\
+~ 					& Top 10 	& 0.9523 & 0.8225 & 0.7222 & 0.9515 & 0.5636 & 0.4182 \\      
+~					& Top 50 	& 0.9791 & 0.8846 & 0.8501 & 0.9520 & 0.8023 & 0.8082 \\
+~					& Top 100	& 0.9815 & 0.8808 & 0.8504 & 0.9555 & 0.7029 & 0.6864 \\
+\textbf{Bicycles}	& Top 200	& 0.9822 & 0.8915 & 0.8668 & 0.9364 & 0.7240 & 0.6980 \\
+~					& Top 500	& 0.9833 & 0.9027 & 0.8819 & 0.8798 & 0.6606 & 0.6467 \\
+~					& Top 1000	& 0.9839 & 0.8950 & 0.8759 & 0.8394 & 0.5220 & 0.5155 \\
+~					& Top 1500  & 0.9839 & 0.8965 & 0.8782 & 0.8293 & 0.4969 & 0.5083 \\
 \hline
-~           		& Top 10 & 0.9656 & 0.6547 & 0.5103 & 0.9394 & 0.3455 & 0.4545 \\
-\textbf{Cooking}    & Top 50 & 0.9901 & 0.7855 & 0.7536 & 0.9501 & 0.6267 & 0.6700 \\
-~          			& All    & 0.9920 & 0.8800 & 0.8690 & 0.8255 & 0.5130 & 0.5254 \\
+~           		& Top 10 	& 0.9656 & 0.6547 & 0.5103 & 0.9394 & 0.3455 & 0.4545 \\
+~				    & Top 50 	& 0.9901 & 0.7855 & 0.7536 & 0.9501 & 0.6267 & 0.6700 \\
+~          			& Top 100 	& 0.9920 & 0.8292 & 0.8058 & 0.9571 & 0.7452 & 0.7469 \\
+\textbf{Cooking}	& Top 200 	& 0.9921 & 0.8551 & 0.8375 & 0.9468 & 0.8017 & 0.8094 \\
+~          			& Top 500 	& 0.9921 & 0.8703 & 0.8564 & 0.9036 & 0.7176 & 0.7259 \\
+~          			& Top 1000	& 0.9921 & 0.8763 & 0.8640 & 0.8792 & 0.6651 & 0.6775 \\
+~          			& Top 1500	& 0.9921 & 0.8777 & 0.8660 & 0.8325 & 0.6304 & 0.6476 \\
 \hline
-~           		& Top 10 & 0.9881 & 0.7840 & 0.8204 & 0.9515 & 0.7212 & 0.8545 \\
-\textbf{Electronics}& Top 50 & 0.9922 & 0.8716 & 0.8948 & 0.9669 & 0.6926 & 0.7247 \\
-~           		& All    & 0.9893 & 0.9116 & 0.9276 & 0.7649 & 0.5204 & 0.5703 \\
+~           		& Top 10 	& 0.9881 & 0.7840 & 0.8204 & 0.9515 & 0.7212 & 0.8545 \\
+~					& Top 50 	& 0.9922 & 0.8716 & 0.8948 & 0.9669 & 0.6926 & 0.7247 \\
+~           		& Top 100   & 0.9902 & 0.8781 & 0.9008 & 0.9545 & 0.7570 & 0.8011 \\
+\textbf{Electronics}& Top 200   & 0.9900 & 0.8925 & 0.9115 & 0.9245 & 0.7802 & 0.8206 \\
+~           		& Top 500   & 0.9893 & 0.9038 & 0.9212 & 0.9009 & 0.7634 & 0.7918 \\
+~           		& Top 1000  & 0.9893 & 0.9085 & 0.9251 & 0.8812 & 0.7446 & 0.7654 \\
+~           		& Top 1500	& 0.9893 & 0.9099 & 0.9262 & 0.8613 & 0.7035 & 0.7269 \\
 \hline
 \end{tabular}\par
-\captionof{table}{Stack Exchange reputation rewards.} \label{tab:corrresults}
+\captionof{table}{Pearson and Spearman correlations between the SE, WS and PR reputation models for the three datasets.} 
+\label{tab:corrresults}
 \end{minipage}
+
+As shown in Table \ref{tab:corrresults}, the WS algorithm correlates very highly with the SE model across all three datasets. There is a tendency for this good performance to trail off slightly, as seen when the larger buckets are examined. The lowest Spearman correlation between the SE and WS algorithms occurs in the largest bucket in the bicycles site (a correlation of $0.8293$ is still very high, however), but is in line with the performance of the algorithm across the other datasets.
+
+When SE is correlated with the PR scores, it is immediately apparent that there is a much lower correlation between them than between SE and WS, with the highest Spearman correlation ($0.8023$) falling slightly short of WS's worst case, and its worst case being a very low Spearman score of $0.3455$ in the SA dataset. Interestingly, this worst-case performance occurs in the `Top 10' bucket, and when the Spearman correlation between PR and SE is examined in detail, the `Top 10' bucket also has a very low score in the bicycles dataset. Upon further examination it seems that PR begins to perform better when a larger number of users are examined, before slightly worsening again.
+
+\subsection{Conclusion}
+
+In conclusion it appears that, as expected, the WS algorithm correlates very well SE's ad-hoc reputation model, but suffers a very minor drop in correlation as more low activity users are considered. The PR algorithm correlates very poorly with the other models when only looking at the very highest ranked users, but sees a rapid increase in correlation when lower reputation users are considered, most likely due to PR's propensity to assign low default reputation scores to users with activity.
 
 \section{Coverage}
 
+It is important that the reputation algorithms can be applied to as many users in a network as possible, and as such, the coverage of each algorithm on the datasets is outlined below (exact numbers can be seen in Table \ref{tab:coverage}). As the reputations evaluated in this investigation can only be applied to users who are producers of content (i.e. they have answered at least one question), they are bound to have a much lower coverage than SE's model of reputation, which takes all user activity into account, and gives all users a default reputation of $1$ upon registering.
+
 \begin{minipage}{\linewidth}
 \centering
-\begin{tabular}{|l|l|}
-\hline \textbf{Site} & \textbf{\% users with WS score} \\ 
-\hline Bicycles & 19.60\% \\ 
-\hline Cooking & 20.61\% \\ 
-\hline Electronics & 12.59\% \\ 
+\begin{tabular}{|l|r|r|}
+\hline \textbf{Site} & \textbf{\%WS coverage} & \textbf{\%PR coverage} \\ 
+\hline Bicycles & 19.60\% & 24.6\% \\ 
+\hline Cooking & 20.61\% & 30.1\% \\ 
+\hline Electronics & 12.59\% & 17.5\% \\ 
 \hline 
 \end{tabular}\par
-\captionof{table}{Coverage of users with computable WS scores.} \label{tab:coverage}
+\captionof{table}{Coverage figures of users with computable WS and PR scores.} 
+\label{tab:coverage}
 \end{minipage}
 
-Charts detailing coverage (include PageRank)
+%\begin{figure}[ht!]
+%\centering
+%\includegraphics[width=160mm]{chap5/coverage.png}
+%\caption{Bar chart visualising coverage provided by reputation algorithms.}
+%\label{gra:coverage}
+%\end{figure}
 
-\section{Predicting the answers to questions}
+As can be seen in Figures \ref{gra:bicoverage}, \ref{gra:sacoverage} and \ref{gra:eecoverage} which follow, the WS and PR reputation algorithms have significantly less user coverage than the SE model, which always has $100\%$ coverage. The PR algorithm always has better coverage than the WS algorithm and this is due to the fact that PR will often assign a low default value as explained previously. McNally et al. came to the conclusion that these extra users covered by the PR algorithm were likely consumers of content at some point and a similar conclusion was drawn for this project.
 
-Placeholder until answer prediction finished. Train on first 80\% of questions (fitting), compute rep scores. Final 20\% attempt to predict the correct answers 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=80mm]{chap5/bicycles_coverage.png}
+\caption{Bar chart visualising coverage provided by reputation algorithms on the bicycles network.}
+\label{gra:bicoverage}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=80mm]{chap5/cooking_coverage.png}
+\caption{Bar chart visualising coverage provided by reputation algorithms on the SA network.}
+\label{gra:sacoverage}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=80mm]{chap5/electronics_coverage.png}
+\caption{Bar chart visualising coverage provided by reputation algorithms on the EE network.}
+\label{gra:eecoverage}
+\end{figure}
 
 \chapter{Conclusions \& Future Work}
 
-Placeholder
+The scope of this project covered both the development of a way to extract the Stack Exchange data, and an academic investigation and analysis of the generic user reputation models proposed in the literature. This chapter discusses exactly which goals were met and to what success, draws conclusions about the subject area, evaluates and makes criticism of the overall implementation of the project and outlines possible future areas of research into the field.
 
 \section{Fulfilment of project goals}
 
-Address the stated project goals, which ones were attempted, and success in completing them
+\subsection{Mandatory goals}
+
+The stated mandatory goals of this project were to:
+\begin{itemize}
+\item Download Stack Exchange data (http://data.stackexchange.com/) - data from three sites should be obtained.
+\item Implementation of reputation algorithms from the literature.
+\item Evaluation: for each dataset, compare the performance of these algorithms to the user reputation model currently used on Stack Exchange.
+\end{itemize}
+
+All mandatory goals of the project were met to satisfaction.
+
+\subsection{Discretionary goals}
+
+The stated discretionary goals of this project were to:
+\begin{itemize}
+\item Predict the correct answers to questions based on user reputation.
+\item Evaluate the accuracy of predicted answers.
+\item Perform user-trials and correlate prediction performance with offline metrics.
+\end{itemize}
+While none of these goals were successfully met, considerable thought was put into a method for answer prediction and evaluation of prediction accuracy. The idea being that a collaboration graph is constructed using the first $80\%$ of the collaboration events (questions) in the network . This graph is then used as training data, in which users' WS and PR reputation scores are calculated. For the remaining $20\%$ of the collaboration events, each answer is given a ranking for each of their respective owner's reputation scores, i.e. the user with the highest score for a particular reputation algorithm is given the ranking of $1$ for that particular algorithm as demonstrated in Table \ref{tab:predictionranking}.
+
+\begin{minipage}{\linewidth}
+\centering
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+\textbf{ID}		& \textbf{Score} & \textbf{True rank} & \textbf{SE} & \textbf{WS} & \textbf{PR} \\ \hline\hline
+A$_{1}$	& $+20$	&		1	&  2 &  1 &  3 \\ \hline
+A$_{2}$	& $+10$	& 		2	&  1 &  3 &  1 \\ \hline
+A$_{3}$	&  $+5$	& 		3	&  4 &  4 &  4 \\ \hline
+A$_{4}$	&  $-2$	& 		4	&  3 &  2 &  2 \\ \hline
+\end{tabular}\par
+\captionof{table}{Example attempt at predicting a correct answer to a question by assigning rankings to each answer according to the author's reputation scores for each of the reputation algorithms and comparing them to the actual ranking of answers according to their scores.} 
+\label{tab:predictionranking}
+\end{minipage}
+
+These rankings can then be correlated against the actual answer ranking (that is, the ranking of answers by points awarded), Once the final remaining $20\%$ of the collaboration events have been tested in such a way, the mean of the Spearman ranks for each algorithm can be compared to find which is most likely to predict a correct answer. This approach can also be modified to consider answers that are `Accepted' by the consumer as correct to be ranked ahead of the highest scoring answer in cases where it is not already.
+
+\subsection{Exceptional goals}
+
+The stated exceptional goals of this project were to:
+\begin{itemize}
+\item Propose and implement enhancements to improve algorithm performance.
+\item Analyse the robustness of the reputation algorithms against attack.
+\end{itemize}
+None of these were attempted due to time constraints.
+
+\section{Conclusions}
+
+Through examination of the results of this project it was found that the generic Weighted Sum approach to user reputation is superior to Rank, which falls in line with expected results according to the research undertaken. WS was far superior to PR for the datasets used, but there is evidence that PR may have superior performance to WS given a large enough dataset with a very large percentage of low-activity users. 
+
+In addition, there is considerable evidence that the WS reputation model performs nearly identically to the SE model in terms of distribution of reputation scores, and after performing correlation analysis, it has been demonstrated that the WS model for user reputation is a viable alternative to the SE model of reputation with regards to a pure reputation model. This WS model also has the benefit that it is an entirely generic approach and can be used for any domain in which there is a \textsl{producer-consumer} model from which \textsl{collaboration events} can be extracted.
 
 \section{Learning outcome}
 
-Outline learning outcomes throughout the course of this project
+Much was learned throughout the course of this project. In particular, the process of realising an academic project from conception to completion and of the difficulties in developing a piece of non-trivial software in terms of managing both time and complexity of said software. In addition, learning to use and integrate different tools and libraries into the project was enlightening, even in cases where these tools were unused in the end.
 
 \section{Failings}
 
-What didn't work? What could have been done better? Criticisms of approach to the project.
+Many aspects of this project could have been improved upon, in particular the implementation of the project and the choice of tools used. If a more complete understanding of exactly what the project entailed had been reached before beginning implementation, a lot of dead ends and wasted time could have been avoided. If this project were to be attempted again, an alternative to Gephi may be found--while Gephi is a fantastic piece of software, it is still in public beta and as such suffers from some instability. Additionally many of Gephi's features were unneeded for the scope of this project.
 
 \section{Future work}
 
+This section will give very brief descriptions of possible future paths this work can be taken down.
+
+\begin{enumerate}
+\item A continued investigation into generic algorithms to compute user reputation can be undertaken, with attention paid to other link-analysis algorithms such as the HITS algorithm (Hubs \& Authorities).
+
+\item An investigation into these algorithms' resistance to abuse or tampering may be undertaken. For example, it has already been demonstrated PageRank is vulnerable to exploitation with the use of artificial in-links. Perform experiments to determine if the Weighted Sum and PageRank algorithms can be exploited in the context of a collaboration graph.
+
+\item Attempt to partition expert users in a collaboration graph by field of expertise. Stack Exchange offers `Tag' meta-data for posts in its Posts.xml file. Leverage this information to find the most reputable users in the contexts of different fields of expertise. For example, the most reputable cake-baker on Seasoned Advice may not be as reputable when it comes to fry-cooking.
+
+\item Evaluate whether using the most reputable users according to these generic reputation algorithms is a viable way to seed the TrustRank algorithm with `good' users.
+
+\item Combine the previous two examples to provide an `even spread' of seeds for the TrustRank algorithm. 
+\end{enumerate}
 
 
 %%%% ADD YOUR BIBLIOGRAPHY HERE
 \newpage
 \raggedright
-\textbf{McNally, K., O'Mahony, M.P., and Smyth, B. 2013} -- ``A Model of Collaboration-based Reputation for the Social Web.'' FIX REFERENCE
-\linebreak
-\linebreak
-\textbf{Cheng, R., and Vassileva, J. 2005} -- ``Reward Mechanism for Sustainable Online Learning Community.'' Proceedings of the 2005 conference on Artificial Intelligence in Education. IOS Press.
-\linebreak
-\linebreak
-\textbf{Page, L., Brin S., Motwani, R., and Winograd, T. 1999} -- ``The PageRank citation ranking: Bringing order to the Web.''
-\linebreak
-\linebreak
-\textbf{Mui, L. 2002} -- ``A Computational Model of Trust and Reputation.'' Agents, Evolutionary Games, and Social Networks
-\linebreak
-\linebreak
-\textbf{Resnick, P., Zeckhauser, R.} -- ``Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay's Reputation System.'' Advances in Applied Microeconomics 11, 2002, p127-157
-\linebreak
-\linebreak
-\textbf{Gyongyi, Z., Garcia-Molina, H., Pedersen, J.} -- ``Combating Web Spam with TrustRank.'' Proceedings of the Thirtieth International Conference on Very Large Data Bases (2004), Volume 30, p576-587
-\linebreak
-\linebreak
-%\textbf{O'Donovan, J., Smyth, B.} -- ``Trust in Recommender Systems.'' In IUI 2005: Proceedings of the Tenth International Conference on Intelligent User Interfaces, p167-174
-%\linebreak
-%\linebreak
-\textbf{Massa, P., Avesani, P. 2007} -- ``Trust-Aware Recommender Systems.'' In Proceedings of the 2007 ACM conference on Recommender systems. ACM. p17-24
-\linebreak
-\linebreak
-\textbf{Breese, J.S., Heckerman, D., Kadie, C.} -- ``Empirical Analysis of Predictive Algorithms for Collaborative Filtering.'' In Proceedings of the Fourteenth Conference on Uncertainty in Artificial Intelligence, Morgan Kaufmann Publishers Inc., May 1998, p43-52.
-\linebreak
-\linebreak
-\textbf{Brin, S., Page, L.} -- ``The anatomy of a large-scale hypertextual Web search engine.'' Computer networks and ISDN systems 30.1, 1998, p107-117.
-\linebreak
-\linebreak
-\textbf{Hoorens, V.} -- ``Self-enhancement and Superiority Biases in Social Comparison.'' The European Review of Social Psychology (1993), Volume 4, Issue 1 p113-139
-\linebreak
-\linebreak
-\textbf{Jøsang, A., Ismail, B., Boyd, C.} -- ``A survey of trust and reputation systems for online service provision.'' Decision Support Systems, Volume 43, Issue 2, March 2007, p618–644
-\linebreak
-\linebreak
-\textbf{McNally, K., O'Mahony, M., Coyle, M., Briggs, P., Smyth, B.} -- ``A Case Study of Collaboration and Reputation in Social Web Search.'' In ACM Transactions on Intelligent Systems and Technology, Volume 9, No. 4, Article 39, March 2010, p39-69
-\linebreak
-\linebreak
-\textbf{Resnick, P., Iacovou, N., Suchak, M., Bergstrom, P., Riedl, J.} -- ``Grouplens: An Open Architecture for Collaborative Filtering of Netnews.'' In Proceedings of ACM CSCW’94 Conference on Computer-Supported Cooperative Work, Sharing Information and Creating Meaning, 1994, p175–186
-\linebreak
-\linebreak
-\textbf{Balabanovic, M., Shoham, Y.} -- ``Fab: Content–based, Collaborative Recommendation.'' Communications of the ACM , Vol. 40, No. 3, ACM Press, March, 1997, p66–72
-\linebreak
-\linebreak
-\textbf{O’Mahony, M., Hurley, N., Kushmerick, N., Silvestre, G.} -- ``Collaborative Recommendation: A Robustness Analysis.'' ACM Transactions on Internet Technology (TOIT), Special Issue on Machine Learning for the Internet, Vol. 4, No. 4, ACM Press, November, 2004, p344–377
-\linebreak
-\linebreak
-\textbf{O'Donovan, J., Smyth, B.} -- ``Trust in Recommender Systems''. In Proceedings of the 10th International Conference on Intelligent User Interfaces (IUI '05). ACM, New York, NY, USA, 2005, p167-174
+\begin{description}
+
+
+\item[(1)] McNally, K., O'Mahony, M.P., and Smyth, B. 2013 -- ``A Model of Collaboration-based Reputation for the Social Web.'' In Seventh International AAAI Conference of Weblogs and Social Media, 2013
+
+\item[(2)] Cheng, R., and Vassileva, J. 2005 -- ``Reward Mechanism for Sustainable Online Learning Community.'' Proceedings of the 2005 conference on Artificial Intelligence in Education. IOS Press.
+
+\item[(3)] Page, L., Brin S., Motwani, R., and Winograd, T. 1999 -- ``The PageRank citation ranking: Bringing order to the Web.''
+
+\item[(4)] Mui, L., Mohtashemi, M., Halberstadt, A. 2002 -- ``A Computational Model of Trust and Reputation.'' In System Sciences, 2002. HICSS. Proceedings of the 35th Annual Hawaii International Conference,IEEE, 2002 p2431-2439. 
+
+\item[(5)] Resnick, P., Zeckhauser, R. 2002 -- ``Trust Among Strangers in Internet Transactions: Empirical Analysis of eBay's Reputation System.'' Advances in Applied Microeconomics 11, 2002, p127-157
+
+\item[(6)] Gyongyi, Z., Garcia-Molina, H., Pedersen, J. 2004 -- ``Combating Web Spam with TrustRank.'' Proceedings of the Thirtieth International Conference on Very Large Data Bases (2004), Volume 30, p576-587
+
+\item[(7)] Massa, P., Avesani, P. 2007 -- ``Trust-Aware Recommender Systems.'' In Proceedings of the 2007 ACM conference on Recommender systems. ACM. p17-24
+
+\item[(8)] Breese, J.S., Heckerman, D., Kadie, C. 1988 -- ``Empirical Analysis of Predictive Algorithms for Collaborative Filtering.'' In Proceedings of the Fourteenth Conference on Uncertainty in Artificial Intelligence, Morgan Kaufmann Publishers Inc., May 1998, p43-52.
+
+\item[(9)] Brin, S., Page, L. 1998 -- ``The anatomy of a large-scale hypertextual Web search engine.'' Computer networks and ISDN systems 30.1, 1998, p107-117.
+
+\item[(10)] Hoorens, V. 1993 -- ``Self-enhancement and Superiority Biases in Social Comparison.'' The European Review of Social Psychology (1993), Volume 4, Issue 1 p113-139
+
+%\item[(11)] Jøsang, A., Ismail, B., Boyd, C. 2007 -- ``A survey of trust and reputation systems for online service provision.'' Decision Support Systems, Volume 43, Issue 2, March 2007, p618–644
+
+\item[(11)] McNally, K., O'Mahony, M., Coyle, M., Briggs, P., Smyth, B. 2010 -- ``A Case Study of Collaboration and Reputation in Social Web Search.'' In ACM Transactions on Intelligent Systems and Technology, Volume 9, No. 4, Article 39, March 2010, p39-69
+
+\item[(12)] Resnick, P., Iacovou, N., Suchak, M., Bergstrom, P., Riedl, J. 1994 -- ``Grouplens: An Open Architecture for Collaborative Filtering of Netnews.'' In Proceedings of ACM CSCW’94 Conference on Computer-Supported Cooperative Work, Sharing Information and Creating Meaning, 1994, p175–186
+
+\item[(13)] Balabanovic, M., Shoham, Y. 1997 -- ``Fab: Content–based, Collaborative Recommendation.'' Communications of the ACM , Vol. 40, No. 3, ACM Press, March, 1997, p66–72
+
+\item[(14)] O’Mahony, M., Hurley, N., Kushmerick, N., Silvestre, G. 2004 -- ``Collaborative Recommendation: A Robustness Analysis.'' ACM Transactions on Internet Technology (TOIT), Special Issue on Machine Learning for the Internet, Vol. 4, No. 4, ACM Press, November, 2004, p344–377
+
+\item[(15)] O'Donovan, J., Smyth, B. 2005 -- ``Trust in Recommender Systems''. In Proceedings of the 10th International Conference on Intelligent User Interfaces (IUI '05). ACM, New York, NY, USA, 2005, p167-174
+
+\end{description}
 
 %\textbf{McNally, K., O'Mahony, M., Smyth, B.} -- ``A Comparative Study of Collaboration-based Reputation Models for Social Recommender Systems''
 

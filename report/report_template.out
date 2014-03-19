@@ -20,27 +20,29 @@
 \BOOKMARK [1][-]{section.3.4}{Computing reputation}{chapter.3}% 20
 \BOOKMARK [2][-]{subsection.3.4.1}{Weighted Sum}{section.3.4}% 21
 \BOOKMARK [2][-]{subsection.3.4.2}{PageRank}{section.3.4}% 22
-\BOOKMARK [1][-]{section.3.5}{Predicting quality answers using reputation}{chapter.3}% 23
-\BOOKMARK [1][-]{section.3.6}{Conclusion}{chapter.3}% 24
-\BOOKMARK [0][-]{chapter.4}{Design \046 Implementation}{}% 25
-\BOOKMARK [1][-]{section.4.1}{Project structure}{chapter.4}% 26
-\BOOKMARK [1][-]{section.4.2}{Development tools}{chapter.4}% 27
-\BOOKMARK [1][-]{section.4.3}{Obtaining the data}{chapter.4}% 28
-\BOOKMARK [2][-]{subsection.4.3.1}{Processing users}{section.4.3}% 29
-\BOOKMARK [2][-]{subsection.4.3.2}{Processing posts}{section.4.3}% 30
-\BOOKMARK [2][-]{subsection.4.3.3}{Building the graph}{section.4.3}% 31
-\BOOKMARK [1][-]{section.4.4}{Computing reputation scores}{chapter.4}% 32
-\BOOKMARK [1][-]{section.4.5}{Predicting correct answers}{chapter.4}% 33
-\BOOKMARK [0][-]{chapter.5}{Testing \046 Evaluation}{}% 34
-\BOOKMARK [1][-]{section.5.1}{The data-sets}{chapter.5}% 35
-\BOOKMARK [1][-]{section.5.2}{Methodology}{chapter.5}% 36
-\BOOKMARK [1][-]{section.5.3}{Analysis}{chapter.5}% 37
-\BOOKMARK [1][-]{section.5.4}{Evaluating performance}{chapter.5}% 38
-\BOOKMARK [1][-]{section.5.5}{Correlation analysis}{chapter.5}% 39
-\BOOKMARK [1][-]{section.5.6}{Coverage}{chapter.5}% 40
-\BOOKMARK [1][-]{section.5.7}{Predicting the answers to questions}{chapter.5}% 41
-\BOOKMARK [0][-]{chapter.6}{Conclusions \046 Future Work}{}% 42
-\BOOKMARK [1][-]{section.6.1}{Fulfilment of project goals}{chapter.6}% 43
-\BOOKMARK [1][-]{section.6.2}{Learning outcome}{chapter.6}% 44
-\BOOKMARK [1][-]{section.6.3}{Failings}{chapter.6}% 45
-\BOOKMARK [1][-]{section.6.4}{Future work}{chapter.6}% 46
+\BOOKMARK [1][-]{section.3.5}{Conclusion}{chapter.3}% 23
+\BOOKMARK [0][-]{chapter.4}{Design \046 Implementation}{}% 24
+\BOOKMARK [1][-]{section.4.1}{Project structure}{chapter.4}% 25
+\BOOKMARK [1][-]{section.4.2}{Development tools}{chapter.4}% 26
+\BOOKMARK [1][-]{section.4.3}{Obtaining the data}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.3.1}{Processing users}{section.4.3}% 28
+\BOOKMARK [2][-]{subsection.4.3.2}{Processing posts}{section.4.3}% 29
+\BOOKMARK [2][-]{subsection.4.3.3}{Building the graph}{section.4.3}% 30
+\BOOKMARK [1][-]{section.4.4}{Computing reputation scores}{chapter.4}% 31
+\BOOKMARK [0][-]{chapter.5}{Testing \046 Evaluation}{}% 32
+\BOOKMARK [1][-]{section.5.1}{The datasets}{chapter.5}% 33
+\BOOKMARK [1][-]{section.5.2}{Methodology}{chapter.5}% 34
+\BOOKMARK [1][-]{section.5.3}{Analysis}{chapter.5}% 35
+\BOOKMARK [2][-]{subsection.5.3.1}{Evaluating performance}{section.5.3}% 36
+\BOOKMARK [2][-]{subsection.5.3.2}{Correlation analysis}{section.5.3}% 37
+\BOOKMARK [2][-]{subsection.5.3.3}{Conclusion}{section.5.3}% 38
+\BOOKMARK [1][-]{section.5.4}{Coverage}{chapter.5}% 39
+\BOOKMARK [0][-]{chapter.6}{Conclusions \046 Future Work}{}% 40
+\BOOKMARK [1][-]{section.6.1}{Fulfilment of project goals}{chapter.6}% 41
+\BOOKMARK [2][-]{subsection.6.1.1}{Mandatory goals}{section.6.1}% 42
+\BOOKMARK [2][-]{subsection.6.1.2}{Discretionary goals}{section.6.1}% 43
+\BOOKMARK [2][-]{subsection.6.1.3}{Exceptional goals}{section.6.1}% 44
+\BOOKMARK [1][-]{section.6.2}{Conclusions}{chapter.6}% 45
+\BOOKMARK [1][-]{section.6.3}{Learning outcome}{chapter.6}% 46
+\BOOKMARK [1][-]{section.6.4}{Failings}{chapter.6}% 47
+\BOOKMARK [1][-]{section.6.5}{Future work}{chapter.6}% 48
